@@ -1,7 +1,9 @@
 node_modules/
 bower_components/
 coverage/
+dist/
+examples_dist/
 .sass-cache/
 .idea/
 .tmp/
-dist/
+.publish/
