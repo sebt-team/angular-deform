@@ -1,0 +1,70 @@
+{
+  "generator-gulp-angular": {
+    "version": "1.1.0",
+    "props": {
+      "angularVersion": "~1.5.3",
+      "angularModules": [
+	{
+	  "key": "animate",
+	  "module": "ngAnimate"
+	},
+	{
+	  "key": "touch",
+	  "module": "ngTouch"
+	},
+	{
+	  "key": "messages",
+	  "module": "ngMessages"
+	},
+	{
+	  "key": "aria",
+	  "module": "ngAria"
+	}
+      ],
+      "jQuery": {
+	"key": "jquery2"
+      },
+      "resource": {
+	"key": "$http",
+	"module": null
+      },
+      "router": {
+	"key": "noRouter",
+	"module": null
+      },
+      "ui": {
+	"key": "bootstrap",
+	"module": null
+      },
+      "bootstrapComponents": {
+	"key": "official",
+	"module": null
+      },
+      "cssPreprocessor": {
+	"key": "node-sass",
+	"extension": "scss"
+      },
+      "jsPreprocessor": {
+	"key": "babel",
+	"extension": "js",
+	"srcExtension": "es6"
+      },
+      "htmlPreprocessor": {
+	"key": "noHtmlPrepro",
+	"extension": "html"
+      },
+      "foundationComponents": {
+	"name": null,
+	"version": null,
+	"key": null,
+	"module": null
+      },
+      "paths": {
+	"src": "src",
+	"dist": "dist",
+	"e2e": "e2e",
+	"tmp": ".tmp"
+      }
+    }
+  }
+}
