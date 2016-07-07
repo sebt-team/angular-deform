@@ -1,5 +1,4 @@
-angular.module('angularDeforms.directive', ['builder.provider', 'builder.controller', 'builder.drag', 'validator']).directive('fbBuilder', [
-  '$injector', function($injector) {
+export FbBuilder = function($injector) {
     var $builder, $drag;
     $builder = $injector.get('$builder');
     $drag = $injector.get('$drag');
@@ -94,8 +93,8 @@ angular.module('angularDeforms.directive', ['builder.provider', 'builder.control
       }
     };
   }
-]).directive('fbFormObjectEditable', [
-  '$injector', function($injector) {
+
+export FbFormObjectEditable = function($injector) {
     var $builder, $compile, $drag, $validator;
     $builder = $injector.get('$builder');
     $drag = $injector.get('$drag');
@@ -243,15 +242,18 @@ angular.module('angularDeforms.directive', ['builder.provider', 'builder.control
         });
       }
     };
-  }
-]).directive('fbComponents', function() {
+  };
+
+
+export FbComponents = function() {
   return {
     restrict: 'A',
     template: "<ul ng-if=\"groups.length > 1\" class=\"nav nav-tabs nav-justified\">\n    <li ng-repeat=\"group in groups\" ng-class=\"{active:activeGroup==group}\">\n        <a href='#' ng-click=\"selectGroup($event, group)\">{{group}}</a>\n    </li>\n</ul>\n<div class='form-horizontal'>\n    <div class='fb-component' ng-repeat=\"component in components\"\n        fb-component=\"component\"></div>\n</div>",
     controller: 'fbComponentsController'
   };
-}).directive('fbComponent', [
-  '$injector', function($injector) {
+};
+
+export FbComponent = function($injector) {
     var $builder, $compile, $drag;
     $builder = $injector.get('$builder');
     $drag = $injector.get('$drag');
@@ -281,9 +283,9 @@ angular.module('angularDeforms.directive', ['builder.provider', 'builder.control
         });
       }
     };
-  }
-]).directive('fbForm', [
-  '$injector', function($injector) {
+  };
+
+export FbForm = function($injector) {
     return {
       restrict: 'A',
       require: 'ngModel',
@@ -303,9 +305,9 @@ angular.module('angularDeforms.directive', ['builder.provider', 'builder.control
         return scope.form = $builder.forms[scope.formName];
       }
     };
-  }
-]).directive('fbFormObject', [
-  '$injector', function($injector) {
+  };
+
+export fbFormObject = function($injector) {
     var $builder, $compile, $parse;
     $builder = $injector.get('$builder');
     $compile = $injector.get('$compile');
@@ -369,5 +371,4 @@ angular.module('angularDeforms.directive', ['builder.provider', 'builder.control
         });
       }
     };
-  }
-]);
+  };

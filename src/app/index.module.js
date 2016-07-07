@@ -4,8 +4,6 @@ import { config } from './index.config';
 import { runBlock } from './index.run';
 import { MainController } from './main/main.controller';
 import { NavbarDirective } from './components/navbar/navbar.directive';
-import { BuilderProvider } from './components/builder/builder.provider';
-import { fbFormObjectEditableController } from './components/builder/builder.controller';
 
 angular.module('angularDeforms', ['ngAnimate', 'ngTouch', 'ngMessages', 'ngAria', 'toastr'])
 
@@ -32,13 +30,18 @@ angular.module('angularDeforms', ['ngAnimate', 'ngTouch', 'ngMessages', 'ngAria'
   // -----------------------
   // DIRECTIVES
   // -----------------------
-  .directive('acmeNavbar', NavbarDirective)
+  .directive('acmeNavbar', NavbarDirective);
 
   //  DIRECTIVE -----------------------------------------------------
   import { BuilderProvider }                from './components/builder/builder.provider';
   import { FbFormObjectEditableController } from './components/builder/builder.controller';
   import { FbComponentsController }         from './components/builder/builder.controller';
-  import { fbFormObjectController }         from './components/builder/builder.controller';
+  import { FbFormObjectController }         from './components/builder/builder.controller';
+  import { FbBuilder }                      from './components/builder/builder.directive';
+  import { FbBuilFbFormObjectEditableder }  from './components/builder/builder.directive';
+  import { FbComponent }                    from './components/builder/builder.directive';
+  import { FbForm }                         from './components/builder/builder.directive';
+  import { FbFormObject }                   from './components/builder/builder.directive';
 
   // -----------------------
   // PROVIDERS
@@ -52,4 +55,14 @@ angular.module('angularDeforms', ['ngAnimate', 'ngTouch', 'ngMessages', 'ngAria'
   angular.module('builder.controller', ['builder.provider'])
   .controller('fbFormObjectEditableController', ['$scope', '$injector', fbFormObjectEditableController])
   .controller('fbComponentsController', ['$scope', '$injector', FbComponentsController])
-  .controller('fbFormObjectController', ['$scope', '$injector', fbFormObjectController])
+  .controller('fbFormObjectController', ['$scope', '$injector', FbFormObjectController])
+
+  // -----------------------
+  // DIRECTIVES
+  // -----------------------
+  angular.module('angularDeforms.directive', ['builder.provider', 'builder.controller', 'builder.drag', 'validator'])
+  .directive('fbBuilder', ['$injector', FbBuilder])
+  .directive('fbFormObjectEditable', ['$injector', FbFormObjectEditable])
+  .directive('fbComponent', FbComponent)
+  .directive('fbForm', ['$injector', FbForm])
+  .directive('fbFormObject', ['$injector', FbFormObject])
