@@ -6,7 +6,7 @@ import { MainController } from './main/main.controller';
 import { NavbarDirective } from './components/navbar/navbar.directive';
 
 angular
-  .module('angularDeforms', ['ngAnimate', 'ngTouch', 'ngMessages', 'ngAria', 'toastr'])
+  .module('angularDeforms', ['ngAnimate', 'ngTouch', 'ngMessages', 'ngAria', 'toastr', 'builder', 'validator.rules'])
 
   // CONTANTS
   .constant('moment', moment)
@@ -39,10 +39,13 @@ angular
   import { FbFormController }               from './components/builder/builder.directive';
   import { FbFormObjectEditable }           from './components/builder/builder.directive';
 
+angular
+  .module('builder', ['builderDirective'])
+
   // PROVIDERS
 angular
   .module('builderProvider', [])
-  .provider('$builder', ['$log', BuilderProvider]);
+  .provider('$builder', BuilderProvider);
 
   // CONTROLLERS
 angular
@@ -64,5 +67,5 @@ angular
 
 // DRAG
 angular
-  .module('angularDeformsDrag', [])
+  .module('builderDrag', [])
   .provider('$drag', DragProvider)
