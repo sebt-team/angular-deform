@@ -14,7 +14,7 @@ var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i 
   // -----------------------
   // BuilderProvider
   // -----------------------
-export function BuilderProvider($log) {
+export function BuilderProvider() {
   var $http, $injector, $templateCache;
   $injector = null;
   $http = null;
@@ -50,10 +50,10 @@ export function BuilderProvider($log) {
       popoverTemplateUrl: component.popoverTemplateUrl
     };
     if (!result.template && !result.templateUrl) {
-      $log.error("The template is empty.");
+      console.error("The template is empty.");
     }
     if (!result.popoverTemplate && !result.popoverTemplateUrl) {
-      $log.error("The popoverTemplate is empty.");
+      console.error("The popoverTemplate is empty.");
     }
     return result;
   };
@@ -154,7 +154,7 @@ export function BuilderProvider($log) {
           _this.groups.push(newComponent.group);
         }
       } else {
-        $log.error("The component " + name + " was registered.");
+        console.error("The component " + name + " was registered.");
       }
     };
   })(this);
