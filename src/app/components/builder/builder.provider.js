@@ -59,11 +59,11 @@ export function BuilderProvider() {
   };
   this.convertFormObject = function(name, formObject) {
     var component, ref, ref1, ref2, ref3, ref4, ref5, ref6, ref7, result;
-    if (formObject === null) {
+    if (formObject == null) {
       formObject = {};
     }
     component = this.components[formObject.component];
-    if (component === null) {
+    if (component == null) {
       throw "The component " + formObject.component + " was not registered.";
     }
     result = {
@@ -168,7 +168,7 @@ export function BuilderProvider() {
       /*
       Insert the form object into the form at last.
        */
-      if ((base = _this.forms)[name] === null) {
+      if ((base = _this.forms)[name] == null) {
         base[name] = [];
       }
       return _this.insertFormObject(name, _this.forms[name].length, formObject);
@@ -177,7 +177,7 @@ export function BuilderProvider() {
   this.insertFormObject = (function(_this) {
     return function(name, index, formObject) {
       var base;
-      if (formObject === null) {
+      if (formObject == null) {
         formObject = {};
       }
 
@@ -198,7 +198,7 @@ export function BuilderProvider() {
           [index]: {int} The form object index. It will be updated by $builder.
       @return: The form object.
        */
-      if ((base = _this.forms)[name] === null) {
+      if ((base = _this.forms)[name] == null) {
         base[name] = [];
       }
       if (index > _this.forms[name].length) {
@@ -235,7 +235,7 @@ export function BuilderProvider() {
       @param newIndex: The new index.
        */
       var formObject, formObjects;
-      if (oldIndex === newIndex) {
+      if (oldIndex == newIndex) {
         return;
       }
       formObjects = _this.forms[name];

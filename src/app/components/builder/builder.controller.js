@@ -155,7 +155,7 @@ export function FbFormObjectController($scope) {
     input = {
       id: $scope.formObject.id,
       label: $scope.formObject.label,
-      value: value !== null ? value : ''
+      value: value != null ? value : ''
     };
     $scope.$parent.input.splice($scope.$index, 1, input);
   };
