@@ -11,13 +11,13 @@ export function FbBuilder ($injector) {
     link: function(scope, element, attrs) {
       var base, beginMove, name;
       scope.formName = attrs.fbBuilder;
-      if ((base = $builder.forms)[name = scope.formName] === null) {
+      if ((base = $builder.forms)[name = scope.formName] == null) {
         base[name] = [];
       }
       scope.formObjects = $builder.forms[scope.formName];
       beginMove = true;
       $(element).addClass('fb-builder');
-      return $drag.droppable($(element), {
+      $drag.droppable($(element), {
         move: function(e) {
           var $empty, $formObject, $formObjects, height, i, index, j, offset, positions, ref, ref1;
           if (beginMove) {
@@ -58,7 +58,7 @@ export function FbBuilder ($injector) {
             $("div.fb-form-object-editable").popover('hide');
             beginMove = false;
           }
-          return $(element).find('.empty').remove();
+          $(element).find('.empty').remove();
         },
         up: function(e, isHover, draggable) {
           var formObject, newIndex, oldIndex;
@@ -87,7 +87,7 @@ export function FbBuilder ($injector) {
               $builder.updateFormObjectIndex(scope.formName, oldIndex, newIndex);
             }
           }
-          return $(element).find('.empty').remove();
+          $(element).find('.empty').remove();
         }
       });
     }
@@ -110,6 +110,7 @@ export function FbFormObjectEditable($injector) {
       var popover;
       scope.inputArray = [];
       scope.$component = $builder.components[scope.formObject.component];
+      // debugger
       scope.setupScope(scope.formObject);
       scope.$watch('$component.template', function(template) {
         var view;
@@ -145,7 +146,7 @@ export function FbFormObjectEditable($injector) {
         popover.html = $(popover.html).addClass(popover.id);
         popover.view = $compile(popover.html)(scope);
         $(element).addClass(popover.id);
-        return $(element).popover({
+        $(element).popover({
           html: true,
           title: scope.$component.label,
           content: popover.view,
@@ -162,7 +163,7 @@ export function FbFormObjectEditable($injector) {
           $event.preventDefault();
           $validator.validate(scope).success(function() {
             popover.isClickedSave = true;
-            return $(element).popover('hide');
+            $(element).popover('hide');
           });
         },
         remove: function($event) {
@@ -211,7 +212,7 @@ export function FbFormObjectEditable($injector) {
           $popover.show();
           setTimeout(function() {
             $popover.addClass('in');
-            return $(element).triggerHandler('shown.bs.popover');
+            $(element).triggerHandler('shown.bs.popover');
           }, 0);
           return false;
         }
@@ -219,10 +220,10 @@ export function FbFormObjectEditable($injector) {
       $(element).on('shown.bs.popover', function() {
         $(".popover ." + popover.id + " input:first").select();
         scope.$apply(function() {
-          return scope.popover.shown();
+          scope.popover.shown();
         });
       });
-      return $(element).on('hide.bs.popover', function() {
+      $(element).on('hide.bs.popover', function() {
         var $popover;
         $popover = $("form." + popover.id).closest('.popover');
         if (!popover.isClickedSave) {
@@ -230,13 +231,13 @@ export function FbFormObjectEditable($injector) {
             scope.popover.cancel();
           } else {
             scope.$apply(function() {
-              return scope.popover.cancel();
+              scope.popover.cancel();
             });
           }
         }
         $popover.removeClass('in');
         setTimeout(function() {
-          return $popover.hide();
+          $popover.hide();
         }, 300);
         return false;
       });
@@ -271,13 +272,13 @@ export function FbComponent($injector) {
           componentName: scope.component.name
         }
       });
-      return scope.$watch('component.template', function(template) {
+      scope.$watch('component.template', function(template) {
         var view;
         if (!template) {
           return;
         }
         view = $compile(template)(scope);
-        return $(element).html(view);
+        $(element).html(view);
       });
     }
   };
@@ -297,7 +298,7 @@ export function FbForm($injector) {
     link: function(scope, element, attrs) {
       var $builder, base, name;
       $builder = $injector.get('$builder');
-      if ((base = $builder.forms)[name = scope.formName] === null) {
+      if ((base = $builder.forms)[name = scope.formName] == null) {
         base[name] = [];
       }
       scope.form = $builder.forms[scope.formName];
@@ -305,7 +306,7 @@ export function FbForm($injector) {
   };
 }
 
-export function fbFormObject($injector) {
+export function FbFormObject($injector) {
   var $builder = $injector.get('$builder');
   var $compile = $injector.get('$compile');
   var $parse = $injector.get('$parse');
@@ -316,7 +317,7 @@ export function fbFormObject($injector) {
       scope.formObject = $parse(attrs.fbFormObject)(scope);
       scope.$component = $builder.components[scope.formObject.component];
       scope.$on($builder.broadcastChannel.updateInput, function() {
-        return scope.updateInput(scope.inputText);
+        scope.updateInput(scope.inputText);
       });
       if (scope.$component.arrayToText) {
         scope.inputArray = [];
@@ -328,7 +329,7 @@ export function fbFormObject($injector) {
           checked = [];
           for (index in scope.inputArray) {
             if (scope.inputArray[index]) {
-              checked.push((ref = scope.options[index]) !== null ? ref : scope.inputArray[index]);
+              checked.push((ref = scope.options[index]) != null ? ref : scope.inputArray[index]);
             }
           }
           scope.inputText = checked.join(', ');

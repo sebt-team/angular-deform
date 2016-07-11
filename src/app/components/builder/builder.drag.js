@@ -68,7 +68,7 @@ export function DragProvider() {
     Setup providers.
      */
     $injector = injector;
-    return $rootScope = $injector.get('$rootScope');
+    $rootScope = $injector.get('$rootScope');
   };
   this.isHover = (function(_this) {
     return function($elementA, $elementB) {
@@ -130,7 +130,7 @@ export function DragProvider() {
             return _this.autoScroll.scroll();
           });
         } else {
-          return _this.autoScroll.scrolling = false;
+          _this.autoScroll.scrolling = false;
         }
       };
     })(this),
@@ -150,14 +150,14 @@ export function DragProvider() {
           }
         } else {
           _this.autoScroll.up = false;
-          return _this.autoScroll.down = false;
+          _this.autoScroll.down = false;
         }
       };
     })(this),
     stop: (function(_this) {
       return function() {
         _this.autoScroll.up = false;
-        return _this.autoScroll.down = false;
+        _this.autoScroll.down = false;
       };
     })(this)
   };

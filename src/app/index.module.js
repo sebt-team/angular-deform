@@ -1,12 +1,21 @@
 /* global moment:false */
-
 import { config } from './index.config';
 import { runBlock } from './index.run';
 import { MainController } from './main/main.controller';
 import { NavbarDirective } from './components/navbar/navbar.directive';
 
 angular
-  .module('angularDeforms', ['ngAnimate', 'ngTouch', 'ngMessages', 'ngAria', 'toastr', 'builder', 'validator.rules'])
+  .module('angularDeforms',
+    [
+      'ngAnimate',
+      'ngTouch',
+      'ngMessages',
+      'ngAria',
+      'toastr',
+      'builder',
+      'validator.rules',
+      'builderComponents'
+    ])
 
   // CONTANTS
   .constant('moment', moment)
@@ -28,24 +37,30 @@ angular
   import { DragProvider }                from './components/builder/builder.drag';
   import { FbFormObjectEditableController } from './components/builder/builder.controller';
   import { FbComponentsController }         from './components/builder/builder.controller';
+  import { FbComponentController }          from './components/builder/builder.controller';
+  import { FbFormController }               from './components/builder/builder.controller';
   import { FbFormObjectController }         from './components/builder/builder.controller';
   import { FbBuilder }                      from './components/builder/builder.directive';
-  // import { FbBuilFbFormObjectEditableder }  from './components/builder/builder.directive';
-  // TODO: revisar que este export exista en el controller. Quiza se me paso.
+  import { FbFormObjectEditable }           from './components/builder/builder.directive';
+  import { FbComponents }                   from './components/builder/builder.directive';
   import { FbComponent }                    from './components/builder/builder.directive';
   import { FbForm }                         from './components/builder/builder.directive';
   import { FbFormObject }                   from './components/builder/builder.directive';
-  import { FbComponentController }          from './components/builder/builder.directive';
-  import { FbFormController }               from './components/builder/builder.directive';
-  import { FbFormObjectEditable }           from './components/builder/builder.directive';
+  import { ComponentsBuilder }              from './components/builder/builder.components';
 
+  // MAIN
 angular
-  .module('builder', ['builderDirective'])
+  .module('builder', ['builderDirective']);
 
   // PROVIDERS
 angular
   .module('builderProvider', [])
   .provider('$builder', BuilderProvider);
+
+  // CONFIG
+angular
+  .module('builderComponents', ['builder', 'validator.rules'])
+  .config(['$builderProvider', ComponentsBuilder])
 
   // CONTROLLERS
 angular
@@ -62,10 +77,11 @@ angular
   .directive('fbBuilder', ['$injector', FbBuilder])
   .directive('fbFormObjectEditable', ['$injector', FbFormObjectEditable])
   .directive('fbComponent', FbComponent)
+  .directive('fbComponents', FbComponents)
   .directive('fbForm', ['$injector', FbForm])
   .directive('fbFormObject', ['$injector', FbFormObject]);
 
 // DRAG
 angular
   .module('builderDrag', [])
-  .provider('$drag', DragProvider)
+  .provider('$drag', DragProvider);

@@ -14,8 +14,7 @@ copyObjectToScope = function(object, scope) {
 };
 
 export function FbFormObjectEditableController($scope, $injector) {
-  var $builder;
-  $builder = $injector.get('$builder');
+  var $builder = $injector.get('$builder');
   $scope.setupScope = function(formObject) {
 
     /*
@@ -34,7 +33,7 @@ export function FbFormObjectEditableController($scope, $injector) {
       formObject.placeholder = $scope.placeholder;
       formObject.required = $scope.required;
       formObject.options = $scope.options;
-      return formObject.validation = $scope.validation;
+      formObject.validation = $scope.validation;
     }, true);
     $scope.$watch('optionsText', function(text) {
       var x;
@@ -50,19 +49,19 @@ export function FbFormObjectEditableController($scope, $injector) {
         }
         return results;
       })();
-      return $scope.inputText = $scope.options[0];
+      $scope.inputText = $scope.options[0];
     });
     component = $builder.components[formObject.component];
-    return $scope.validationOptions = component.validationOptions;
+    $scope.validationOptions = component.validationOptions;
   };
-  return $scope.data = {
+  $scope.data = {
     model: null,
     backup: function() {
 
       /*
       Backup input value.
       */
-      return this.model = {
+      this.model = {
         label: $scope.label,
         description: $scope.description,
         placeholder: $scope.placeholder,
@@ -84,14 +83,13 @@ export function FbFormObjectEditableController($scope, $injector) {
       $scope.placeholder = this.model.placeholder;
       $scope.required = this.model.required;
       $scope.optionsText = this.model.optionsText;
-      return $scope.validation = this.model.validation;
+      $scope.validation = this.model.validation;
     }
   };
 }
 
 export function FbComponentsController($scope, $injector) {
-  var $builder;
-  $builder = $injector.get('$builder');
+  var $builder = $injector.get('$builder');
   $scope.selectGroup = function($event, group) {
     var component, name, ref, results;
     if ($event != null) {
@@ -112,14 +110,14 @@ export function FbComponentsController($scope, $injector) {
   $scope.groups = $builder.groups;
   $scope.activeGroup = $scope.groups[0];
   $scope.allComponents = $builder.components;
-  return $scope.$watch('allComponents', function() {
-    return $scope.selectGroup(null, $scope.activeGroup);
+  $scope.$watch('allComponents', function() {
+    $scope.selectGroup(null, $scope.activeGroup);
   });
 }
 
 export function FbComponentController($scope) {
-  return $scope.copyObjectToScope = function(object) {
-    return copyObjectToScope(object, $scope);
+  $scope.copyObjectToScope = function(object) {
+    copyObjectToScope(object, $scope);
   };
 }
 
@@ -130,12 +128,12 @@ export function FbFormController($scope, $injector) {
   if ($scope.input == null) {
     $scope.input = [];
   }
-  return $scope.$watch('form', function() {
+  $scope.$watch('form', function() {
     if ($scope.input.length > $scope.form.length) {
       $scope.input.splice($scope.form.length);
     }
-    return $timeout(function() {
-      return $scope.$broadcast($builder.broadcastChannel.updateInput);
+    $timeout(function() {
+      $scope.$broadcast($builder.broadcastChannel.updateInput);
     });
   }, true);
 }
@@ -145,9 +143,9 @@ export function FbFormObjectController($scope) {
   // var $builder = $injector.get('$builder');
   // it comes with the sourcecode but isn't used
   $scope.copyObjectToScope = function(object) {
-    return copyObjectToScope(object, $scope);
+    copyObjectToScope(object, $scope);
   };
-  return $scope.updateInput = function(value) {
+  $scope.updateInput = function(value) {
 
     /*
     Copy current scope.input[X] to $parent.input.
@@ -157,8 +155,8 @@ export function FbFormObjectController($scope) {
     input = {
       id: $scope.formObject.id,
       label: $scope.formObject.label,
-      value: value != null ? value : ''
+      value: value !== null ? value : ''
     };
-    return $scope.$parent.input.splice($scope.$index, 1, input);
+    $scope.$parent.input.splice($scope.$index, 1, input);
   };
 }
