@@ -34,7 +34,7 @@ angular
 
   //  DIRECTIVE -----------------------------------------------------
   import { BuilderProvider }                from './components/builder/builder.provider';
-  import { DragProvider }                from './components/builder/builder.drag';
+  import { DragProvider }                   from './components/builder/builder.drag';
   import { FbFormObjectEditableController } from './components/builder/builder.controller';
   import { FbComponentsController }         from './components/builder/builder.controller';
   import { FbComponentController }          from './components/builder/builder.controller';

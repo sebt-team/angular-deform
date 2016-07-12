@@ -1,45 +1,62 @@
 export function FbBuilder ($injector) {
-  var $builder, $drag;
-  $builder = $injector.get('$builder');
-  $drag = $injector.get('$drag');
-  return {
+  // ----------------------------------------
+  // providers
+  // ----------------------------------------
+  var $builder = $injector.get('$builder');
+  var $drag = $injector.get('$drag');
+
+  // ----------------------------------------
+  // directive
+  // ----------------------------------------
+  let directive = {
     restrict: 'A',
     scope: {
       fbBuilder: '='
     },
-    template: "<div class='form-horizontal'>\n    <div class='fb-form-object-editable' ng-repeat=\"object in formObjects\"\n        fb-form-object-editable=\"object\"></div>\n</div>",
-    link: function(scope, element, attrs) {
-      var base, beginMove, name;
+    template: "<div class='form-horizontal'>\
+              | <div class='fb-form-object-editable' \
+              |   ng-repeat='object in formObjects' \
+              |   fb-form-object-editable='object'>\
+              | </div>\
+              |</div>",
+
+    link: (scope, element, attrs) => {
+      // ----------------------------------------
+      // valuables
+      // ----------------------------------------
       scope.formName = attrs.fbBuilder;
-      if ((base = $builder.forms)[name = scope.formName] == null) {
-        base[name] = [];
-      }
       scope.formObjects = $builder.forms[scope.formName];
-      beginMove = true;
+
+      var beginMove = true;
+
       $(element).addClass('fb-builder');
       $drag.droppable($(element), {
-        move: function(e) {
-          var $empty, $formObject, $formObjects, height, i, index, j, offset, positions, ref, ref1;
-          if (beginMove) {
+        move: (e) => {
+
+          if(beginMove) {
             $("div.fb-form-object-editable").popover('hide');
             beginMove = false;
           }
-          $formObjects = $(element).find('.fb-form-object-editable:not(.empty,.dragging)');
+
+          let $formObjects = $(element).find('.fb-form-object-editable:not(.empty,.dragging)');
           if ($formObjects.length === 0) {
             if ($(element).find('.fb-form-object-editable.empty').length === 0) {
               $(element).find('>div:first').append($("<div class='fb-form-object-editable empty'></div>"));
             }
             return;
           }
-          positions = [];
+
+          let positions = [];
           positions.push(-1000);
-          for (index = i = 0, ref = $formObjects.length; i < ref; index = i += 1) {
-            $formObject = $($formObjects[index]);
-            offset = $formObject.offset();
-            height = $formObject.height();
+
+          $formObjects.forEach($formObject => {
+            let offset = $formObject.offset();
+            let height = $formObject.height();
             positions.push(offset.top + height / 2);
-          }
+          })
+
           positions.push(positions[positions.length - 1] + 1000);
+
           for (index = j = 1, ref1 = positions.length; j < ref1; index = j += 1) {
             if (e.pageY > positions[index - 1] && e.pageY <= positions[index]) {
               $(element).find('.empty').remove();
@@ -92,6 +109,8 @@ export function FbBuilder ($injector) {
       });
     }
   };
+
+  return directive;
 }
 
 export function FbFormObjectEditable($injector) {
