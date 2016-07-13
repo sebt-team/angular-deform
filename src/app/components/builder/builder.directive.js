@@ -49,46 +49,46 @@ export function FbBuilder ($injector) {
           let positions = [];
           positions.push(-1000);
 
-          $formObjects.forEach($formObject => {
+          Array.from($formObjects).forEach(formObject => {
+            let $formObject = $(formObject);
             let offset = $formObject.offset();
             let height = $formObject.height();
             positions.push(offset.top + height / 2);
-          })
+          });
 
           positions.push(positions[positions.length - 1] + 1000);
 
-          for (index = j = 1, ref1 = positions.length; j < ref1; index = j += 1) {
-            if (e.pageY > positions[index - 1] && e.pageY <= positions[index]) {
+          for (var i = 0; i < positions.length; i++) {
+            if (e.pageY > positions[i] && e.pageY <= positions[i + 1]) {
               $(element).find('.empty').remove();
-              $empty = $("<div class='fb-form-object-editable empty'></div>");
-              if (index - 1 < $formObjects.length) {
-                $empty.insertBefore($($formObjects[index - 1]));
+              let $empty = $("<div class='fb-form-object-editable empty'></div>");
+              if (i < $formObjects.length) {
+                $empty.insertBefore($($formObjects[i]));
               } else {
-                $empty.insertAfter($($formObjects[index - 2]));
+                $empty.insertAfter($($formObjects[i - 1]));
               }
               break;
             }
           }
         },
-        out: function() {
+        out: () => {
           if (beginMove) {
             $("div.fb-form-object-editable").popover('hide');
             beginMove = false;
           }
           $(element).find('.empty').remove();
         },
-        up: function(e, isHover, draggable) {
-          var formObject, newIndex, oldIndex;
+        up: (e, isHover, draggable) => {
           beginMove = true;
+
           if (!$drag.isMouseMoved()) {
             $(element).find('.empty').remove();
-            return;
           }
+
           if (!isHover && draggable.mode === 'drag') {
-            formObject = draggable.object.formObject;
-            if (formObject.editable) {
+            let formObject = draggable.object.formObject;
+            if (formObject.editable)
               $builder.removeFormObject(attrs.fbBuilder, formObject.index);
-            }
           } else if (isHover) {
             if (draggable.mode === 'mirror') {
               $builder.insertFormObject(scope.formName, $(element).find('.empty').index('.fb-form-object-editable'), {
@@ -96,8 +96,8 @@ export function FbBuilder ($injector) {
               });
             }
             if (draggable.mode === 'drag') {
-              oldIndex = draggable.object.formObject.index;
-              newIndex = $(element).find('.empty').index('.fb-form-object-editable');
+              let oldIndex = draggable.object.formObject.index;
+              let newIndex = $(element).find('.empty').index('.fb-form-object-editable');
               if (oldIndex < newIndex) {
                 newIndex--;
               }
