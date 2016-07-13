@@ -13,13 +13,12 @@ export function FbBuilder ($injector) {
     scope: {
       fbBuilder: '='
     },
-    template: "<div class='form-horizontal'>\
-              | <div class='fb-form-object-editable' \
-              |   ng-repeat='object in formObjects' \
-              |   fb-form-object-editable='object'>\
-              | </div>\
-              |</div>",
-
+    template: '<div class="form-horizontal">\
+                <div class="fb-form-object-editable" \
+                  ng-repeat="object in formObjects" \
+                  fb-form-object-editable="object">\
+                </div>\
+               </div>',
     link: (scope, element, attrs) => {
       // ----------------------------------------
       // valuables
@@ -49,46 +48,46 @@ export function FbBuilder ($injector) {
           let positions = [];
           positions.push(-1000);
 
-          $formObjects.forEach($formObject => {
+          Array.from($formObjects).forEach(formObject => {
+            let $formObject = $(formObject);
             let offset = $formObject.offset();
             let height = $formObject.height();
             positions.push(offset.top + height / 2);
-          })
+          });
 
           positions.push(positions[positions.length - 1] + 1000);
 
-          for (index = j = 1, ref1 = positions.length; j < ref1; index = j += 1) {
-            if (e.pageY > positions[index - 1] && e.pageY <= positions[index]) {
+          for (var i = 0; i < positions.length; i++) {
+            if (e.pageY > positions[i] && e.pageY <= positions[i + 1]) {
               $(element).find('.empty').remove();
-              $empty = $("<div class='fb-form-object-editable empty'></div>");
-              if (index - 1 < $formObjects.length) {
-                $empty.insertBefore($($formObjects[index - 1]));
+              let $empty = $("<div class='fb-form-object-editable empty'></div>");
+              if (i < $formObjects.length) {
+                $empty.insertBefore($($formObjects[i]));
               } else {
-                $empty.insertAfter($($formObjects[index - 2]));
+                $empty.insertAfter($($formObjects[i - 1]));
               }
               break;
             }
           }
         },
-        out: function() {
+        out: () => {
           if (beginMove) {
             $("div.fb-form-object-editable").popover('hide');
             beginMove = false;
           }
           $(element).find('.empty').remove();
         },
-        up: function(e, isHover, draggable) {
-          var formObject, newIndex, oldIndex;
+        up: (e, isHover, draggable) => {
           beginMove = true;
+
           if (!$drag.isMouseMoved()) {
             $(element).find('.empty').remove();
-            return;
           }
+
           if (!isHover && draggable.mode === 'drag') {
-            formObject = draggable.object.formObject;
-            if (formObject.editable) {
+            let formObject = draggable.object.formObject;
+            if (formObject.editable)
               $builder.removeFormObject(attrs.fbBuilder, formObject.index);
-            }
           } else if (isHover) {
             if (draggable.mode === 'mirror') {
               $builder.insertFormObject(scope.formName, $(element).find('.empty').index('.fb-form-object-editable'), {
@@ -96,11 +95,10 @@ export function FbBuilder ($injector) {
               });
             }
             if (draggable.mode === 'drag') {
-              oldIndex = draggable.object.formObject.index;
-              newIndex = $(element).find('.empty').index('.fb-form-object-editable');
-              if (oldIndex < newIndex) {
+              let oldIndex = draggable.object.formObject.index;
+              let newIndex = $(element).find('.empty').index('.fb-form-object-editable');
+              if (oldIndex < newIndex)
                 newIndex--;
-              }
               $builder.updateFormObjectIndex(scope.formName, oldIndex, newIndex);
             }
           }
@@ -114,47 +112,55 @@ export function FbBuilder ($injector) {
 }
 
 export function FbFormObjectEditable($injector) {
-  var $builder, $compile, $drag, $validator;
-  $builder = $injector.get('$builder');
-  $drag = $injector.get('$drag');
-  $compile = $injector.get('$compile');
-  $validator = $injector.get('$validator');
-  return {
+  // ----------------------------------------
+  // providers
+  // ----------------------------------------
+  var $builder = $injector.get('$builder');
+  var $drag = $injector.get('$drag');
+  var $compile = $injector.get('$compile');
+  var $validator = $injector.get('$validator');
+
+  // ----------------------------------------
+  // directive
+  // ----------------------------------------
+  let directive = {
     restrict: 'A',
     controller: 'fbFormObjectEditableController',
     scope: {
       formObject: '=fbFormObjectEditable'
     },
-    link: function(scope, element) {
-      var popover;
+    link: (scope, element) => {
       scope.inputArray = [];
       scope.$component = $builder.components[scope.formObject.component];
       // debugger
       scope.setupScope(scope.formObject);
-      scope.$watch('$component.template', function(template) {
-        var view;
-        if (!template) {
+      scope.$watch('$component.template', (template) => {
+        let view;
+        if (!template)
           return;
-        }
+
         view = $compile(template)(scope);
-        return $(element).html(view);
+        $(element).html(view);
       });
-      $(element).on('click', function() {
+
+      $(element).on('click', ()=> {
         return false;
       });
+
       $drag.draggable($(element), {
         object: {
           formObject: scope.formObject
         }
       });
-      if (!scope.formObject.editable) {
+
+      if (!scope.formObject.editable)
         return;
-      }
-      popover = {};
-      scope.$watch('$component.popoverTemplate', function(template) {
-        if (!template) {
+
+      let popover = {};
+      scope.$watch('$component.popoverTemplate', (template) => {
+        if (!template)
           return;
-        }
+
         $(element).removeClass(popover.id);
         popover = {
           id: "fb-" + (Math.random().toString().substr(2)),
@@ -174,39 +180,27 @@ export function FbFormObjectEditable($injector) {
         });
       });
       scope.popover = {
-        save: function($event) {
-
-          /*
-          The save event of the popover.
-          */
+        save: ($event) => {
+          // The save event of the popover.
           $event.preventDefault();
-          $validator.validate(scope).success(function() {
+          $validator.validate(scope).success(() => {
             popover.isClickedSave = true;
             $(element).popover('hide');
           });
         },
-        remove: function($event) {
-
-          /*
-          The delete event of the popover.
-          */
+        remove: ($event) => {
+          // The delete event of the popover.
           $event.preventDefault();
           $builder.removeFormObject(scope.$parent.formName, scope.$parent.$index);
           $(element).popover('hide');
         },
-        shown: function() {
-
-          /*
-          The shown event of the popover.
-          */
+        shown: () => {
+          // The shown event of the popover.
           scope.data.backup();
           popover.isClickedSave = false;
         },
-        cancel: function($event) {
-
-          /*
-          The cancel event of the popover.
-          */
+        cancel: ($event) => {
+          // The cancel event of the popover.
           scope.data.rollback();
           if ($event) {
             $event.preventDefault();
@@ -214,7 +208,9 @@ export function FbFormObjectEditable($injector) {
           }
         }
       };
-      $(element).on('show.bs.popover', function() {
+
+      // popover.show
+      $(element).on('show.bs.popover', () => {
         var $popover, elementOrigin, popoverTop;
         if ($drag.isMouseMoved()) {
           return false;
@@ -229,27 +225,33 @@ export function FbFormObjectEditable($injector) {
             top: popoverTop
           });
           $popover.show();
-          setTimeout(function() {
+          setTimeout(() => {
             $popover.addClass('in');
             $(element).triggerHandler('shown.bs.popover');
           }, 0);
           return false;
         }
       });
-      $(element).on('shown.bs.popover', function() {
+
+      // popover.shown
+      $(element).on('shown.bs.popover', () => {
         $(".popover ." + popover.id + " input:first").select();
-        scope.$apply(function() {
+        scope.$apply(() => {
           scope.popover.shown();
         });
       });
-      $(element).on('hide.bs.popover', function() {
+
+      // popover.hide
+      $(element).on('hide.bs.popover', () => {
+        // do not remove the DOM
         var $popover;
         $popover = $("form." + popover.id).closest('.popover');
         if (!popover.isClickedSave) {
+          // eval the cancel event
           if (scope.$$phase || scope.$root.$$phase) {
             scope.popover.cancel();
           } else {
-            scope.$apply(function() {
+            scope.$apply(() => {
               scope.popover.cancel();
             });
           }
@@ -262,27 +264,49 @@ export function FbFormObjectEditable($injector) {
       });
     }
   };
+
+  return directive;
 }
 
 
 export function FbComponents() {
-  return {
+  // ----------------------------------------
+  // directive
+  // ----------------------------------------
+
+  let directive = {
     restrict: 'A',
-    template: "<ul ng-if=\"groups.length > 1\" class=\"nav nav-tabs nav-justified\">\n    <li ng-repeat=\"group in groups\" ng-class=\"{active:activeGroup==group}\">\n        <a href='#' ng-click=\"selectGroup($event, group)\">{{group}}</a>\n    </li>\n</ul>\n<div class='form-horizontal'>\n    <div class='fb-component' ng-repeat=\"component in components\"\n        fb-component=\"component\"></div>\n</div>",
+    template: '<ul ng-if="groups.length > 1" class="nav nav-tabs nav-justified">\
+                <li ng-repeat="group in groups" ng-class="{active:activeGroup==group}">\
+                  <a href="#" ng-click="selectGroup($event, group)">{{group}}</a>\
+                </li>\
+              </ul>\
+              <div class="form-horizontal">\
+                <div class="fb-component" ng-repeat="component in components" fb-component="component"></div>\
+              </div>',
     controller: 'fbComponentsController'
   };
+
+  return directive;
 }
 
 export function FbComponent($injector) {
+  // ----------------------------------------
+  // providers
+  // ----------------------------------------
   var $drag = $injector.get('$drag');
   var $compile = $injector.get('$compile');
-  return {
+
+  // ----------------------------------------
+  // directive
+  // ----------------------------------------
+  let directive = {
     restrict: 'A',
     scope: {
       component: '=fbComponent'
     },
     controller: 'fbComponentController',
-    link: function(scope, element) {
+    link: (scope, element) => {
       scope.copyObjectToScope(scope.component);
       $drag.draggable($(element), {
         mode: 'mirror',
@@ -291,20 +315,29 @@ export function FbComponent($injector) {
           componentName: scope.component.name
         }
       });
-      scope.$watch('component.template', function(template) {
-        var view;
-        if (!template) {
+      scope.$watch('component.template', (template) => {
+        if (!template)
           return;
-        }
-        view = $compile(template)(scope);
+
+        let view = $compile(template)(scope);
         $(element).html(view);
       });
     }
   };
+
+  return directive;
 }
 
 export function FbForm($injector) {
-  return {
+  // ----------------------------------------
+  // providers
+  // ----------------------------------------
+  var $builder = $injector.get('$builder');
+
+  // ----------------------------------------
+  // directive
+  // ----------------------------------------
+  let directive = {
     restrict: 'A',
     require: 'ngModel',
     scope: {
@@ -312,80 +345,90 @@ export function FbForm($injector) {
       input: '=ngModel',
       "default": '=fbDefault'
     },
-    template: "<div class='fb-form-object' ng-repeat=\"object in form\" fb-form-object=\"object\"></div>",
+    template: '<div class="fb-form-object" ng-repeat="object in form" fb-form-object="object"></div>',
     controller: 'fbFormController',
-    link: function(scope, element, attrs) {
-      var $builder, base, name;
+    link: (scope, element, attrs) => {
       $builder = $injector.get('$builder');
-      if ((base = $builder.forms)[name = scope.formName] == null) {
-        base[name] = [];
-      }
-      scope.form = $builder.forms[scope.formName];
+      $builder.forms[scope.formName] = $builder.forms[scope.formName] || []
+      scope.form = $builder.forms[scope.formName]
     }
   };
+
+  return directive;
 }
 
 export function FbFormObject($injector) {
+  // ----------------------------------------
+  // providers
+  // ----------------------------------------
   var $builder = $injector.get('$builder');
   var $compile = $injector.get('$compile');
   var $parse = $injector.get('$parse');
-  return {
+
+  // ----------------------------------------
+  // directive
+  // ----------------------------------------
+  let directive = {
     restrict: 'A',
     controller: 'fbFormObjectController',
-    link: function(scope, element, attrs) {
+    link: (scope, element, attrs) => {
       scope.formObject = $parse(attrs.fbFormObject)(scope);
       scope.$component = $builder.components[scope.formObject.component];
-      scope.$on($builder.broadcastChannel.updateInput, function() {
+      // listen (formObject updated)
+      scope.$on($builder.broadcastChannel.updateInput, () => {
         scope.updateInput(scope.inputText);
       });
       if (scope.$component.arrayToText) {
         scope.inputArray = [];
-        scope.$watch('inputArray', function(newValue, oldValue) {
-          var checked, index, ref;
-          if (newValue === oldValue) {
+        scope.$watch('inputArray', (newValue, oldValue) => {
+
+          if (newValue === oldValue)
             return;
-          }
-          checked = [];
-          for (index in scope.inputArray) {
-            if (scope.inputArray[index]) {
-              checked.push((ref = scope.options[index]) != null ? ref : scope.inputArray[index]);
+
+          let checked = [];
+          let ref;
+          for (var i in scope.inputArray) {
+            if (scope.inputArray[i]) {
+              checked.push((ref = scope.options[i]) != null ? ref : scope.inputArray[i]);
             }
           }
           scope.inputText = checked.join(', ');
         }, true);
       }
-      scope.$watch('inputText', function() {
+      scope.$watch('inputText', () => {
         scope.updateInput(scope.inputText);
       });
-      scope.$watch(attrs.fbFormObject, function() {
+      // watch (management updated form objects)
+      scope.$watch(attrs.fbFormObject, () => {
         scope.copyObjectToScope(scope.formObject);
       }, true);
-      scope.$watch('$component.template', function(template) {
-        var $input, $template, view;
+      scope.$watch('$component.template', (template) => {
+
         if (!template) {
           return;
         }
-        $template = $(template);
-        $input = $template.find("[ng-model='inputText']");
-        $input.attr({
-          validator: '{{validation}}'
-        });
-        view = $compile($template)(scope);
+
+        let $template = $(template);
+        let view = $compile($template)(scope);
+        let $input = $template.find("[ng-model='inputText']");
+        $input.attr({ validator: '{{validation}}'});
         return $(element).html(view);
       });
-      if (!scope.$component.arrayToText && scope.formObject.options.length > 0) {
+
+      if (!scope.$component.arrayToText && scope.formObject.options.length > 0)
         scope.inputText = scope.formObject.options[0];
-      }
-      return scope.$watch("default['" + scope.formObject.id + "']", function(value) {
-        if (!value) {
+
+      return scope.$watch("default['" + scope.formObject.id + "']", (value) => {
+        if (!value)
           return;
-        }
-        if (scope.$component.arrayToText) {
+
+        if (scope.$component.arrayToText)
           scope.inputArray = value;
-        } else {
+        else
           scope.inputText = value;
-        }
       });
     }
   };
+
+  return directive;
 }
