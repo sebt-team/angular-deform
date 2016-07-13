@@ -130,8 +130,7 @@ export function DragProvider() {
         that.autoScroll.down = false;
       }
   };
-  this.dragMirrorMode = ($element, defer, object) => {
-      if (defer == null) defer = true;
+  this.dragMirrorMode = ($element, defer = true, object) => {
       let result = {
         id: that.getNewId(),
         mode: 'mirror',
@@ -187,8 +186,7 @@ export function DragProvider() {
       return result;
     };
 
-  this.dragDragMode = ($element, defer, object) => {
-      if (defer == null) defer = true;
+  this.dragDragMode = ($element, defer = true, object) => {
       let result = {
         id: that.getNewId(),
         mode: 'drag',
@@ -265,44 +263,51 @@ export function DragProvider() {
   };
 
   this.draggable = ($element, options = {}) => {
+      var draggable, element, i, j, len, len1, result;
       // Make the element could be drag.
       // @param element: The jQuery element.
       // @param options: Options
-      //    mode: 'drag' [default], 'mirror'
-      //    defer: yes/no. defer dragging
-      //    object: custom information
+      //     mode: 'drag' [default], 'mirror'
+      //     defer: yes/no. defer dragging
+      //     object: custom information
 
-      let result = [];
+      result = [];
       if (options.mode == 'mirror') {
-        angular.forEach($element, (element) => {
-          let draggable = that.dragMirrorMode($(element), options.defer, options.object);
+        for (i = 0, len = $element.length; i < len; i++) {
+          element = $element[i];
+          draggable = that.dragMirrorMode($(element), options.defer, options.object);
           result.push(draggable.id);
           that.data.draggables[draggable.id] = draggable;
-        })
+        }
       } else {
-        angular.forEach($element, (element) => {
-          let draggable = that.dragDragMode($(element), options.defer, options.object);
+        for (j = 0, len1 = $element.length; j < len1; j++) {
+          element = $element[j];
+          draggable = that.dragDragMode($(element), options.defer, options.object);
           result.push(draggable.id);
           that.data.draggables[draggable.id] = draggable;
-        })
+        }
       }
       return result;
     };
 
   this.droppable = ($element, options = {}) => {
-      // Make the element coulde be drop.
-      // @param $element: The jQuery element.
-      // @param options: The droppable options.
-      //    move: The custom mouse move callback. (e, draggable)->
-      //    up: The custom mouse up callback. (e, isHover, draggable)->
-      //    out: The custom mouse out callback. (e, draggable)->
+      var droppable, element, i, len, result;
 
-      let result = [];
-      angular.forEach($element, (element) => {
-        let draggable = that.dragDragMode($(element), options.defer, options.object);
-        result.push(draggable.id);
-        that.data.draggables[draggable.id] = draggable;
-      })
+      /*
+      Make the element coulde be drop.
+      @param $element: The jQuery element.
+      @param options: The droppable options.
+          move: The custom mouse move callback. (e, draggable)->
+          up: The custom mouse up callback. (e, isHover, draggable)->
+          out: The custom mouse out callback. (e, draggable)->
+       */
+      result = [];
+      for (i = 0, len = $element.length; i < len; i++) {
+        element = $element[i];
+        droppable = that.dropMode($(element), options);
+        result.push(droppable);
+        that.data.droppables[droppable.id] = droppable;
+      }
       return result;
     };
 
