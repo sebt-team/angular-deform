@@ -32,16 +32,11 @@ export function FbFormObjectEditableController($scope, $injector) {
       formObject.validation   = $scope.validation;
     }, true);
 
-    $scope.$watch('optionsText', function(text) {
-      $scope.options = () => {
-        text.split('\n').map(opt => {
-          if(opt.length > 0) return opt;
-        });
-      }
-      $scope.inputText = $scope.options[0];
+    $scope.$watch('optionsText', (text) => {
+      $scope.options    = text.split('\n').map(opt => { if(opt.length > 0) return opt; });
+      $scope.inputText  = $scope.options[0];
     });
-    let component = $builder.components[formObject.component];
-    $scope.validationOptions = component.validationOptions;
+    $scope.validationOptions = $builder.components[formObject.component].validationOptions;
   };
   $scope.data = {
     model: null,
