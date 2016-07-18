@@ -12,6 +12,8 @@ var copyObjectToScope = (object, scope) => {
 
 export function FbFormObjectEditableController($scope, $injector) {
   var $builder = $injector.get('$builder');
+  var $timeout = $injector.get('$timeout');
+
   $scope.setupScope = (formObject) => {
 
     // 1. Copy origin formObject (ng-repeat="object in formObjects") to scope.
@@ -24,6 +26,7 @@ export function FbFormObjectEditableController($scope, $injector) {
     $scope.optionsText = formObject.options.join('\n');
 
     $scope.$watch('[label, description, placeholder, required, options, validation]', () => {
+      console.log('ENTER 2');
       formObject.label        = $scope.label;
       formObject.description  = $scope.description;
       formObject.placeholder  = $scope.placeholder;
@@ -65,6 +68,12 @@ export function FbFormObjectEditableController($scope, $injector) {
       $scope.validation = this.model.validation;
     }
   };
+
+  $scope.save = () => {
+    $timeout(() => {
+      $scope.$broadcast($builder.broadcastChannel.saveInput);
+    });
+  }
 }
 
 export function FbComponentsController($scope, $injector) {

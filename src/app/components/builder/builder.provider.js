@@ -7,8 +7,12 @@ export function BuilderProvider() {
   this.config = { popoverPlacement: 'right' };
   this.components = {};
   this.groups = [];
-  this.broadcastChannel = { updateInput: '$updateInput' };
+  this.broadcastChannel = {
+    updateInput: '$updateInput',
+    saveInput: '$saveInput'
+  };
   this.forms = { "default": [] };
+  this.currentObject = null;
   this.convertComponent = (name, component) => {
     let ref;
     let result = {
@@ -174,6 +178,9 @@ export function BuilderProvider() {
     return this.forms[name][index];
   };
 
+  this.selectFormObject = (name) => {
+  }
+
   this.removeFormObject = (name, index) => {
     /*
     Remove the form object by the index.
@@ -214,9 +221,11 @@ export function BuilderProvider() {
         components: this.components,
         groups: this.groups,
         forms: this.forms,
+        selectedFormObject: undefined,
         broadcastChannel: this.broadcastChannel,
         registerComponent: this.registerComponent,
         addFormObject: this.addFormObject,
+        selectFormObject: this.selectFormObject,
         insertFormObject: this.insertFormObject,
         removeFormObject: this.removeFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex
