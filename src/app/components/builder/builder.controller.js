@@ -77,11 +77,11 @@ export function FbComponentsController($scope, $injector) {
     $scope.activeGroup = group;
     $scope.components = [];
 
-    if($event)
+    if(typeof $event !== "undefined" && $event !== null)
       $event.preventDefault();
 
     angular.forEach($builder.components, (component) => {
-      if(component.group == group) $scope.components.push(component)
+      if(component.group === group) $scope.components.push(component)
     });
 
   }
