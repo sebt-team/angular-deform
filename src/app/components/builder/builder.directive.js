@@ -85,6 +85,7 @@ export function FbBuilder ($injector) {
 
           if (!$drag.isMouseMoved()) {
             $(element).find('.empty').remove();
+            return;
           }
 
           if (!isHover && draggable.mode === 'drag') {
@@ -149,7 +150,9 @@ export function FbFormObjectEditable($injector) {
       });
 
       element.bind('click', function(){
-        ctrl.selectObjectEditable(scope, scope.formObject);
+        scope.$apply(function () {
+          ctrl.selectObjectEditable(scope, scope.formObject);
+        });
       });
 
       $drag.draggable($(element), {
