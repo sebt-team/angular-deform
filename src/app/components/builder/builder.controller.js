@@ -1,6 +1,5 @@
+// Copy object (ng-repeat="object in objects") to scope without `hashKey`.
 var copyObjectToScope = (object, scope) => {
-  // Copy object (ng-repeat="object in objects") to scope without `hashKey`.
-
   var key, value;
   for (key in object) {
     value = object[key];
@@ -16,7 +15,10 @@ export function FbBuilderController($scope, $injector) {
   var selectedObjectEditableScope = undefined;
 
   this.selectObjectEditable = (childScope, formObject) => {
+    // 1. Configure current scope from child directive
+    // 2. Set current formobject to share between directives
     selectedObjectEditableScope = childScope;
+    // replace to setter method
     $builder.selectedFormObject = angular.copy(formObject);
   }
 
@@ -35,7 +37,6 @@ export function FbFormObjectEditableController($scope, $injector) {
     // 3. Watch scope.label, .description, .placeholder, .required, .options then copy to origin formObject.
     // 4. Watch scope.optionsText then convert to scope.options.
     // 5. setup validationOptions
-
     copyObjectToScope(formObject, $scope);
     $scope.optionsText = formObject.options.join('\n');
 

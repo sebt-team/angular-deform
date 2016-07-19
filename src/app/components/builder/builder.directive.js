@@ -295,7 +295,7 @@ export function FbObjectEditable($injector) {
       scope.builder = $builder;
       scope.$watch('builder.selectedFormObject', (currentFormObject) => {
         if(currentFormObject) {
-          scope.setupScope($builder.selectedFormObject);
+          scope.setupScope(currentFormObject);
           // scope.data.backup();
           let component = $builder.components[currentFormObject.component];
           let view = $compile(component.popoverTemplate)(scope);
