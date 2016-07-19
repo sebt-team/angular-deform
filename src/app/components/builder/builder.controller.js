@@ -17,11 +17,11 @@ export function FbBuilderController($scope, $injector) {
 
   this.selectObjectEditable = (childScope, formObject) => {
     selectedObjectEditableScope = childScope;
-    $builder.selectedFormObject = formObject;
+    $builder.selectedFormObject = angular.copy(formObject);
   }
 
-  $scope.updateChildAttributes = () => {
-    selectedObjectEditableScope.label = $builder.selectedFormObject.label;
+  $scope.updateChildAttributes = (currentFormObject) => {
+    copyObjectToScope(currentFormObject, selectedObjectEditableScope);
   }
 }
 
@@ -30,7 +30,6 @@ export function FbFormObjectEditableController($scope, $injector) {
   var $timeout = $injector.get('$timeout');
 
   $scope.setupScope = (formObject) => {
-
     // 1. Copy origin formObject (ng-repeat="object in formObjects") to scope.
     // 2. Setup optionsText with formObject.options.
     // 3. Watch scope.label, .description, .placeholder, .required, .options then copy to origin formObject.

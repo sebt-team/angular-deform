@@ -27,7 +27,7 @@ export function FbBuilder ($injector) {
 
       scope.$watch('builder.selectedFormObject', (currentFormObject) => {
         if(currentFormObject)
-          scope.updateChildAttributes();
+          scope.updateChildAttributes(currentFormObject);
       }, true);
 
       $(element).addClass('fb-builder');
@@ -296,7 +296,7 @@ export function FbObjectEditable($injector) {
       scope.$watch('builder.selectedFormObject', (currentFormObject) => {
         if(currentFormObject) {
           scope.setupScope($builder.selectedFormObject);
-          scope.data.backup();
+          // scope.data.backup();
           let component = $builder.components[currentFormObject.component];
           let view = $compile(component.popoverTemplate)(scope);
           $(element).html(view);
