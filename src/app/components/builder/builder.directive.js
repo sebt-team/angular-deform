@@ -13,17 +13,25 @@ export function FbBuilder ($injector) {
     scope: {
       fbBuilder: '='
     },
+    controller: 'fbBuilderController',
     templateUrl: 'app/components/builder/templates/df-builder.directive.html',
     link: (scope, element, attrs) => {
       // ----------------------------------------
       // valuables
       // ----------------------------------------
-      scope.formName = attrs.fbBuilder;
-      scope.formObjects = $builder.forms[scope.formName];
-
       var beginMove = true;
 
+      scope.formName = attrs.fbBuilder;
+      scope.formObjects = $builder.forms[scope.formName];
+      scope.builder = $builder;
+
+      scope.$watch('builder.selectedFormObject', (currentFormObject) => {
+        if(currentFormObject)
+          scope.updateChildAttributes();
+      }, true);
+
       $(element).addClass('fb-builder');
+
       $drag.droppable($(element), {
         move: (e) => {
 
@@ -121,16 +129,15 @@ export function FbFormObjectEditable($injector) {
   let directive = {
     restrict: 'A',
     controller: 'fbFormObjectEditableController',
+    require:'^fbBuilder',
     scope: {
       formObject: '=fbFormObjectEditable'
     },
-    link: (scope, element) => {
+    link: (scope, element, attrs, ctrl) => {
       scope.inputArray = [];
       scope.builder = $builder;
       scope.$component = $builder.components[scope.formObject.component];
       scope.setupScope(scope.formObject);
-
-      var unbindWatch;
 
       scope.$watch('$component.template', (template) => {
         let view;
@@ -142,18 +149,7 @@ export function FbFormObjectEditable($injector) {
       });
 
       element.bind('click', function(){
-        $builder.selectedFormObject = scope.formObject;
-
-        unbindWatch = scope.$watch('builder.selectedFormObject', (currentFormObject) => {
-          if(currentFormObject)
-            scope.setupScope(currentFormObject);
-        }, true);
-      });
-
-      scope.$on($builder.broadcastChannel.saveInput, () => {
-        console.log(unbindWatch)
-        if(unbindWatch)
-          unbindWatch();
+        ctrl.selectObjectEditable(scope, scope.formObject);
       });
 
       $drag.draggable($(element), {

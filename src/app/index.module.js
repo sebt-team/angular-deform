@@ -36,6 +36,7 @@ angular
   import { BuilderProvider }                from './components/builder/builder.provider';
   import { DragProvider }                   from './components/builder/builder.drag';
   import { FbFormObjectEditableController } from './components/builder/builder.controller';
+  import { FbBuilderController }            from './components/builder/builder.controller';
   import { FbComponentsController }         from './components/builder/builder.controller';
   import { FbComponentController }          from './components/builder/builder.controller';
   import { FbFormController }               from './components/builder/builder.controller';
@@ -66,6 +67,7 @@ angular
   // CONTROLLERS
 angular
   .module('builderController', ['builderProvider'])
+  .controller('fbBuilderController', ['$scope', '$injector', FbBuilderController])
   .controller('fbFormObjectEditableController', ['$scope', '$injector', FbFormObjectEditableController])
   .controller('fbComponentsController', ['$scope', '$injector', FbComponentsController])
   .controller('fbFormObjectController', ['$scope', FbFormObjectController])

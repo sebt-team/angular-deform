@@ -10,6 +10,21 @@ var copyObjectToScope = (object, scope) => {
   }
 };
 
+
+export function FbBuilderController($scope, $injector) {
+  var $builder = $injector.get('$builder');
+  var selectedObjectEditableScope = undefined;
+
+  this.selectObjectEditable = (childScope, formObject) => {
+    selectedObjectEditableScope = childScope;
+    $builder.selectedFormObject = formObject;
+  }
+
+  $scope.updateChildAttributes = () => {
+    selectedObjectEditableScope.label = $builder.selectedFormObject.label;
+  }
+}
+
 export function FbFormObjectEditableController($scope, $injector) {
   var $builder = $injector.get('$builder');
   var $timeout = $injector.get('$timeout');
@@ -26,7 +41,6 @@ export function FbFormObjectEditableController($scope, $injector) {
     $scope.optionsText = formObject.options.join('\n');
 
     $scope.$watch('[label, description, placeholder, required, options, validation]', () => {
-      console.log('ENTER 2');
       formObject.label        = $scope.label;
       formObject.description  = $scope.description;
       formObject.placeholder  = $scope.placeholder;
