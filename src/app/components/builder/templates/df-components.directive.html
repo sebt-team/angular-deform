@@ -7,12 +7,12 @@
           <div class="panel sidebar_section" ng-repeat="group in groups track by $index">
             <div class="panel-heading" role="tab" id="heading{{$index}}">
               <h4 class="panel-title">
-                <a role="button" data-toggle="collapse" data-target="#collapse{{$index}}">
+                <a role="button" data-toggle="collapse" data-target="#collapse{{$index}}" ng-click="selectGroup($event, group)">
                   {{group}}
                 </a>
               </h4>
             </div>
-            <div id="collapse{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}" ng-class="{'in':$index == 0}">
+            <div id="collapse{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}" ng-class="{in:activeGroup==group}">
               <div class="panel-body">
                 <div class="row">
                   <ul>
