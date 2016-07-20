@@ -26,6 +26,7 @@ export function BuilderProvider() {
       template: component.template,
       templateUrl: component.templateUrl,
       showcaseTemplate: component.showcaseTemplate,
+      icon: component.icon,
       popoverTemplate: component.popoverTemplate,
       popoverTemplateUrl: component.popoverTemplateUrl
     };
