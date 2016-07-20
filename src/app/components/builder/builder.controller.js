@@ -1,6 +1,5 @@
+// Copy object (ng-repeat="object in objects") to scope without `hashKey`.
 var copyObjectToScope = (object, scope) => {
-  // Copy object (ng-repeat="object in objects") to scope without `hashKey`.
-
   var key, value;
   for (key in object) {
     value = object[key];
@@ -10,16 +9,34 @@ var copyObjectToScope = (object, scope) => {
   }
 };
 
+
+export function FbBuilderController($scope, $injector) {
+  var $builder = $injector.get('$builder');
+  var selectedObjectEditableScope = undefined;
+
+  this.selectObjectEditable = (childScope, formObject) => {
+    // 1. Configure current scope from child directive
+    // 2. Set current formobject to share between directives
+    selectedObjectEditableScope = childScope;
+    // replace to setter method
+    $builder.selectedFormObject = angular.copy(formObject);
+  }
+
+  $scope.updateChildAttributes = (currentFormObject) => {
+    copyObjectToScope(currentFormObject, selectedObjectEditableScope);
+  }
+}
+
 export function FbFormObjectEditableController($scope, $injector) {
   var $builder = $injector.get('$builder');
-  $scope.setupScope = (formObject) => {
+  var $timeout = $injector.get('$timeout');
 
+  $scope.setupScope = (formObject) => {
     // 1. Copy origin formObject (ng-repeat="object in formObjects") to scope.
     // 2. Setup optionsText with formObject.options.
     // 3. Watch scope.label, .description, .placeholder, .required, .options then copy to origin formObject.
     // 4. Watch scope.optionsText then convert to scope.options.
     // 5. setup validationOptions
-
     copyObjectToScope(formObject, $scope);
     $scope.optionsText = formObject.options.join('\n');
 
@@ -42,7 +59,6 @@ export function FbFormObjectEditableController($scope, $injector) {
     model: null,
     backup: () => {
       // Backup input value.
-
       this.model = {
         label: $scope.label,
         description: $scope.description,
@@ -54,7 +70,6 @@ export function FbFormObjectEditableController($scope, $injector) {
     },
     rollback: () => {
       // Rollback input value.
-
       if (!this.model) return;
 
       $scope.label = this.model.label;
@@ -65,6 +80,20 @@ export function FbFormObjectEditableController($scope, $injector) {
       $scope.validation = this.model.validation;
     }
   };
+
+  $scope.duplicate = () => {
+    let formObject = $builder.selectedFormObject;
+    let formName = $scope.formName;
+    $builder.forms[formName].splice(formObject.index, 0, angular.copy(formObject));
+    $timeout(() => {
+      $scope.$broadcast($builder.broadcastChannel.saveInput);
+    });
+  }
+
+  $scope.remove = () => {
+    let formObject = $builder.selectedFormObject;
+    $builder.removeFormObject($scope.formName, formObject.index);
+  }
 }
 
 export function FbComponentsController($scope, $injector) {
