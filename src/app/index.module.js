@@ -67,23 +67,23 @@ angular
   // CONTROLLERS
 angular
   .module('builderController', ['builderProvider'])
-  .controller('fbBuilderController', ['$scope', '$injector', FbBuilderController])
-  .controller('fbFormObjectEditableController', ['$scope', '$injector', FbFormObjectEditableController])
-  .controller('fbComponentsController', ['$scope', '$injector', FbComponentsController])
-  .controller('fbFormObjectController', ['$scope', FbFormObjectController])
-  .controller('fbComponentController', ['$scope', FbComponentController])
-  .controller('fbFormController', ['$scope', '$injector', FbFormController]);
+  .controller('fbBuilderController', FbBuilderController)
+  .controller('fbFormObjectEditableController', FbFormObjectEditableController)
+  .controller('fbComponentsController', FbComponentsController)
+  .controller('fbFormObjectController', FbFormObjectController)
+  .controller('fbComponentController', FbComponentController)
+  .controller('fbFormController', FbFormController);
 
   // DIRECTIVES
 angular
   .module('builderDirective', ['builderProvider', 'builderController', 'builderDrag', 'validator'])
-  .directive('fbBuilder', ['$injector', FbBuilder])
-  .directive('fbFormObjectEditable', ['$injector', FbFormObjectEditable])
-  .directive('fbObjectEditable', ['$injector', FbObjectEditable])
+  .directive('fbBuilder', FbBuilder)
+  .directive('fbFormObjectEditable', FbFormObjectEditable)
+  .directive('fbObjectEditable', FbObjectEditable)
   .directive('fbComponent', FbComponent)
   .directive('fbComponents', FbComponents)
-  .directive('fbForm', ['$injector', FbForm])
-  .directive('fbFormObject', ['$injector', FbFormObject]);
+  .directive('fbForm', FbForm)
+  .directive('fbFormObject', FbFormObject);
 
 // DRAG
 angular
