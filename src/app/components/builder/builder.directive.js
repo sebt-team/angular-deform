@@ -34,7 +34,6 @@ export function FbBuilder ($injector) {
 
       $drag.droppable($(element), {
         move: (e) => {
-
           if(beginMove) {
             $("div.fb-form-object-editable").popover('hide');
             beginMove = false;
@@ -123,6 +122,8 @@ export function FbFormObjectEditable($injector) {
   var $drag = $injector.get('$drag');
   var $compile = $injector.get('$compile');
   var $validator = $injector.get('$validator');
+  var $rootScope = $injector.get('$rootScope');
+  var $timeout = $injector.get('$timeout');
 
   // ----------------------------------------
   // directive
@@ -152,6 +153,9 @@ export function FbFormObjectEditable($injector) {
       element.bind('click', function(e){
         e.preventDefault();
         scope.$apply(function () {
+          $timeout(() => {
+            scope.$emit($builder.broadcastChannel.addNewInput);
+          });
           ctrl.selectObjectEditable(scope, scope.formObject, element);
         });
       });
