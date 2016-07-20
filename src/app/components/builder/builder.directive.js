@@ -151,7 +151,7 @@ export function FbFormObjectEditable($injector) {
 
       element.bind('click', function(){
         scope.$apply(function () {
-          ctrl.selectObjectEditable(scope, scope.formObject);
+          ctrl.selectObjectEditable(scope, scope.formObject, element);
         });
       });
 

@@ -12,11 +12,17 @@ var copyObjectToScope = (object, scope) => {
 
 export function FbBuilderController($scope, $injector) {
   var $builder = $injector.get('$builder');
+  var selectedElement = undefined;
   var selectedObjectEditableScope = undefined;
 
-  this.selectObjectEditable = (childScope, formObject) => {
+  this.selectObjectEditable = (childScope, formObject, element) => {
     // 1. Configure current scope from child directive
     // 2. Set current formobject to share between directives
+    if(selectedElement)
+      selectedElement.removeClass('active');
+
+    selectedElement = element
+    $(selectedElement).addClass('active');
     selectedObjectEditableScope = childScope;
     // replace to setter method
     $builder.selectedFormObject = angular.copy(formObject);
