@@ -166,3 +166,6 @@ export function FbFormObjectController($scope) {
     $scope.$parent.input.splice($scope.$index, 1, input);
   };
 }
+export function DfDragpagesController($scope) {
+  // TODO: adds logic code
+}

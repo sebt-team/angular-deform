@@ -361,3 +361,21 @@ export function FbFormObject($injector) {
 
   return directive;
 }
+
+export function DfDragpages($injector) {
+  // ----------------------------------------
+  // providers
+  // ----------------------------------------
+  var $builder = $injector.get('$builder');
+
+  // ----------------------------------------
+  // directive
+  // ----------------------------------------
+  let directive = {
+    restrict: 'A',
+    templateUrl: 'app/components/builder/templates/df-dragpages.directive.html',
+    controller: 'dfDragpagesController'
+  }
+
+  return directive;
+}

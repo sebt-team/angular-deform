@@ -14,22 +14,32 @@
   }
 }
 
-.df-drag-container {
-  // DRAGZONE
-  div.dragzone-tab-container {
-    padding: 20px !important;
-    .dragzone-element {min-height: 125px;margin-top: 10px;background-color: #f7f7f7; padding-bottom: 15px; padding-right: 30px;}
-    .dragzone-element:hover {background-color: #e3e9f3;}
-    .dragzone-element>i.fa-ellipsis-v { font-size: 20px; color: #b5b2b2;position: absolute;right: 0; top: 50%;padding: 3px 14px;}
-    .dragzone-element>i.fa-ellipsis-v:hover { cursor: ns-resize; color: #dadada;}
-    .dragzone-element .dragzone {height: 125px;width: 100%;margin: auto; left: 0; right: 0; position: absolute;padding: 25px;border: 2px dashed rgba(73, 86, 109, 0.38);}
-    .dragzone-element .dragzone h4 {text-align: center;}
-    .dragzone-element .dragzone button {position: absolute;left: 0;right: 0;margin: auto !important;}
-    .dragzone-element .dragzone .add-button { list-style-type: none; display: inline-block; zoom: 1; -moz-box-sizing: border-box; box-sizing: border-box; width: 49%; max-width: 200px; line-height: 2em!important; padding: 4px; margin: 2px 0 0 0; font-size: 11px; text-decoration: none; text-align: center; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; border: 1px solid #49566d; cursor: pointer; background-image: linear-gradient(180deg, #a3b5d4, #7d90b3); color: #f3f3f3;}
-    .dragzone-element .radio label,
-    .dragzone-element .checkbox label {min-height: 20px;padding-left: 20px;margin-bottom: 0;font-weight: normal;cursor: pointer;font-size: 15px;}
+
+// DRAGZONE
+div.dragzone-tab-container {
+  padding: 20px !important;
+  .dragzone-element {min-height: 125px;margin-top: 10px;background-color: #f7f7f7; padding-bottom: 15px; padding-right: 30px;}
+  .dragzone-element:hover {background-color: #e3e9f3;}
+  .dragzone-element>i.fa-ellipsis-v { font-size: 20px; color: #b5b2b2;position: absolute;right: 0; top: 50%;padding: 3px 14px;}
+  .dragzone-element>i.fa-ellipsis-v:hover { cursor: ns-resize; color: #dadada;}
+  .dragzone-element {
+    .dragzone {height: 125px;width: 100%;margin: auto; left: 0; right: 0; position: absolute;padding: 25px;border: 2px dashed rgba(73, 86, 109, 0.38);}
+    .dragzone h4 {text-align: center;}
+    .dragzone button {position: absolute;left: 0;right: 0;margin: auto !important;}
+    .dragzone .add-button { list-style-type: none; display: inline-block; zoom: 1; -moz-box-sizing: border-box; box-sizing: border-box; width: 49%; max-width: 200px; line-height: 2em!important; padding: 4px; margin: 2px 0 0 0; font-size: 11px; text-decoration: none; text-align: center; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; border: 1px solid #49566d; cursor: pointer; background-image: linear-gradient(180deg, #a3b5d4, #7d90b3); color: #f3f3f3;}
+    .radio label,
+    .checkbox label {min-height: 20px;padding-left: 20px;margin-bottom: 0;font-weight: normal;cursor: pointer;font-size: 15px;}
   }
 }
+
+// TABS PANEL
+.tabbable-panel {border:1px solid #eee;}
+.tabbable-line.tabs-below .nav-tabs {border: 1px solid #ddd;border-top: 0;background-color: #fff;}
+.tabbable-line.tabs-below > .nav-tabs > li {border: 1px solid transparent;}
+.tabbable-line.tabs-below > .nav-tabs > li > a {border: 1px solid transparent; margin-top: 0;text-decoration: none;border-right-color: transparent;border-left-color: transparent; border-radius: 2px;}
+.tabbable-line.tabs-below > .nav-tabs > li:hover a {border: 1px solid rgba(72, 86, 109, 0.37);color: #1e2a33 !important;background: rgba(151, 169, 201, 0.53);}
+.tabbable-line.tabs-below > .nav-tabs > li.active a {color: #ffffff;background-image: linear-gradient(180deg, #a3b5d4, #7d90b3);border-color: #48566d;}
+.tabbable-line.tabs-below > .tab-content {background-color: #fff;border-bottom: 1px solid #eee;border-top: 1px solid #eee;padding-bottom: 15px;height: 600px;overflow-y: scroll;}
 
 
 // TABS INPUTS

@@ -41,6 +41,7 @@ angular
   import { FbComponentController }          from './components/builder/builder.controller';
   import { FbFormController }               from './components/builder/builder.controller';
   import { FbFormObjectController }         from './components/builder/builder.controller';
+  import { DfDragpagesController }          from './components/builder/builder.controller';
   import { FbBuilder }                      from './components/builder/builder.directive';
   import { FbFormObjectEditable }           from './components/builder/builder.directive';
   import { FbObjectEditable }               from './components/builder/builder.directive';
@@ -48,6 +49,7 @@ angular
   import { FbComponent }                    from './components/builder/builder.directive';
   import { FbForm }                         from './components/builder/builder.directive';
   import { FbFormObject }                   from './components/builder/builder.directive';
+  import { DfDragpages }                    from './components/builder/builder.directive';
   import { ComponentsBuilder }              from './components/builder/builder.components';
 
   // MAIN
@@ -72,7 +74,8 @@ angular
   .controller('fbComponentsController', FbComponentsController)
   .controller('fbFormObjectController', FbFormObjectController)
   .controller('fbComponentController', FbComponentController)
-  .controller('fbFormController', FbFormController);
+  .controller('fbFormController', FbFormController)
+  .controller('dfDragpagesController', DfDragpagesController);
 
   // DIRECTIVES
 angular
@@ -83,9 +86,10 @@ angular
   .directive('fbComponent', FbComponent)
   .directive('fbComponents', FbComponents)
   .directive('fbForm', FbForm)
-  .directive('fbFormObject', FbFormObject);
+  .directive('fbFormObject', FbFormObject)
+  .directive('dfDragpages', DfDragpages);
 
-// DRAG
+  // DRAG
 angular
   .module('builderDrag', [])
   .provider('$drag', DragProvider);
