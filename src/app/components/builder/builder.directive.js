@@ -149,7 +149,8 @@ export function FbFormObjectEditable($injector) {
         $(element).html(view);
       });
 
-      element.bind('click', function(){
+      element.bind('click', function(e){
+        e.preventDefault();
         scope.$apply(function () {
           ctrl.selectObjectEditable(scope, scope.formObject, element);
         });
@@ -304,7 +305,6 @@ export function FbFormObject($injector) {
       scope.$component = $builder.components[scope.formObject.component];
       // listen (formObject updated)
       scope.$on($builder.broadcastChannel.updateInput, () => {
-        console.log(scope.inputText);
         scope.updateInput(scope.inputText);
       });
       if (scope.$component.arrayToText) {
