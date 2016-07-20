@@ -25,6 +25,7 @@ export function BuilderProvider() {
       arrayToText: (ref = component.arrayToText) != null ? ref : false,
       template: component.template,
       templateUrl: component.templateUrl,
+      showcaseTemplate: component.showcaseTemplate,
       popoverTemplate: component.popoverTemplate,
       popoverTemplateUrl: component.popoverTemplateUrl
     };
@@ -43,6 +44,7 @@ export function BuilderProvider() {
     if (component == null) {
       throw "The component " + formObject.component + " was not registered.";
     }
+
     let result = {
       id: formObject.id,
       component: formObject.component,

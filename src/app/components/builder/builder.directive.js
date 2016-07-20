@@ -303,11 +303,11 @@ export function FbComponent($injector) {
           componentName: scope.component.name
         }
       });
-      scope.$watch('component.template', (template) => {
-        if (!template)
+      scope.$watch('component.showcaseTemplate', (showcaseTemplate) => {
+        if (!showcaseTemplate)
           return;
 
-        let view = $compile(template)(scope);
+        let view = $compile(showcaseTemplate)(scope);
         $(element).html(view);
       });
     }

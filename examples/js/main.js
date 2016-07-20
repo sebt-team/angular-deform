@@ -11,6 +11,7 @@ angular.module('deformExamples', ['angularDeforms'])
         description: 'From html template',
         placeholder: 'placeholder',
         required: false,
+        icon: 'fa fa-file-archive-o',
         validationOptions: [
           {label: 'none', rule: '/.*/'},
           {label: 'number', rule: '[number]'},
