@@ -81,7 +81,10 @@ export function FbFormObjectEditableController($scope, $injector) {
     }
   };
 
-  $scope.save = () => {
+  $scope.duplicate = () => {
+    let formObject = $builder.selectedFormObject;
+    let formName = $scope.formName;
+    $builder.forms[formName].splice(formObject.index, 0, angular.copy(formObject));
     $timeout(() => {
       $scope.$broadcast($builder.broadcastChannel.saveInput);
     });
