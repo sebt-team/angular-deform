@@ -10,8 +10,25 @@ var copyObjectToScope = (object, scope) => {
   }
 };
 
+
+export function FbBuilderController($scope, $injector) {
+  var $builder = $injector.get('$builder');
+  var selectedObjectEditableScope = undefined;
+
+  this.selectObjectEditable = (childScope, formObject) => {
+    selectedObjectEditableScope = childScope;
+    $builder.selectedFormObject = formObject;
+  }
+
+  $scope.updateChildAttributes = () => {
+    selectedObjectEditableScope.label = $builder.selectedFormObject.label;
+  }
+}
+
 export function FbFormObjectEditableController($scope, $injector) {
   var $builder = $injector.get('$builder');
+  var $timeout = $injector.get('$timeout');
+
   $scope.setupScope = (formObject) => {
 
     // 1. Copy origin formObject (ng-repeat="object in formObjects") to scope.
@@ -65,6 +82,12 @@ export function FbFormObjectEditableController($scope, $injector) {
       $scope.validation = this.model.validation;
     }
   };
+
+  $scope.save = () => {
+    $timeout(() => {
+      $scope.$broadcast($builder.broadcastChannel.saveInput);
+    });
+  }
 }
 
 export function FbComponentsController($scope, $injector) {
