@@ -3,7 +3,7 @@ var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i 
   // BuilderProvider
   // -----------------------
 export function BuilderProvider() {
-  var $injector = null, $http = null, $templateCache = null;
+  var $injector = null, $http = null, $log = null, $templateCache = null;
   this.config = { popoverPlacement: 'right' };
   this.components = {};
   this.groups = [];
@@ -35,10 +35,10 @@ export function BuilderProvider() {
       popoverTemplateUrl: component.popoverTemplateUrl
     };
     if (!result.template && !result.templateUrl)
-      console.error("The template is empty.");
+      $log.error("The template is empty.");
 
     if (!result.popoverTemplate && !result.popoverTemplateUrl)
-      console.error("The popoverTemplate is empty.");
+      $log.error("The popoverTemplate is empty.");
 
     return result;
   };
@@ -54,7 +54,6 @@ export function BuilderProvider() {
       id: formObject.id,
       component: formObject.component,
       editable: (ref = formObject.editable) != null ? ref : component.editable,
-      index: (ref = formObject.index) != null ? ref : 0,
       label: (ref = formObject.label) != null ? ref : component.label,
       description: (ref = formObject.description) != null ? ref : component.description,
       placeholder: (ref = formObject.placeholder) != null ? ref : component.placeholder,
@@ -77,6 +76,7 @@ export function BuilderProvider() {
     $injector = injector;
     $http = $injector.get('$http');
     $templateCache = $injector.get('$templateCache');
+    $log = $injector.get('$log');
   };
 
   this.loadTemplate = (component) => {
@@ -129,7 +129,7 @@ export function BuilderProvider() {
         this.groups.push(newComponent.group);
 
     } else {
-      console.info("The component " + name + " was registered.");
+      $log.info("The component " + name + " was registered.");
     }
   };
 
@@ -171,18 +171,15 @@ export function BuilderProvider() {
       base[name] = [];
 
     if (index > this.forms[name].length) {
-      let index = this.forms[name].length;
+      index = this.forms[name].length;
     } else if (index < 0) {
-      let index = 0;
+      index = 0;
     }
 
     this.forms[name].splice(index, 0, this.convertFormObject(name, formObject));
     this.reindexFormObject(name);
     return this.forms[name][index];
   };
-
-  this.selectFormObject = (name) => {
-  }
 
   this.removeFormObject = (name, index) => {
     /*
@@ -215,7 +212,7 @@ export function BuilderProvider() {
     '$injector', function($injector) {
       this.setupProviders($injector);
       let components = this.components;
-      for (name in components) {
+      for (let name in components) {
         let component = components[name];
         this.loadTemplate(component);
       }
@@ -228,7 +225,6 @@ export function BuilderProvider() {
         broadcastChannel: this.broadcastChannel,
         registerComponent: this.registerComponent,
         addFormObject: this.addFormObject,
-        selectFormObject: this.selectFormObject,
         insertFormObject: this.insertFormObject,
         removeFormObject: this.removeFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex

@@ -22,7 +22,7 @@ export function FbBuilderController($scope, $injector) {
       selectedElement.removeClass('active');
 
     selectedElement = element
-    $(selectedElement).addClass('active');
+    selectedElement.addClass('active');
     selectedObjectEditableScope = childScope;
     // replace to setter method
     $builder.selectedFormObject = angular.copy(formObject);
