@@ -7,19 +7,10 @@ export function ComponentsBuilder($builderProvider) {
       icon: 'fa fa-font',
       required: false,
       validationOptions: [
-        {
-          label: 'none',
-          rule: '/.*/'
-        }, {
-          label: 'number',
-          rule: '[number]'
-        }, {
-          label: 'email',
-          rule: '[email]'
-        }, {
-          label: 'url',
-          rule: '[url]'
-        }
+        {label: 'none',   rule: '/.*/'},
+        {label: 'number', rule: '[number]'},
+        {label: 'email',  rule: '[email]'},
+        {label: 'url',    rule: '[url]'}
       ],
       showcaseTemplate: "<i class='{{icon}}'></i> <span>{{label}}</span>",
       template: "<div class=\"form-group\">\n    <label for=\"{{formName+index}}\" class=\"col-sm-4 control-label\" ng-class=\"{'fb-required':required}\">{{label}}</label>\n    <div class=\"col-sm-8\">\n        <input type=\"text\" ng-model=\"inputText\" validator-required=\"{{required}}\" validator-group=\"{{formName}}\" id=\"{{formName+index}}\" class=\"form-control\" placeholder=\"{{placeholder}}\"/>\n        <p class='help-block'>{{description}}</p>\n    </div>\n</div>",

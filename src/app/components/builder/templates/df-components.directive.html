@@ -30,38 +30,35 @@
           <br>
 
           <div class="inputs-panel-group panel-group" id="accordion" role="tablist" ng-if="groups.length > 1" aria-multiselectable="true">
-            <div class="panel sidebar_section">
-              <div class="panel-heading" role="tab" id="headingOne">
+            <div class="panel sidebar_section" ng-repeat="group in groups track by $index">
+              <div class="panel-heading" role="tab" id="heading{{$index}}">
                 <h4 class="panel-title">
-                  <a role="button" data-toggle="collapse" data-target="#collapseOne">
-                    Inputs basicos
+                  <a role="button" data-toggle="collapse" data-target="#collapse{{$index}}">
+                    {{group}}
                   </a>
                 </h4>
               </div>
-              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+              <div id="collapse{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}" ng-class="{'in':$index == 0}">
                 <div class="panel-body">
                   <div class="row">
-                    <!-- <ul  class="nav nav-tabs nav-justified">
+                    <!--
+                    <ul  class="nav nav-tabs nav-justified">
                       <li ng-repeat="group in groups" ng-class="{active:activeGroup==group}">
                         <a href="#" ng-click="selectGroup($event, group)">{{group}}</a>
                       </li>
-                    </ul>-->
+                    </ul>
+                    -->
                     <ul>
-                      <!-- <li class="fa fa-ellipsis-v"><i class="fa fa-font"></i>Texto</li>
-                      <li class="fa fa-ellipsis-v"><i class="fa fa-text-width"></i>Textarea</li>
-                      <li class="fa fa-ellipsis-v"><i class="fa fa-list-ul"></i>Radio</li>
-                      <li class="fa fa-ellipsis-v"><i class="fa fa-check-square-o"></i>Checkbox</li>
-                      <li class="fa fa-ellipsis-v"><i class="fa fa-list-alt"></i>Select</li>
-                      <li class="fa fa-ellipsis-v"><i class="fa fa-file-archive-o"></i>File</li> -->
-                      <li class="fa fa-ellipsis-v" ng-repeat="component in components" fb-component="component">
-
+                      <li ng-repeat="component in components"
+                        class="fa fa-ellipsis-v"
+                        fb-component="component">
                       </li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
-            <div class="panel sidebar_section">
+            <!-- <div class="panel sidebar_section">
               <div class="panel-heading" role="tab" id="headingTwo">
                 <h4 class="panel-title">
                   <a role="button" data-toggle="collapse" data-target="#collapseTwo">
@@ -80,7 +77,7 @@
                   </div>
                 </div>
               </div>
-            </div>
+            </div> -->
           </div>
 
 
