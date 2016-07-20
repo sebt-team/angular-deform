@@ -1,72 +1,172 @@
 <!doctype html>
 <html ng-app="deformExamples">
-  <head>
-    <meta charset="utf-8">
-    <title>angularDeforms</title>
-    <meta name="description" content="">
-    <meta name="viewport" content="width=device-width">
-    <link rel="stylesheet" href="../css/font-awesome.min.css" charset="utf-8">
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<head>
+  <meta charset="utf-8">
+  <title>angularDeforms</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width">
+  <link rel="stylesheet" href="../css/font-awesome.min.css" charset="utf-8">
+  <link rel="stylesheet" href="../css/basic-example.css" charset="utf-8">
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
-    <!-- bower:css -->
-    <!-- run `gulp inject` to automatically populate bower styles dependencies -->
-    <!-- endbower -->
-    <!-- endbuild -->
+  <!-- build:css({.tmp/serve,src}) styles/vendor.css -->
+  <!-- bower:css -->
+  <!-- run `gulp inject` to automatically populate bower styles dependencies -->
+  <!-- endbower -->
+  <!-- endbuild -->
 
-    <!-- build:css({.tmp/serve,src}) styles/app.css -->
-    <!-- inject:css -->
-    <!-- css files will be automatically insert here -->
-    <!-- endinject -->
-    <!-- endbuild -->
-  </head>
-  <body ng-app="deformExamples">
-    <!--[if lt IE 10]>
-      <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
-    <![endif]-->
+  <!-- build:css({.tmp/serve,src}) styles/app.css -->
+  <!-- inject:css -->
+  <!-- css files will be automatically insert here -->
+  <!-- endinject -->
+  <!-- endbuild -->
+</head>
+<body ng-app="deformExamples">
+  <!--[if lt IE 10]>
+  <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+  <![endif]-->
 
-    <acme-navbar></acme-navbar>
-    <h1>Basic Example</h1>
+  <acme-navbar></acme-navbar>
+  <h1>Basic Example</h1>
 
 
-    <div class="container">
-      <div class="row" ng-controller="DemoController">
-        <h1>angular-form-builder</h1>
-        <hr/>
+  <div class="container">
+    <div class="row" ng-controller="DemoController">
+      <h1>angular-form-builder</h1>
+      <hr/>
 
-        <div class="col-md-5">
-          <div fb-object-editable="default"></div>
-          <div fb-components></div>
-        </div>
+      <div class="col-md-5">
+        <div class="inputs-container df-tabs-container">
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation"  class="active">
+              <a role="tab" data-target="#inputs" data-toggle="tab" aria-controls="inputs">Inputs</a>
+            </li>
+            <li role="presentation">
+              <a role="tab" data-target="#page" data-toggle="tab" aria-controls="page">Pagina</a>
+            </li>
+            <li role="presentation">
+              <a role="tab" data-target="#survey" data-toggle="tab" aria-controls="survey">Encuesta</a>
+            </li>
+            <li role="presentation">
+              <a role="tab" data-target="#options" data-toggle="tab" aria-controls="options">Opciones</a>
+            </li>
+          </ul>
 
-        <div class="col-md-7">
-          <div class="panel panel-default">
-            <div class="panel-heading">
-              <h3 class="panel-title">Builder</h3>
+          <!-- Tab panes -->
+          <div class="tab-content">
+            <div role="tabpanel" class="tab-pane fade active in" id="inputs">
+              <div class="row">
+                <div class="col-md-12 col-sm-12">
+                  <p class="help"> <i class="fa fa-hand-paper-o"></i> Drag elements to build »</p><br>
+                  <div fb-components></div>
+                </div>
+              </div>
             </div>
-            <div fb-builder="default"></div>
+            <div role="tabpanel" class="tab-pane fade" id="survey">
+              <div class="row">
+
+                <div class="col-md-12 col-sm-12">
+                  <div class="form-group">
+                    <label>Titulo</label>
+                    <input type="text" class="form-control">
+                  </div>
+                  <div class="form-group">
+                    <label>Descripcion</label>
+                    <textarea name="Name" rows="8" cols="35" class="form-control"></textarea>
+                    <p class="help-block">Opcional</p>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="page">
+              <p class="help"><a href="" class="btn btn-primary">Añadir una página</a></p>
+              <br/>
+
+              <div class="survey-panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                <div class="panel sidebar_section">
+                  <div class="panel-heading" role="tab" id="pageOne">
+                    <h4 class="panel-title">
+                      <a role="button" data-toggle="collapse" data-target="#collapsePageOne">
+                        Página uno
+                      </a>
+                    </h4>
+                  </div>
+                  <div id="collapsePageOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="pageOne">
+                    <div class="panel-body">
+                      <div class="row">
+
+                        <div class="col-md-12 col-sm-12">
+                          <div class="form-group">
+                            <label>Titulo</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                          </div>
+                          <div class="form-group">
+                            <label>Descripcion</label>
+                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <p class="help-block">Opcional</p>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="panel sidebar_section">
+                  <div class="panel-heading" role="tab" id="pageTwo">
+                    <h4 class="panel-title">
+                      <a role="button" data-toggle="collapse" data-target="#collapsePageTwo">
+                        Página dos
+                      </a>
+                    </h4>
+                  </div>
+                  <div id="collapsePageTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="pageTwo">
+                    <div class="panel-body">
+                      Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div role="tabpanel" class="tab-pane fade" id="options">
+              <div fb-object-editable="default"></div>
+            </div>
+
           </div>
         </div>
+
       </div>
 
+      <div class="col-md-7">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Builder</h3>
+          </div>
+          <div fb-builder="default"></div>
+        </div>
+      </div>
     </div>
 
+  </div>
 
-    <!-- build:js(src) scripts/vendor.js -->
-    <!-- bower:js -->
-    <!-- run `gulp inject` to automatically populate bower script dependencies -->
-    <!-- endbower -->
-    <!-- endbuild -->
 
-    <!-- build:js({.tmp/serve,.tmp/partials}) scripts/examples-bundler.js -->
-    <!-- inject:js -->
-    <!-- js files will be automatically insert here -->
-    <!-- endinject -->
+  <!-- build:js(src) scripts/vendor.js -->
+  <!-- bower:js -->
+  <!-- run `gulp inject` to automatically populate bower script dependencies -->
+  <!-- endbower -->
+  <!-- endbuild -->
 
-    <!-- inject:partials -->
-    <!-- angular templates will be automatically converted in js and inserted here -->
-    <!-- endinject -->
-    <!-- endbuild -->
+  <!-- build:js({.tmp/serve,.tmp/partials}) scripts/examples-bundler.js -->
+  <!-- inject:js -->
+  <!-- js files will be automatically insert here -->
+  <!-- endinject -->
 
-  </body>
+  <!-- inject:partials -->
+  <!-- angular templates will be automatically converted in js and inserted here -->
+  <!-- endinject -->
+  <!-- endbuild -->
+
+</body>
 </html>

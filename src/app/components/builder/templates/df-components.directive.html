@@ -1,167 +1,31 @@
-<div class="df-config-tabs df-shared">
+<div class="df-shared">
 
-
-
-
-  <div class="inputs-container">
-    <!-- Nav tabs -->
-      <ul class="nav nav-tabs" role="tablist">
-        <li role="presentation"  class="active">
-          <a role="tab" data-target="#inputs" data-toggle="tab" aria-controls="inputs">Inputs</a>
-        </li>
-        <li role="presentation">
-          <a role="tab" data-target="#page" data-toggle="tab" aria-controls="page">Pagina</a>
-        </li>
-        <li role="presentation">
-          <a role="tab" data-target="#survey" data-toggle="tab" aria-controls="survey">Encuesta</a>
-        </li>
-        <li role="presentation">
-          <a role="tab" data-target="#options" data-toggle="tab" aria-controls="options">Opciones</a>
-        </li>
-      </ul>
-
-      <!-- Tab panes -->
-      <div class="tab-content">
-        <div role="tabpanel" class="tab-pane fade active in" id="inputs">
-
-
-          <p class="help"> <i class="fa fa-hand-paper-o"></i> Arrastra elementos para añadir »</p>
-
-          <br>
-
-          <div class="inputs-panel-group panel-group" id="accordion" role="tablist" ng-if="groups.length > 1" aria-multiselectable="true">
-            <div class="panel sidebar_section" ng-repeat="group in groups track by $index">
-              <div class="panel-heading" role="tab" id="heading{{$index}}">
-                <h4 class="panel-title">
-                  <a role="button" data-toggle="collapse" data-target="#collapse{{$index}}">
-                    {{group}}
-                  </a>
-                </h4>
-              </div>
-              <div id="collapse{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}" ng-class="{'in':$index == 0}">
-                <div class="panel-body">
-                  <div class="row">
-                    <!--
-                    <ul  class="nav nav-tabs nav-justified">
-                      <li ng-repeat="group in groups" ng-class="{active:activeGroup==group}">
-                        <a href="#" ng-click="selectGroup($event, group)">{{group}}</a>
-                      </li>
-                    </ul>
-                    -->
-                    <ul>
-                      <li ng-repeat="component in components"
-                        class="fa fa-ellipsis-v"
-                        fb-component="component">
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
+    <div class="row">
+      <div class="col-md-12 col-sm-12">
+        <!-- start accordeon -->
+        <div class="df-accordeon panel-group" ng-if="groups.length > 1" aria-multiselectable="true">
+          <div class="panel sidebar_section" ng-repeat="group in groups track by $index">
+            <div class="panel-heading" role="tab" id="heading{{$index}}">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-target="#collapse{{$index}}">
+                  {{group}}
+                </a>
+              </h4>
             </div>
-            <!-- <div class="panel sidebar_section">
-              <div class="panel-heading" role="tab" id="headingTwo">
-                <h4 class="panel-title">
-                  <a role="button" data-toggle="collapse" data-target="#collapseTwo">
-                    Inputs Avanzados
-                  </a>
-                </h4>
-              </div>
-              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                <div class="panel-body">
-                  <div class="row">
-                    <ul>
-                      <li class="fa fa-ellipsis-v"><i class="fa fa-camera"></i>Foto</li>
-                      <li class="fa fa-ellipsis-v"><i class="fa fa-video-camera"></i>Video</li>
-                      <li class="fa fa-ellipsis-v"><i class="fa fa-location-arrow"></i>Ubicación</li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div> -->
-          </div>
-
-
-
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="survey">
-          <div class="row">
-
-            <div class="col-md-12 col-sm-12">
-              <div class="form-group">
-                <label>Titulo</label>
-                <input type="text" class="form-control">
-              </div>
-              <div class="form-group">
-                <label>Descripcion</label>
-                <textarea name="Name" rows="8" cols="35" class="form-control"></textarea>
-                <p class="help-block">Opcional</p>
-              </div>
-            </div>
-
-          </div>
-        </div>
-        <div role="tabpanel" class="tab-pane fade" id="page">
-          <p class="help"><a href="" class="btn btn-primary">Añadir una página</a></p>
-          <br/>
-
-          <div class="survey-panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-            <div class="panel sidebar_section">
-              <div class="panel-heading" role="tab" id="pageOne">
-                <h4 class="panel-title">
-                  <a role="button" data-toggle="collapse" data-target="#collapsePageOne">
-                    Página uno
-                  </a>
-                </h4>
-              </div>
-              <div id="collapsePageOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="pageOne">
-                <div class="panel-body">
-                  <div class="row">
-
-                    <div class="col-md-12 col-sm-12">
-                        <div class="form-group">
-                          <label>Titulo</label>
-                          <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
-                        </div>
-                        <div class="form-group">
-                          <label>Descripcion</label>
-                          <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                          <p class="help-block">Opcional</p>
-                        </div>
-                    </div>
-
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="panel sidebar_section">
-              <div class="panel-heading" role="tab" id="pageTwo">
-                <h4 class="panel-title">
-                  <a role="button" data-toggle="collapse" data-target="#collapsePageTwo">
-                    Página dos
-                  </a>
-                </h4>
-              </div>
-              <div id="collapsePageTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="pageTwo">
-                <div class="panel-body">
-                  Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+            <div id="collapse{{$index}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}" ng-class="{'in':$index == 0}">
+              <div class="panel-body">
+                <div class="row">
+                  <ul>
+                    <li ng-repeat="component in components" class="fa fa-ellipsis-v" fb-component="component">
+                    </li>
+                  </ul>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
-        <div role="tabpanel" class="tab-pane fade" id="options">
-          <ul ng-if="groups.length > 1" class="nav nav-tabs nav-justified">
-            <li ng-repeat="group in groups" ng-class="{active:activeGroup==group}">
-              <a href="#" ng-click="selectGroup($event, group)">{{group}}</a>
-            </li>
-          </ul>
-          <div class="form-horizontal">
-            <div class="fb-component" ng-repeat="component in components" fb-component="component">
-            </div>
-          </div>
-        </div>
+        <!-- end accordeon -->
       </div>
-  </div>
+    </div>
 
 </div>
