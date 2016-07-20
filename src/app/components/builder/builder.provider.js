@@ -8,6 +8,7 @@ export function BuilderProvider() {
   this.components = {};
   this.groups = [];
   this.broadcastChannel = {
+    addNewInput: '$addNewInput',
     updateInput: '$updateInput',
     saveInput: '$saveInput'
   };

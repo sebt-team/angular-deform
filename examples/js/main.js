@@ -1,6 +1,3 @@
-// var deformExamples = angular.module('deformExamples',['angularDeforms']);
-
-// angular.module('deformExamples', ['angularDeforms', 'builder', 'builderComponents', 'validator.rules'])
 angular.module('deformExamples', ['angularDeforms'])
 
   .run([
@@ -61,12 +58,17 @@ angular.module('deformExamples', ['angularDeforms'])
       $scope.defaultValue = {};
       $scope.defaultValue[textbox.id] = 'default value';
       $scope.defaultValue[checkbox.id] = [true, true];
-      return $scope.submit = function() {
+
+      $scope.submit = function() {
         return $validator.validate($scope, 'default').success(function() {
           return console.log('success');
         }).error(function() {
           return console.log('error');
         });
       };
+
+      $scope.$on($builder.broadcastChannel.addNewInput, () => {
+        $('a[data-target="#options"]').tab('show')
+      });
     }
   ]);
