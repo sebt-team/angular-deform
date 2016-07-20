@@ -291,8 +291,9 @@ export function FbObjectEditable($injector) {
     restrict: 'A',
     controller: 'fbFormObjectEditableController',
     templateUrl: 'app/components/builder/templates/df-object-editable.directive.html',
-    link: (scope, element) => {
+    link: (scope, element, attrs) => {
       scope.builder = $builder;
+      scope.formName = attrs.fbObjectEditable;
       scope.$watch('builder.selectedFormObject', (currentFormObject) => {
         if(currentFormObject) {
           scope.setupScope(currentFormObject);

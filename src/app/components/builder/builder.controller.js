@@ -59,7 +59,6 @@ export function FbFormObjectEditableController($scope, $injector) {
     model: null,
     backup: () => {
       // Backup input value.
-
       this.model = {
         label: $scope.label,
         description: $scope.description,
@@ -71,7 +70,6 @@ export function FbFormObjectEditableController($scope, $injector) {
     },
     rollback: () => {
       // Rollback input value.
-
       if (!this.model) return;
 
       $scope.label = this.model.label;
@@ -87,6 +85,11 @@ export function FbFormObjectEditableController($scope, $injector) {
     $timeout(() => {
       $scope.$broadcast($builder.broadcastChannel.saveInput);
     });
+  }
+
+  $scope.remove = () => {
+    let formObject = $builder.selectedFormObject;
+    $builder.removeFormObject($scope.formName, formObject.index);
   }
 }
 
