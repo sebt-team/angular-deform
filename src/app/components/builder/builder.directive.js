@@ -27,7 +27,7 @@ export function FbBuilder ($injector) {
 
       scope.$watch('builder.selectedFormObject', (currentFormObject) => {
         if(currentFormObject)
-          scope.updateChildAttributes();
+          scope.updateChildAttributes(currentFormObject);
       }, true);
 
       $(element).addClass('fb-builder');
@@ -85,6 +85,7 @@ export function FbBuilder ($injector) {
 
           if (!$drag.isMouseMoved()) {
             $(element).find('.empty').remove();
+            return;
           }
 
           if (!isHover && draggable.mode === 'drag') {
@@ -149,7 +150,9 @@ export function FbFormObjectEditable($injector) {
       });
 
       element.bind('click', function(){
-        ctrl.selectObjectEditable(scope, scope.formObject);
+        scope.$apply(function () {
+          ctrl.selectObjectEditable(scope, scope.formObject);
+        });
       });
 
       $drag.draggable($(element), {
@@ -288,12 +291,13 @@ export function FbObjectEditable($injector) {
     restrict: 'A',
     controller: 'fbFormObjectEditableController',
     templateUrl: 'app/components/builder/templates/df-object-editable.directive.html',
-    link: (scope, element) => {
+    link: (scope, element, attrs) => {
       scope.builder = $builder;
+      scope.formName = attrs.fbObjectEditable;
       scope.$watch('builder.selectedFormObject', (currentFormObject) => {
         if(currentFormObject) {
-          scope.setupScope($builder.selectedFormObject);
-          scope.data.backup();
+          scope.setupScope(currentFormObject);
+          // scope.data.backup();
           let component = $builder.components[currentFormObject.component];
           let view = $compile(component.popoverTemplate)(scope);
           $(element).html(view);
