@@ -12,7 +12,8 @@ export function BuilderProvider() {
     updateInput: '$updateInput',
     saveInput: '$saveInput'
   };
-  this.forms = { "default": [] };
+  this.forms = { 'default': [] };
+  this.currentForm = 'default';
   this.currentObject = null;
   this.convertComponent = (name, component) => {
     let ref;
@@ -222,6 +223,7 @@ export function BuilderProvider() {
         components: this.components,
         groups: this.groups,
         forms: this.forms,
+        currentForm: this.currentForm,
         selectedFormObject: undefined,
         broadcastChannel: this.broadcastChannel,
         registerComponent: this.registerComponent,

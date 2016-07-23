@@ -142,11 +142,13 @@ export function FbFormObjectEditable($injector) {
       scope.setupScope(scope.formObject);
 
       scope.$watch('$component.template', (template) => {
-        let view;
         if (!template)
           return;
 
-        view = $compile(template)(scope);
+        template = `<div><div ng-click='remove(formObject)'>
+                      <i class='glyphicon glyphicon-remove'></i></div>${template}
+                    </div>`;
+        let view = $compile(template)(scope);
         $(element).html(view);
       });
 
@@ -155,8 +157,8 @@ export function FbFormObjectEditable($injector) {
         scope.$apply(function () {
           $timeout(() => {
             scope.$emit($builder.broadcastChannel.addNewInput);
+            ctrl.selectObjectEditable(scope, scope.formObject, element);
           });
-          ctrl.selectObjectEditable(scope, scope.formObject, element);
         });
       });
 

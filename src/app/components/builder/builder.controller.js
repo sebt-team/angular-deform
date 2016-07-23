@@ -96,9 +96,9 @@ export function FbFormObjectEditableController($scope, $injector) {
     });
   }
 
-  $scope.remove = () => {
-    let formObject = $builder.selectedFormObject;
-    $builder.removeFormObject($scope.formName, formObject.index);
+  $scope.remove = (formObject) => {
+    formObject = formObject || $builder.selectedFormObject;
+    $builder.removeFormObject($builder.currentForm, formObject.index);
   }
 }
 
