@@ -98,7 +98,7 @@ export function FbFormObjectEditableController($scope, $injector) {
 
   $scope.remove = (formObject) => {
     formObject = formObject || $builder.selectedFormObject;
-    $builder.removeFormObject($builder.currentForm, formObject.index);
+    $builder.removeFormObject('default', 0);
   }
 }
 
