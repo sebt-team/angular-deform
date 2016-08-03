@@ -77,6 +77,11 @@ angular
   .controller('fbFormController', FbFormController)
   .controller('dfDragpagesController', DfDragpagesController);
 
+  // DRAG
+angular
+  .module('builderDrag', [])
+  .provider('$drag', DragProvider);
+
   // DIRECTIVES
 angular
   .module('builderDirective', ['builderProvider', 'builderController', 'builderDrag', 'validator'])
@@ -88,8 +93,3 @@ angular
   .directive('fbForm', FbForm)
   .directive('fbFormObject', FbFormObject)
   .directive('dfDragpages', DfDragpages);
-
-  // DRAG
-angular
-  .module('builderDrag', [])
-  .provider('$drag', DragProvider);

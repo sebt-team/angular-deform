@@ -107,26 +107,12 @@ export function FbComponentsController($scope, $injector) {
    // providers
   var $builder = $injector.get('$builder');
 
-  // actions
-  $scope.selectGroup = ($event, group) => {
-    $scope.activeGroup = group;
-    $scope.components = [];
-
-    if(typeof $event !== "undefined" && $event !== null)
-      $event.preventDefault();
-
-    angular.forEach($builder.components, (component) => {
-      if(component.group === group) $scope.components.push(component)
-    });
-
-  }
-
-  $scope.groups = $builder.groups;
-  $scope.activeGroup = $scope.groups[0];
-  $scope.allComponents = $builder.components;
-
-  $scope.$watch('allComponents', () => {
-    $scope.selectGroup(null, $scope.activeGroup);
+  $scope.groupedComponents = {};
+  angular.forEach($builder.components, (component) => {
+    if (!angular.isDefined($scope.groupedComponents[component.group])) {
+      $scope.groupedComponents[component.group] = [];
+    }
+    $scope.groupedComponents[component.group].push(component);
   });
 }
 
