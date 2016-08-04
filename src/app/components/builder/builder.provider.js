@@ -8,7 +8,7 @@ export function BuilderProvider() {
   this.components = {};
   this.groups = [];
   this.broadcastChannel = {
-    addNewInput: '$addNewInput',
+    selectInput: '$selectInput',
     updateInput: '$updateInput',
     saveInput: '$saveInput'
   };
@@ -16,8 +16,9 @@ export function BuilderProvider() {
   this.forms = { 'default': [] };
   this.pages = [];
 
-  this.currentFormObject = null;
-  this.currentPage = null;
+  let currentFormObject = null;
+  let currentPage = null;
+  let currentForm = this.forms['default'];
 
   this.convertComponent = (name, component) => {
     let ref;
@@ -72,7 +73,7 @@ export function BuilderProvider() {
 
   this.reindexFormObject = (name) => {
     var formObjects, i, index, ref;
-    formObjects = this.forms[name];
+    formObjects = this.forms[name] || currentForm;
     for (index = i = 0, ref = formObjects.length; i < ref; index = i += 1) {
       formObjects[index].index = index;
     }
@@ -151,11 +152,13 @@ export function BuilderProvider() {
   };
 
   this.getCurrentFormObject = () => {
-    return this.currentFormObject;
+    return currentFormObject;
   }
 
-  this.selectCurrentFormObject = (formObject) => {
-    this.currentFormObject = formObject
+  this.selectCurrentFormObject = (formName, formObject) => {
+    debugger;
+    currentForm = this.forms[formName];
+    currentFormObject = formObject;
   }
 
   this.addForm = (name) => {
@@ -165,11 +168,11 @@ export function BuilderProvider() {
   }
 
   this.getCurrentPage = () => {
-    return this.currentPage;
+    return currentPage;
   }
 
   this.selectCurrentPage = (index) => {
-    this.currentPage = this.pages[index];
+    return currentPage = this.pages[index];
   }
 
   this.addPage = () => {
@@ -232,7 +235,8 @@ export function BuilderProvider() {
     @param name: The form name.
     @param index: The form object index.
      */
-    let formObjects = this.forms[name];
+    index = index || currentFormObject.index;
+    let formObjects = this.forms[name] || currentForm;
     formObjects.splice(index, 1);
     return this.reindexFormObject(name);
   };
@@ -269,6 +273,7 @@ export function BuilderProvider() {
         pages: this.pages,
         addPage: this.addPage,
         getCurrentPage: this.getCurrentPage,
+        selectCurrentPage: this.selectCurrentPage,
         addForm: this.addForm,
         getCurrentFormObject: this.getCurrentFormObject,
         selectCurrentFormObject: this.selectCurrentFormObject,

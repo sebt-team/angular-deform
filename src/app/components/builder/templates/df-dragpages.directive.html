@@ -1,7 +1,7 @@
 <div class="tabbable-panel">
   <div class="tabbable-line tabs-below row">
     <div class="tab-content">
-      <div class="tab-pane fade" ng-class="{ 'active in' : currentPage.index == $index }" ng-repeat="page in pages" id="page_{{$index}}">
+      <div class="tab-pane fade" ng-class="{ 'active in' : builder.getCurrentPage().index == $index }" ng-repeat="page in pages" id="page_{{$index}}">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bhoechie-tab-container dragzone-tab-container">
           <h3 class="fb-title-form" contenteditable="true">
             {{page.title}}
@@ -16,7 +16,7 @@
       </div>
     </div>
     <ul class="nav nav-tabs">
-      <li ng-class="{ 'active': currentPage.index == $index }" ng-repeat="page in pages" ng-click="chagePage($index)">
+      <li ng-class="{ 'active': builder.getCurrentPage().index == $index }" ng-repeat="page in pages" ng-click="changePage($index)">
         <a data-target="page_{{$index}}" data-toggle="tab" aria-controls="page_{{$index}}">
           Página {{$index + 1}}
         </a>

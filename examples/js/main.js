@@ -99,7 +99,7 @@ angular.module('deformExamples', ['angularDeforms', 'angular-sweetnotifier', 'ng
       });
     };
 
-    $scope.$on($builder.broadcastChannel.addNewInput, () => {
+    $scope.$on($builder.broadcastChannel.selectInput, () => {
       $('a[data-target="#options"]').tab('show')
     });
 

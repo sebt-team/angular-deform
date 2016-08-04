@@ -153,7 +153,7 @@ export function FbFormObjectEditable($injector) {
         e.preventDefault();
         scope.$apply(function () {
           $timeout(() => {
-            scope.$emit($builder.broadcastChannel.addNewInput);
+            scope.$emit($builder.broadcastChannel.selectInput);
             ctrl.selectObjectEditable(scope, scope.formObject, element);
           });
         });
@@ -387,18 +387,12 @@ export function DfPageEditable($injector) {
     templateUrl: 'app/components/builder/templates/df-page-editable.directive.html',
     link: (scope, element, attrs) => {
 
+      scope.builer = $builder;
       scope.pages = $builder.pages;
 
       scope.addNewPage = ()=> {
-        scope.currentPage = $builder.addPage();
+        $builder.addPage();
       }
-
-      scope.chagePage = (index)=> {
-        scope.currentPage = $builder.selectCurrentPage(index);
-      }
-
-      // create the first page
-      scope.addNewPage(0);
     }
   }
 
@@ -421,6 +415,15 @@ export function DfDragpages($injector) {
     controller: 'dfDragpagesController',
     link: (scope, element, attrs) => {
       scope.forms = $builder.forms
+      scope.pages = $builder.pages;
+      scope.builder = $builder;
+
+      scope.changePage = (index)=> {
+        $builder.selectCurrentPage(index);
+      }
+
+      // create the first page
+      scope.addNewPage(0);
     }
   }
 
