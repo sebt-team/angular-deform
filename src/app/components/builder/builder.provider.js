@@ -13,6 +13,7 @@ export function BuilderProvider() {
     saveInput: '$saveInput'
   };
   this.forms = { 'default': [] };
+  this.pages = [];
   this.currentForm = 'default';
   this.currentObject = null;
   this.convertComponent = (name, component) => {
@@ -147,7 +148,6 @@ export function BuilderProvider() {
   };
 
   this.addForm = (name) => {
-    debugger
     if(!this.forms[name])
       this.forms[name] = [];
 
@@ -231,6 +231,7 @@ export function BuilderProvider() {
         components: this.components,
         groups: this.groups,
         forms: this.forms,
+        pages: this.pages,
         currentForm: this.currentForm,
         selectedFormObject: undefined,
         broadcastChannel: this.broadcastChannel,
