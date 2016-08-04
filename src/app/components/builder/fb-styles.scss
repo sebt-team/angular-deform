@@ -63,7 +63,7 @@ body, .form-control {
 }
 
 .fb-o-editable-in{
-  opacity: 1;
+  opacity: 1 !important;
   -webkit-transition: all .5s linear;
   -moz-transition: all .5s linear;
   -o-transition: all .5s linear;

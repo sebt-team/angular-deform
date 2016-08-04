@@ -10,19 +10,16 @@ export function FbBuilder ($injector) {
   // ----------------------------------------
   let directive = {
     restrict: 'A',
-    scope: {
-      fbBuilder: '='
-    },
     controller: 'fbBuilderController',
     templateUrl: 'app/components/builder/templates/df-builder.directive.html',
     link: (scope, element, attrs) => {
+      debugger;
       // ----------------------------------------
       // valuables
       // ----------------------------------------
       var beginMove = true;
-
       scope.formName = attrs.fbBuilder;
-      scope.formObjects = $builder.forms[scope.formName];
+      scope.formObjects = $builder.addForm(scope.formName);
       scope.builder = $builder;
 
       scope.$watch('builder.selectedFormObject', (currentFormObject) => {
@@ -376,6 +373,50 @@ export function FbFormObject($injector) {
   return directive;
 }
 
+export function DfPageEditable($injector) {
+  // ----------------------------------------
+  // providers
+  // ----------------------------------------
+  var $builder = $injector.get('$builder');
+
+  // ----------------------------------------
+  // directive
+  // ----------------------------------------
+  let directive = {
+    restrict: 'A',
+    templateUrl: 'app/components/builder/templates/df-page-editable.directive.html',
+    link: (scope, element, attrs) => {
+      scope.pages = [{
+        title: 'Page 1',
+        description: 'Description number 1',
+        formName: 'form0',
+        index: 0
+      }];
+
+      scope.currentPage = scope.pages[0];
+
+      scope.addNewPage = ()=> {
+        let pagesQty = scope.pages.length
+        scope.pages.push({
+          title: `Page ${pagesQty + 1}`,
+          description: `Description number ${pagesQty + 1}`,
+          formName: `form${pagesQty}`,
+          index: pagesQty
+        })
+        scope.currentPage = scope.pages.slice(-1)[0]
+      }
+
+      scope.chagePage = (index)=> {
+        debugger;
+        scope.currentPage = scope.pages[index];
+      }
+    }
+  }
+
+  return directive;
+}
+
+
 export function DfDragpages($injector) {
   // ----------------------------------------
   // providers
@@ -388,7 +429,10 @@ export function DfDragpages($injector) {
   let directive = {
     restrict: 'A',
     templateUrl: 'app/components/builder/templates/df-dragpages.directive.html',
-    controller: 'dfDragpagesController'
+    controller: 'dfDragpagesController',
+    link: (scope, element, attrs) => {
+      scope.forms = $builder.forms
+    }
   }
 
   return directive;

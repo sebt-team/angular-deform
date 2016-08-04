@@ -146,8 +146,16 @@ export function BuilderProvider() {
     return this.insertFormObject(name, this.forms[name].length, formObject);
   };
 
+  this.addForm = (name) => {
+    debugger
+    if(!this.forms[name])
+      this.forms[name] = [];
+
+    return this.forms[name]
+  }
 
   this.insertFormObject = (name, index, formObject) => {
+
     if (formObject == null)
       formObject = {};
 
@@ -228,6 +236,7 @@ export function BuilderProvider() {
         broadcastChannel: this.broadcastChannel,
         registerComponent: this.registerComponent,
         addFormObject: this.addFormObject,
+        addForm: this.addForm,
         insertFormObject: this.insertFormObject,
         removeFormObject: this.removeFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex
