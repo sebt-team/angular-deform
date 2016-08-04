@@ -23,12 +23,14 @@ export function FbBuilderController($scope, $injector) {
 
     selectedElement = element
     selectedElement.addClass('active');
+    debugger;
     selectedObjectEditableScope = childScope;
     // replace for setter method
-    $builder.selectedFormObject = angular.copy(formObject);
+    $builder.selectCurrentFormObject($scope.formName, angular.copy(formObject));
   }
 
   $scope.updateChildAttributes = (currentFormObject) => {
+    debugger;
     copyObjectToScope(currentFormObject, selectedObjectEditableScope);
   }
 }
@@ -88,7 +90,7 @@ export function FbFormObjectEditableController($scope, $injector) {
   };
 
   $scope.duplicate = () => {
-    let formObject = $builder.selectedFormObject;
+    let formObject = $builder.getCurrentFormObject();
     let formName = $scope.formName;
     $builder.forms[formName].splice(formObject.index, 0, angular.copy(formObject));
     $timeout(() => {
@@ -97,8 +99,8 @@ export function FbFormObjectEditableController($scope, $injector) {
   }
 
   $scope.remove = (formObject) => {
-    formObject = formObject || $builder.selectedFormObject;
-    $builder.removeFormObject('default', 0);
+    debugger;
+    $builder.removeFormObject($scope.$parent.formName, formObject);
   }
 }
 

@@ -8,13 +8,18 @@ export function BuilderProvider() {
   this.components = {};
   this.groups = [];
   this.broadcastChannel = {
-    addNewInput: '$addNewInput',
+    selectInput: '$selectInput',
     updateInput: '$updateInput',
     saveInput: '$saveInput'
   };
+
   this.forms = { 'default': [] };
-  this.currentForm = 'default';
-  this.currentObject = null;
+  this.pages = [];
+
+  let currentFormObject = null;
+  let currentPage = null;
+  let currentForm = this.forms['default'];
+
   this.convertComponent = (name, component) => {
     let ref;
     let result = {
@@ -68,7 +73,7 @@ export function BuilderProvider() {
 
   this.reindexFormObject = (name) => {
     var formObjects, i, index, ref;
-    formObjects = this.forms[name];
+    formObjects = this.forms[name] || currentForm;
     for (index = i = 0, ref = formObjects.length; i < ref; index = i += 1) {
       formObjects[index].index = index;
     }
@@ -146,8 +151,49 @@ export function BuilderProvider() {
     return this.insertFormObject(name, this.forms[name].length, formObject);
   };
 
+  this.getCurrentFormObject = () => {
+    return currentFormObject;
+  }
+
+  this.selectCurrentFormObject = (formName, formObject) => {
+    debugger;
+    currentForm = this.forms[formName];
+    currentFormObject = formObject;
+  }
+
+  this.addForm = (name) => {
+    if(!this.forms[name])
+      this.forms[name] = [];
+    return this.forms[name];
+  }
+
+  this.getCurrentPage = () => {
+    return currentPage;
+  }
+
+  this.selectCurrentPage = (index) => {
+    return currentPage = this.pages[index];
+  }
+
+  this.addPage = () => {
+    let pageNumber = this.pages.length;
+    let page = {
+      title: `Page ${pageNumber + 1}`,
+      description: `Description number ${pageNumber + 1}`,
+      index: pageNumber,
+      formName: `form${pageNumber}`,
+      form: {
+        name: `form${pageNumber}`,
+        content: this.addForm(`form${pageNumber}`)
+      }
+    };
+    this.pages.push(page);
+    this.selectCurrentPage(pageNumber);
+    return page;
+  }
 
   this.insertFormObject = (name, index, formObject) => {
+
     if (formObject == null)
       formObject = {};
 
@@ -189,7 +235,8 @@ export function BuilderProvider() {
     @param name: The form name.
     @param index: The form object index.
      */
-    let formObjects = this.forms[name];
+    index = index || currentFormObject.index;
+    let formObjects = this.forms[name] || currentForm;
     formObjects.splice(index, 1);
     return this.reindexFormObject(name);
   };
@@ -223,14 +270,19 @@ export function BuilderProvider() {
         components: this.components,
         groups: this.groups,
         forms: this.forms,
-        currentForm: this.currentForm,
-        selectedFormObject: undefined,
-        broadcastChannel: this.broadcastChannel,
-        registerComponent: this.registerComponent,
+        pages: this.pages,
+        addPage: this.addPage,
+        getCurrentPage: this.getCurrentPage,
+        selectCurrentPage: this.selectCurrentPage,
+        addForm: this.addForm,
+        getCurrentFormObject: this.getCurrentFormObject,
+        selectCurrentFormObject: this.selectCurrentFormObject,
         addFormObject: this.addFormObject,
         insertFormObject: this.insertFormObject,
         removeFormObject: this.removeFormObject,
-        updateFormObjectIndex: this.updateFormObjectIndex
+        updateFormObjectIndex: this.updateFormObjectIndex,
+        broadcastChannel: this.broadcastChannel,
+        registerComponent: this.registerComponent,
       };
     }
   ];

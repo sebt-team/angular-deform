@@ -10,22 +10,19 @@ export function FbBuilder ($injector) {
   // ----------------------------------------
   let directive = {
     restrict: 'A',
-    scope: {
-      fbBuilder: '='
-    },
     controller: 'fbBuilderController',
     templateUrl: 'app/components/builder/templates/df-builder.directive.html',
     link: (scope, element, attrs) => {
+      debugger;
       // ----------------------------------------
       // valuables
       // ----------------------------------------
       var beginMove = true;
-
       scope.formName = attrs.fbBuilder;
-      scope.formObjects = $builder.forms[scope.formName];
+      scope.formObjects = $builder.addForm(scope.formName);
       scope.builder = $builder;
 
-      scope.$watch('builder.selectedFormObject', (currentFormObject) => {
+      scope.$watch('builder.getCurrentFormObject()', (currentFormObject) => {
         if(currentFormObject)
           scope.updateChildAttributes(currentFormObject);
       }, true);
@@ -156,7 +153,7 @@ export function FbFormObjectEditable($injector) {
         e.preventDefault();
         scope.$apply(function () {
           $timeout(() => {
-            scope.$emit($builder.broadcastChannel.addNewInput);
+            scope.$emit($builder.broadcastChannel.selectInput);
             ctrl.selectObjectEditable(scope, scope.formObject, element);
           });
         });
@@ -196,7 +193,7 @@ export function FbObjectEditable($injector, $animate, $timeout) {
       scope.builder = $builder;
       scope.formName = attrs.fbObjectEditable;
       scope.showForm = true;
-      scope.$watch('builder.selectedFormObject', (currentFormObject) => {
+      scope.$watch('builder.getCurrentFormObject()', (currentFormObject) => {
         if(currentFormObject) {
           scope.setupScope(currentFormObject);
           // scope.data.backup();
@@ -205,7 +202,7 @@ export function FbObjectEditable($injector, $animate, $timeout) {
           let childElement = element.children()
           childElement.addClass('fb-o-editable-out')
           childElement.html(view);
-          // adnimate
+          // animate
           $animate.addClass(childElement, 'fb-o-editable-in').then(() => {
             $animate.removeClass(childElement,'fb-o-editable-out');
             $animate.removeClass(childElement,'fb-o-editable-in');
@@ -376,6 +373,33 @@ export function FbFormObject($injector) {
   return directive;
 }
 
+export function DfPageEditable($injector) {
+  // ----------------------------------------
+  // providers
+  // ----------------------------------------
+  var $builder = $injector.get('$builder');
+
+  // ----------------------------------------
+  // directive
+  // ----------------------------------------
+  let directive = {
+    restrict: 'A',
+    templateUrl: 'app/components/builder/templates/df-page-editable.directive.html',
+    link: (scope, element, attrs) => {
+
+      scope.builer = $builder;
+      scope.pages = $builder.pages;
+
+      scope.addNewPage = ()=> {
+        $builder.addPage();
+      }
+    }
+  }
+
+  return directive;
+}
+
+
 export function DfDragpages($injector) {
   // ----------------------------------------
   // providers
@@ -388,7 +412,19 @@ export function DfDragpages($injector) {
   let directive = {
     restrict: 'A',
     templateUrl: 'app/components/builder/templates/df-dragpages.directive.html',
-    controller: 'dfDragpagesController'
+    controller: 'dfDragpagesController',
+    link: (scope, element, attrs) => {
+      scope.forms = $builder.forms
+      scope.pages = $builder.pages;
+      scope.builder = $builder;
+
+      scope.changePage = (index)=> {
+        $builder.selectCurrentPage(index);
+      }
+
+      // create the first page
+      scope.addNewPage(0);
+    }
   }
 
   return directive;
