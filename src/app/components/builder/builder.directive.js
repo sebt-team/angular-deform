@@ -202,7 +202,7 @@ export function FbObjectEditable($injector, $animate, $timeout) {
           let childElement = element.children()
           childElement.addClass('fb-o-editable-out')
           childElement.html(view);
-          // adnimate
+          // animate
           $animate.addClass(childElement, 'fb-o-editable-in').then(() => {
             $animate.removeClass(childElement,'fb-o-editable-out');
             $animate.removeClass(childElement,'fb-o-editable-in');
@@ -387,29 +387,14 @@ export function DfPageEditable($injector) {
     templateUrl: 'app/components/builder/templates/df-page-editable.directive.html',
     link: (scope, element, attrs) => {
 
-      scope.pages = [];
+      scope.pages = $builder.pages;
 
-      scope.addNewPage = (pagesNumber)=> {
-        pagesNumber = pagesNumber || scope.pages.length;
-        scope.pages.push(createPage(pagesNumber))
-        scope.currentPage = scope.pages[pagesNumber];
+      scope.addNewPage = ()=> {
+        scope.currentPage = $builder.addPage();
       }
 
       scope.chagePage = (index)=> {
-        scope.currentPage = scope.pages[index];
-      }
-
-      let createPage = (pagesNumber)=> {
-        return {
-          title: `Page ${pagesNumber + 1}`,
-          description: `Description number ${pagesNumber + 1}`,
-          index: pagesNumber,
-          formName: `form${pagesNumber}`,
-          form: {
-            name: `form${pagesNumber}`,
-            content: $builder.addForm(`form${pagesNumber}`)
-          }
-        };
+        scope.currentPage = $builder.selectCurrentPage(index);
       }
 
       // create the first page
