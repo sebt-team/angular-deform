@@ -13,7 +13,6 @@ export function FbBuilder ($injector) {
     controller: 'fbBuilderController',
     templateUrl: 'app/components/builder/templates/df-builder.directive.html',
     link: (scope, element, attrs) => {
-      debugger;
       // ----------------------------------------
       // valuables
       // ----------------------------------------
@@ -22,10 +21,10 @@ export function FbBuilder ($injector) {
       scope.formObjects = $builder.addForm(scope.formName);
       scope.builder = $builder;
 
-      scope.$watch('builder.getCurrentFormObject()', (currentFormObject) => {
-        if(currentFormObject)
-          scope.updateChildAttributes(currentFormObject);
-      }, true);
+      // scope.$watch('builder.getCurrentFormObject()', (currentFormObject) => {
+      //   if(currentFormObject)
+      //     scope.updateChildAttributes(currentFormObject);
+      // }, true);
 
       $(element).addClass('fb-builder');
 
@@ -142,7 +141,7 @@ export function FbFormObjectEditable($injector) {
         if (!template)
           return;
 
-        template = `<div><div class="fb-remove-btn" ng-click='remove(formObject)'>
+        template = `<div><div class="fb-remove-btn" ng-click='remove(formObject, $event)'>
                       <i class='glyphicon glyphicon-remove'></i></div>${template}
                     </div>`;
         let view = $compile(template)(scope);
@@ -154,7 +153,10 @@ export function FbFormObjectEditable($injector) {
         scope.$apply(function () {
           $timeout(() => {
             scope.$emit($builder.broadcastChannel.selectInput);
-            ctrl.selectObjectEditable(scope, scope.formObject, element);
+            let formName = scope.$parent.formName;
+            let formObject = scope.formObject;
+            debugger;
+            $builder.selectCurrentFormObject(formName, formObject, element, scope);
           });
         });
       });
@@ -199,16 +201,21 @@ export function FbObjectEditable($injector, $animate, $timeout) {
           // scope.data.backup();
           let component = $builder.components[currentFormObject.component];
           let view = $compile(component.popoverTemplate)(scope);
-          let childElement = element.children()
-          childElement.addClass('fb-o-editable-out')
-          childElement.html(view);
+          let renderElement = element.children();
+          renderElement.html(view);
           // animate
-          $animate.addClass(childElement, 'fb-o-editable-in').then(() => {
-            $animate.removeClass(childElement,'fb-o-editable-out');
-            $animate.removeClass(childElement,'fb-o-editable-in');
+          renderElement.addClass('fb-o-editable-out')
+          $animate.addClass(renderElement, 'fb-o-editable-in').then(() => {
+            $animate.removeClass(renderElement,'fb-o-editable-out');
+            $animate.removeClass(renderElement,'fb-o-editable-in');
           });
         }
       });
+
+      scope.$watch('builder.getCurrentFormObject()', (currentFormObject) => {
+        if(currentFormObject)
+          $builder.updateFormObjectScope(currentFormObject);
+      }, true);
     }
   };
 

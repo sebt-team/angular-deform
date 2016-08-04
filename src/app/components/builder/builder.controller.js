@@ -1,39 +1,4 @@
-// Copy object (ng-repeat="object in objects") to scope without `hashKey`.
-var copyObjectToScope = (object, scope) => {
-  var key, value;
-  for (key in object) {
-    value = object[key];
-    if (key !== '$$hashKey') {
-      scope[key] = value;
-    }
-  }
-};
-
-
-export function FbBuilderController($scope, $injector) {
-  var $builder = $injector.get('$builder');
-  var selectedElement = undefined;
-  var selectedObjectEditableScope = undefined;
-
-  this.selectObjectEditable = (childScope, formObject, element) => {
-    // 1. Configure current scope from child directive
-    // 2. Set current formobject to share between directives
-    if(selectedElement)
-      selectedElement.removeClass('active');
-
-    selectedElement = element
-    selectedElement.addClass('active');
-    debugger;
-    selectedObjectEditableScope = childScope;
-    // replace for setter method
-    $builder.selectCurrentFormObject($scope.formName, angular.copy(formObject));
-  }
-
-  $scope.updateChildAttributes = (currentFormObject) => {
-    debugger;
-    copyObjectToScope(currentFormObject, selectedObjectEditableScope);
-  }
-}
+export function FbBuilderController($scope, $injector) {}
 
 export function FbFormObjectEditableController($scope, $injector) {
   var $builder = $injector.get('$builder');
@@ -45,7 +10,7 @@ export function FbFormObjectEditableController($scope, $injector) {
     // 3. Watch scope.label, .description, .placeholder, .required, .options then copy to origin formObject.
     // 4. Watch scope.optionsText then convert to scope.options.
     // 5. setup validationOptions
-    copyObjectToScope(formObject, $scope);
+    $builder.copyObjectToScope(formObject, $scope);
     $scope.optionsText = formObject.options.join('\n');
 
     $scope.$watch('[label, description, placeholder, required, options, validation]', () => {
@@ -63,31 +28,6 @@ export function FbFormObjectEditableController($scope, $injector) {
     });
     $scope.validationOptions = $builder.components[formObject.component].validationOptions;
   };
-  $scope.data = {
-    model: null,
-    backup: () => {
-      // Backup input value.
-      this.model = {
-        label: $scope.label,
-        description: $scope.description,
-        placeholder: $scope.placeholder,
-        required: $scope.required,
-        optionsText: $scope.optionsText,
-        validation: $scope.validation
-      };
-    },
-    rollback: () => {
-      // Rollback input value.
-      if (!this.model) return;
-
-      $scope.label = this.model.label;
-      $scope.description = this.model.description;
-      $scope.placeholder = this.model.placeholder;
-      $scope.required = this.model.required;
-      $scope.optionsText = this.model.optionsText;
-      $scope.validation = this.model.validation;
-    }
-  };
 
   $scope.duplicate = () => {
     let formObject = $builder.getCurrentFormObject();
@@ -98,8 +38,8 @@ export function FbFormObjectEditableController($scope, $injector) {
     });
   }
 
-  $scope.remove = (formObject) => {
-    debugger;
+  $scope.remove = (formObject, event) => {
+    event.stopPropagation();
     $builder.removeFormObject($scope.$parent.formName, formObject);
   }
 }
@@ -118,8 +58,9 @@ export function FbComponentsController($scope, $injector) {
   });
 }
 
-export function FbComponentController($scope) {
-  $scope.copyObjectToScope = (object) => copyObjectToScope(object, $scope);
+export function FbComponentController($scope, $injector) {
+  var $builder = $injector.get('$builder');
+  $scope.copyObjectToScope = (object) => $builder.copyObjectToScope(object, $scope);
 }
 
 export function FbFormController($scope, $injector) {
