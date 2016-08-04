@@ -386,30 +386,34 @@ export function DfPageEditable($injector) {
     restrict: 'A',
     templateUrl: 'app/components/builder/templates/df-page-editable.directive.html',
     link: (scope, element, attrs) => {
-      scope.pages = [{
-        title: 'Page 1',
-        description: 'Description number 1',
-        formName: 'form0',
-        index: 0
-      }];
 
-      scope.currentPage = scope.pages[0];
+      scope.pages = [];
 
-      scope.addNewPage = ()=> {
-        let pagesQty = scope.pages.length
-        scope.pages.push({
-          title: `Page ${pagesQty + 1}`,
-          description: `Description number ${pagesQty + 1}`,
-          formName: `form${pagesQty}`,
-          index: pagesQty
-        })
-        scope.currentPage = scope.pages.slice(-1)[0]
+      scope.addNewPage = (pagesNumber)=> {
+        pagesNumber = pagesNumber || scope.pages.length;
+        scope.pages.push(createPage(pagesNumber))
+        scope.currentPage = scope.pages[pagesNumber];
       }
 
       scope.chagePage = (index)=> {
-        debugger;
         scope.currentPage = scope.pages[index];
       }
+
+      let createPage = (pagesNumber)=> {
+        return {
+          title: `Page ${pagesNumber + 1}`,
+          description: `Description number ${pagesNumber + 1}`,
+          index: pagesNumber,
+          formName: `form${pagesNumber}`,
+          form: {
+            name: `form${pagesNumber}`,
+            content: $builder.addForm(`form${pagesNumber}`)
+          }
+        };
+      }
+
+      // create the first page
+      scope.addNewPage(0);
     }
   }
 
