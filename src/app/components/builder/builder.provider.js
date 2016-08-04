@@ -12,10 +12,13 @@ export function BuilderProvider() {
     updateInput: '$updateInput',
     saveInput: '$saveInput'
   };
+
   this.forms = { 'default': [] };
   this.pages = [];
-  this.currentForm = 'default';
-  this.currentObject = null;
+
+  this.selectedFormObject = null;
+  this.currentPage = null;
+
   this.convertComponent = (name, component) => {
     let ref;
     let result = {
@@ -151,7 +154,32 @@ export function BuilderProvider() {
     if(!this.forms[name])
       this.forms[name] = [];
 
-    return this.forms[name]
+    return this.forms[name];
+  }
+
+  this.getCurrentPage = () => {
+    return this.currentPage;
+  }
+
+  this.selectCurrentPage = (index) => {
+    this.currentPage = this.pages[index];
+  }
+
+  this.addPage = () => {
+    let pageNumber = this.pages.length;
+    let page = {
+      title: `Page ${pageNumber + 1}`,
+      description: `Description number ${pageNumber + 1}`,
+      index: pageNumber,
+      formName: `form${pageNumber}`,
+      form: {
+        name: `form${pageNumber}`,
+        content: this.addForm(`form${pageNumber}`)
+      }
+    };
+    this.pages.push(page);
+    this.selectCurrentPage(pageNumber);
+    return page;
   }
 
   this.insertFormObject = (name, index, formObject) => {
@@ -232,15 +260,17 @@ export function BuilderProvider() {
         groups: this.groups,
         forms: this.forms,
         pages: this.pages,
-        currentForm: this.currentForm,
-        selectedFormObject: undefined,
-        broadcastChannel: this.broadcastChannel,
-        registerComponent: this.registerComponent,
-        addFormObject: this.addFormObject,
+        addPage: this.addPage,
+        getCurrentPage: this.getCurrentPage,
+        selectCurrentPage: this.selectCurrentPage,
         addForm: this.addForm,
+        addFormObject: this.addFormObject,
+        selectedFormObject: this.selectedFormObject,
         insertFormObject: this.insertFormObject,
         removeFormObject: this.removeFormObject,
-        updateFormObjectIndex: this.updateFormObjectIndex
+        updateFormObjectIndex: this.updateFormObjectIndex,
+        broadcastChannel: this.broadcastChannel,
+        registerComponent: this.registerComponent,
       };
     }
   ];
