@@ -49,6 +49,7 @@ angular
   import { FbComponent }                    from './components/builder/builder.directive';
   import { FbForm }                         from './components/builder/builder.directive';
   import { FbFormObject }                   from './components/builder/builder.directive';
+  import { DfPageEditable }                 from './components/builder/builder.directive';
   import { DfDragpages }                    from './components/builder/builder.directive';
   import { ComponentsBuilder }              from './components/builder/builder.components';
 
@@ -87,6 +88,7 @@ angular
   .directive('fbComponents', FbComponents)
   .directive('fbForm', FbForm)
   .directive('fbFormObject', FbFormObject)
+  .directive('dfPageEditable', DfPageEditable)
   .directive('dfDragpages', DfDragpages);
 
   // DRAG
