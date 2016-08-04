@@ -142,12 +142,14 @@ export function FbFormObjectEditable($injector) {
       scope.setupScope(scope.formObject);
 
       scope.$watch('$component.template', (template) => {
-        let view;
         if (!template)
           return;
 
-        view = $compile(template)(scope);
-        $(element).html(view);
+        template = `<div><div class="fb-remove-btn" ng-click='remove(formObject)'>
+                      <i class='glyphicon glyphicon-remove'></i></div>${template}
+                    </div>`;
+        let view = $compile(template)(scope);
+        element.html(view);
       });
 
       element.bind('click', function(e){
@@ -155,8 +157,8 @@ export function FbFormObjectEditable($injector) {
         scope.$apply(function () {
           $timeout(() => {
             scope.$emit($builder.broadcastChannel.addNewInput);
+            ctrl.selectObjectEditable(scope, scope.formObject, element);
           });
-          ctrl.selectObjectEditable(scope, scope.formObject, element);
         });
       });
 
@@ -175,7 +177,7 @@ export function FbFormObjectEditable($injector) {
   return directive;
 }
 
-export function FbObjectEditable($injector) {
+export function FbObjectEditable($injector, $animate, $timeout) {
   // ----------------------------------------
   // providers
   // ----------------------------------------
@@ -193,13 +195,21 @@ export function FbObjectEditable($injector) {
     link: (scope, element, attrs) => {
       scope.builder = $builder;
       scope.formName = attrs.fbObjectEditable;
+      scope.showForm = true;
       scope.$watch('builder.selectedFormObject', (currentFormObject) => {
         if(currentFormObject) {
           scope.setupScope(currentFormObject);
           // scope.data.backup();
           let component = $builder.components[currentFormObject.component];
           let view = $compile(component.popoverTemplate)(scope);
-          $(element).html(view);
+          let childElement = element.children()
+          childElement.addClass('fb-o-editable-out')
+          childElement.html(view);
+          // adnimate
+          $animate.addClass(childElement, 'fb-o-editable-in').then(() => {
+            $animate.removeClass(childElement,'fb-o-editable-out');
+            $animate.removeClass(childElement,'fb-o-editable-in');
+          });
         }
       });
     }
@@ -253,7 +263,7 @@ export function FbComponent($injector) {
           return;
 
         let view = $compile(showcaseTemplate)(scope);
-        $(element).html(view);
+        element.html(view);
       });
     }
   };

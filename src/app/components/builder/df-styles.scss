@@ -51,7 +51,6 @@ li.fb-draggable.dragging::before {
   content: "\f" !important;
  }
 
-
 .df-accordeon {
   ul { padding: 3%;}
   .panel-body {
@@ -95,6 +94,7 @@ li.fb-draggable.dragging::before {
 
 }
 
+
 // DRAGPAGE
 .tabbable-line.tabs-below {
   .nav-tabs {
@@ -128,5 +128,52 @@ li.fb-draggable.dragging::before {
     padding-bottom: 15px;
     height: 600px;
     overflow-y: scroll;
+  }
+}
+
+
+
+
+html, body, .fullheight {
+  min-height: 100% !important;
+  height: 100%;
+}
+
+.non-float {
+  display: table-cell;
+  float: none;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+.nav > li > a {
+  position: relative;
+  display: block;
+  padding: 10px 9px;
+}
+
+.container
+{
+  display:table;
+  width: 100%;
+  margin-top: -50px;
+  padding-top: 50px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.toolbox-container {
+  border-right: 1px solid #ccc;
+  width: 320px;
+  min-width: 320px;
+  .panel {
+    box-shadow: none;
+  }
+}
+
+.form-workarea-container {
+  width: 100%;
+  hr {
+    border-top: 1px dashed #c0c0c0;
   }
 }

@@ -1,61 +1,88 @@
+body, .form-control {
+  font-size: 12px;
+}
+
 .fb-component {
-    padding: 10px;
-    cursor: move;
-    input { cursor: move; }
-    label { cursor: move; }
-    select { cursor: move; }
-    textarea { cursor: move; }
+  padding: 10px;
+  cursor: move;
+  input { cursor: move; }
+  label { cursor: move; }
+  select { cursor: move; }
+  textarea { cursor: move; }
 }
 .fb-form-object-editable {
-    padding: 10px;
-    border: 1px solid #fff;
-    &.active {
-        background-color: #f5f5f5;
-        border-top: 1px solid #ddd;
-        border-bottom: 1px solid #ddd;
-        @include transition(background-color 600ms linear);
-    }
-    &:hover {
-        border: 1px dashed #aaa;
-    }
+  padding: 10px;
+  border: 1px solid #fff;
+  margin-top: 5px;
+  background: repeating-linear-gradient( 45deg, #f7f7f7, #f3eded 1px, #f7f7f7 2px, #f7f7f7 3px );
+  &.active {
+    background: #e5f4fb !important;
+    border: 1px solid #8fb5d6;
+    margin-left: 1px;
+    margin-right: 1px;
+    @include transition(background-color 600ms linear);
+  }
+  &:hover {
+    background: #f3fbff;
+    border: 1px dashed #8fb5d6;
+  }
 }
 .fb-form-object-editable.fb-draggable {
-    cursor: move;
-    input { cursor: move; }
-    label { cursor: pointer; }
-    select { cursor: move; }
-    textarea { cursor: move; }
+  cursor: move;
+  input { cursor: move; }
+  label { cursor: pointer; }
+  select { cursor: move; }
+  textarea { cursor: move; }
 }
 .fb-form-object-editable.empty {
-    cursor: default;
-    margin: 6px;
-    height: 80px;
-    border:dashed 1px #aaa;
-    background-color: #eee;
+  cursor: default;
+  margin: 6px;
+  height: 80px;
+  border:dashed 1px #aaa;
+  background-color: #eee;
 }
 
 .fb-draggable.dragging {
-    background-color: #ffffff;
-    position: absolute;
-    z-index: 800;
-    @include box-shadow(#666 0 0 20px);
+  background-color: #ffffff;
+  position: absolute;
+  z-index: 800;
+  @include box-shadow(#666 0 0 20px);
 }
 
 .fb-required:after {
-    color: #b94a48;
-    content: ' *';
+  color: #b94a48;
+  content: ' *';
 }
 
 .fb-builder {
-    min-height: 250px;
+  min-height: 250px;
+}
+
+.fb-o-editable-out {
+  opacity: 0;
+}
+
+.fb-o-editable-in{
+  opacity: 1;
+  -webkit-transition: all .5s linear;
+  -moz-transition: all .5s linear;
+  -o-transition: all .5s linear;
+  transition: all .5s linear;
+}
+
+.fb-remove-btn {
+  width: 20px;
+  color: #d9534f;
+}
+
+.fb-title-form, .fb-desc-form {
+  outline: none;
+}
+
+.fb-title-form {
+  margin-top: 0;
 }
 
 
-.popover {
-    .control-label {
-        text-align: left;
-    }
-    form {
-        width: 240px;
-    }
-}
+
+
