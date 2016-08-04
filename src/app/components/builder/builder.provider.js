@@ -16,7 +16,7 @@ export function BuilderProvider() {
   this.forms = { 'default': [] };
   this.pages = [];
 
-  this.selectedFormObject = null;
+  this.currentFormObject = null;
   this.currentPage = null;
 
   this.convertComponent = (name, component) => {
@@ -150,10 +150,17 @@ export function BuilderProvider() {
     return this.insertFormObject(name, this.forms[name].length, formObject);
   };
 
+  this.getCurrentFormObject = () => {
+    return this.currentFormObject;
+  }
+
+  this.selectCurrentFormObject = (formObject) => {
+    this.currentFormObject = formObject
+  }
+
   this.addForm = (name) => {
     if(!this.forms[name])
       this.forms[name] = [];
-
     return this.forms[name];
   }
 
@@ -262,10 +269,10 @@ export function BuilderProvider() {
         pages: this.pages,
         addPage: this.addPage,
         getCurrentPage: this.getCurrentPage,
-        selectCurrentPage: this.selectCurrentPage,
         addForm: this.addForm,
+        getCurrentFormObject: this.getCurrentFormObject,
+        selectCurrentFormObject: this.selectCurrentFormObject,
         addFormObject: this.addFormObject,
-        selectedFormObject: this.selectedFormObject,
         insertFormObject: this.insertFormObject,
         removeFormObject: this.removeFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex,

@@ -22,7 +22,7 @@ export function FbBuilder ($injector) {
       scope.formObjects = $builder.addForm(scope.formName);
       scope.builder = $builder;
 
-      scope.$watch('builder.selectedFormObject', (currentFormObject) => {
+      scope.$watch('builder.getCurrentFormObject()', (currentFormObject) => {
         if(currentFormObject)
           scope.updateChildAttributes(currentFormObject);
       }, true);
@@ -193,7 +193,7 @@ export function FbObjectEditable($injector, $animate, $timeout) {
       scope.builder = $builder;
       scope.formName = attrs.fbObjectEditable;
       scope.showForm = true;
-      scope.$watch('builder.selectedFormObject', (currentFormObject) => {
+      scope.$watch('builder.getCurrentFormObject()', (currentFormObject) => {
         if(currentFormObject) {
           scope.setupScope(currentFormObject);
           // scope.data.backup();
