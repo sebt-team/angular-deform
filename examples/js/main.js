@@ -103,5 +103,7 @@ angular.module('deformExamples', ['angularDeforms', 'angular-sweetnotifier', 'ng
       $('a[data-target="#options"]').tab('show')
     });
 
+    $('[data-toggle="tooltip"]').tooltip();
+
   }
 ]);
