@@ -201,7 +201,8 @@ export function FbObjectEditable($injector, $animate, $timeout) {
           // scope.data.backup();
           let component = $builder.components[currentFormObject.component];
           let view = $compile(component.popoverTemplate)(scope);
-          let renderElement = element.children();
+          debugger;
+          let renderElement = element.children('.fb-o-editable').children();
           renderElement.html(view);
           // animate
           renderElement.addClass('fb-o-editable-out')
