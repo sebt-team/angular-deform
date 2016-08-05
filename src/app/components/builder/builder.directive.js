@@ -433,16 +433,16 @@ export function Contenteditable() {
   return {
     require: 'ngModel',
     replace: true,
-    link: function(scope, elm, attrs, ctrl) {
+    link: (scope, elm, attrs, ctrl) => {
         // view to model
-        elm.on('keyup', function() {
-            scope.$apply(function() {
+        elm.on('keyup', () => {
+            scope.$apply(() => {
                 ctrl.$setViewValue(elm.html());
             });
         });
 
         // model to view
-        ctrl.$render = function() {
+        ctrl.$render = () => {
             elm.html(ctrl.$viewValue);
         };
 
