@@ -17,6 +17,9 @@ export function BuilderProvider() {
   this.pages = [];
 
   let currentFormObject = null;
+  let currentFormObjectScope = null;
+  let currentFormObjectElement = null;
+  let currentFormName = null;
   let currentPage = null;
   let currentForm = this.forms['default'];
 
@@ -73,7 +76,7 @@ export function BuilderProvider() {
 
   this.reindexFormObject = (name) => {
     var formObjects, i, index, ref;
-    formObjects = this.forms[name] || currentForm;
+    formObjects = this.forms[name];
     for (index = i = 0, ref = formObjects.length; i < ref; index = i += 1) {
       formObjects[index].index = index;
     }
@@ -102,6 +105,17 @@ export function BuilderProvider() {
       });
     }
   };
+
+  this.copyObjectToScope = (object, scope) => {
+    // Copy object (ng-repeat="object in objects") to scope without `hashKey`.
+    var key, value;
+    for (key in object) {
+      value = object[key];
+      if (key !== '$$hashKey') {
+        scope[key] = value;
+      }
+    }
+  }
 
   this.registerComponent = (name, component) => {
     if (component == null)
@@ -155,10 +169,22 @@ export function BuilderProvider() {
     return currentFormObject;
   }
 
-  this.selectCurrentFormObject = (formName, formObject) => {
-    debugger;
+  this.selectCurrentFormObject = (formName, formObject, element, objectScope) => {
+    currentFormName = formName;
     currentForm = this.forms[formName];
-    currentFormObject = formObject;
+    currentFormObject = angular.copy(formObject);
+    currentFormObjectScope = objectScope;
+
+    if(currentFormObjectElement)
+      currentFormObjectElement.removeClass('active');
+
+    currentFormObjectElement = element
+    currentFormObjectElement.addClass('active');
+  }
+
+  this.updateFormObjectScope = (formObject, objectScope) => {
+    objectScope = objectScope || currentFormObjectScope;
+    this.copyObjectToScope(formObject, objectScope);
   }
 
   this.addForm = (name) => {
@@ -235,9 +261,16 @@ export function BuilderProvider() {
     @param name: The form name.
     @param index: The form object index.
      */
+    name = name || currentFormName
     index = index || currentFormObject.index;
-    let formObjects = this.forms[name] || currentForm;
+    let formObjects = this.forms[name];
     formObjects.splice(index, 1);
+
+    if(!formObjects.length)
+      if(currentPage)
+        if(currentPage.form.name == currentFormName)
+          currentFormObject = undefined;
+
     return this.reindexFormObject(name);
   };
 
@@ -277,12 +310,14 @@ export function BuilderProvider() {
         addForm: this.addForm,
         getCurrentFormObject: this.getCurrentFormObject,
         selectCurrentFormObject: this.selectCurrentFormObject,
+        updateFormObjectScope: this.updateFormObjectScope,
         addFormObject: this.addFormObject,
         insertFormObject: this.insertFormObject,
         removeFormObject: this.removeFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex,
         broadcastChannel: this.broadcastChannel,
         registerComponent: this.registerComponent,
+        copyObjectToScope: this.copyObjectToScope
       };
     }
   ];
