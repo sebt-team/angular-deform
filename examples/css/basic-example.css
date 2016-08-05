@@ -7,3 +7,11 @@
     height: 600px;
     overflow-y: scroll;
 }
+.action-buttons {
+  position: fixed;
+  bottom: 0;
+  margin-bottom: 0 !important;
+  width: inherit;
+  margin-left: -15px;
+  padding: 15px;
+}
