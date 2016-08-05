@@ -16,12 +16,15 @@ export function BuilderProvider() {
   this.forms = { 'default': [] };
   this.pages = [];
 
+  let current = {
+    formObject: null,
+    formObjectScope: null,
+    formObjectElement: null,
+    formName: null,
+    page: null,
+    form: this.forms['default']
+  }
 
-  let currentFormObject = null;
-  let currentFormObjectScope = null;
-  let currentFormObjectElement = null;
-  let currentFormName = null;
-  let currentPage = null;
   let currentForm = this.forms['default'];
 
   this.convertComponent = (name, component) => {
@@ -167,24 +170,24 @@ export function BuilderProvider() {
   };
 
   this.getCurrentFormObject = () => {
-    return currentFormObject;
+    return current.formObject;
   }
 
   this.selectCurrentFormObject = (formName, formObject, element, objectScope) => {
-    currentFormName = formName;
-    currentForm = this.forms[formName];
-    currentFormObject = angular.copy(formObject);
-    currentFormObjectScope = objectScope;
+    current.formName = formName;
+    current.form = this.forms[formName];
+    current.formObject = angular.copy(formObject);
+    current.formObjectScope = objectScope;
 
-    if(currentFormObjectElement)
-      currentFormObjectElement.removeClass('active');
+    if(current.formObjectElement)
+      current.formObjectElement.removeClass('active');
 
-    currentFormObjectElement = element
-    currentFormObjectElement.addClass('active');
+    current.formObjectElement = element
+    current.formObjectElement.addClass('active');
   }
 
   this.updateFormObjectScope = (formObject, objectScope) => {
-    objectScope = objectScope || currentFormObjectScope;
+    objectScope = objectScope || current.formObjectScope;
     this.copyObjectToScope(formObject, objectScope);
   }
 
@@ -195,11 +198,11 @@ export function BuilderProvider() {
   }
 
   this.getCurrentPage = () => {
-    return currentPage;
+    return current.page;
   }
 
   this.selectCurrentPage = (index) => {
-    return currentPage = this.pages[index];
+    return current.page = this.pages[index];
   }
 
   this.addPage = () => {
@@ -262,15 +265,15 @@ export function BuilderProvider() {
     @param name: The form name.
     @param index: The form object index.
      */
-    name = name || currentFormName
-    index = index || currentFormObject.index;
+    name = name || current.formName
+    index = index || current.formObject.index;
     let formObjects = this.forms[name];
     formObjects.splice(index, 1);
 
     if(!formObjects.length)
-      if(currentPage)
-        if(currentPage.form.name == currentFormName)
-          currentFormObject = undefined;
+      if(current.page)
+        if(current.page.form.name == current.formName)
+          current.formObject = undefined;
 
     return this.reindexFormObject(name);
   };

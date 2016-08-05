@@ -396,12 +396,12 @@ export function DfPageEditable($injector) {
     templateUrl: 'app/components/builder/templates/df-page-editable.directive.html',
     link: (scope, element, attrs) => {
 
-      scope.builer = $builder;
-      scope.pages = scope.builer.pages;
+      scope.pages = $builder.pages;
+      scope.currentPage = $builder.getCurrentPage();
 
       scope.$watch('builer.getCurrentPage()', function(currentPage) {
         if(currentPage)
-          scope.currentPage = scope.builer.getCurrentPage();
+          scope.currentPage = $builder.getCurrentPage();
       });
 
       scope.addNewPage = ()=> {
@@ -444,7 +444,9 @@ export function DfDragpages($injector) {
   return directive;
 }
 
-export function Contenteditable() {
+export function Contenteditable($injector) {
+  var $timeout = $injector.get('$timeout');
+
   return {
     require: '^?ngModel',
     replace: true,
@@ -461,8 +463,11 @@ export function Contenteditable() {
           elm.html(ctrl.$viewValue);
         };
 
+        debugger;
         // load init value from DOM
-        ctrl.$setViewValue(elm.html());
+        $timeout(function(){
+          ctrl.$setViewValue(elm.html());
+        });
     }
   };
 }
