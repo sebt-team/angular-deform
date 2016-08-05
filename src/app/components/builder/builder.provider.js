@@ -16,6 +16,7 @@ export function BuilderProvider() {
   this.forms = { 'default': [] };
   this.pages = [];
 
+
   let currentFormObject = null;
   let currentFormObjectScope = null;
   let currentFormObjectElement = null;

@@ -398,13 +398,10 @@ export function DfPageEditable($injector) {
 
       scope.builer = $builder;
       scope.pages = scope.builer.pages;
-      $timeout(() => {
-        scope.currentPage = scope.builer.getCurrentPage();
-      });
-      scope.$watch('scope.builer.getCurrentPage()', function(page) {
-        if(page)
+
+      scope.$watch('builer.getCurrentPage()', function(currentPage) {
+        if(currentPage)
           scope.currentPage = scope.builer.getCurrentPage();
-        console.log("watch");
       });
 
       scope.addNewPage = ()=> {
@@ -461,7 +458,7 @@ export function Contenteditable() {
 
         // model to view
         ctrl.$render = () => {
-            elm.html(ctrl.$viewValue);
+          elm.html(ctrl.$viewValue);
         };
 
         // load init value from DOM

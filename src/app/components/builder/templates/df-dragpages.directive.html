@@ -6,13 +6,6 @@
           <h3 class="fb-title-form" contenteditable="true" ng-model="page.title"></h3>
           <h5 class="fb-title-form" contenteditable="true" ng-model="page.description"></h5>
           <hr>
-          <pre>
-            {{page.title}}
-          </pre>
-          <pre>
-            {{page.description}}
-          </pre>
-          <!-- http://stackoverflow.com/questions/14561676/angularjs-and-contenteditable-two-way-binding-doesnt-work-as-expected -->
           <div fb-builder="{{page.form.name}}"></div>
         </div>
       </div>
@@ -26,7 +19,3 @@
     </ul>
   </div>
 </div>
-
-<pre>
-  {{builder.getCurrentPage()}}
-</pre>
