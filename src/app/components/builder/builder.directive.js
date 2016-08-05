@@ -377,6 +377,7 @@ export function DfPageEditable($injector) {
   // providers
   // ----------------------------------------
   var $builder = $injector.get('$builder');
+  var $timeout = $injector.get('$timeout');
 
   // ----------------------------------------
   // directive
@@ -387,7 +388,15 @@ export function DfPageEditable($injector) {
     link: (scope, element, attrs) => {
 
       scope.builer = $builder;
-      scope.pages = $builder.pages;
+      scope.pages = scope.builer.pages;
+      $timeout(() => {
+        scope.currentPage = scope.builer.getCurrentPage();
+      });
+      scope.$watch('scope.builer.getCurrentPage()', function(page) {
+        if(page)
+          scope.currentPage = scope.builer.getCurrentPage();
+        console.log("watch");
+      });
 
       scope.addNewPage = ()=> {
         $builder.addPage();
@@ -431,7 +440,7 @@ export function DfDragpages($injector) {
 
 export function Contenteditable() {
   return {
-    require: 'ngModel',
+    require: '^?ngModel',
     replace: true,
     link: (scope, elm, attrs, ctrl) => {
         // view to model

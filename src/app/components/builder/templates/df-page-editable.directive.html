@@ -4,47 +4,23 @@
 
 <br/>
 
-<div class="survey-panel panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-  <div class="panel sidebar_section">
-    <div class="panel-heading" role="tab" id="pageOne">
-      <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-target="#collapsePageOne">
-          Página uno
-        </a>
-      </h4>
+<div class="row">
+
+  <div class="col-md-12 col-sm-12">
+    <div class="form-group">
+      <label>Title</label>
+      <input type="text" class="form-control" placeholder="Title" ng-model="currentPage.title">
     </div>
-    <div id="collapsePageOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="pageOne">
-      <div class="panel-body">
-        <div class="row">
-
-          <div class="col-md-12 col-sm-12">
-            <div class="form-group">
-              <label>Titulo</label>
-              <input type="text" class="form-control" id="exampleInputEmail1" placeholder="Email">
-            </div>
-            <div class="form-group">
-              <label>Descripcion</label>
-              <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password">
-              <p class="help-block">Opcional</p>
-            </div>
-          </div>
-
-        </div>
-      </div>
+    <div class="form-group">
+      <label>Description</label>
+      <textarea rows="4" cols="40" class="form-control" placeholder="Description" ng-model="currentPage.description"></textarea>
+      <p class="help-block">Optional</p>
     </div>
   </div>
-  <div class="panel sidebar_section">
-    <div class="panel-heading" role="tab" id="pageTwo">
-      <h4 class="panel-title">
-        <a role="button" data-toggle="collapse" data-target="#collapsePageTwo">
-          Página dos
-        </a>
-      </h4>
-    </div>
-    <div id="collapsePageTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="pageTwo">
-      <div class="panel-body">
-        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-      </div>
-    </div>
-  </div>
+
+</div>
+<div class="row">
+  <pre>
+    {{currentPage}}
+  </pre>
 </div>
