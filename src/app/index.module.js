@@ -51,6 +51,7 @@ angular
   import { FbFormObject }                   from './components/builder/builder.directive';
   import { DfPageEditable }                 from './components/builder/builder.directive';
   import { DfDragpages }                    from './components/builder/builder.directive';
+  import { Contenteditable }                from './components/builder/builder.directive';
   import { ComponentsBuilder }              from './components/builder/builder.components';
 
   // MAIN
@@ -94,4 +95,5 @@ angular
   .directive('fbForm', FbForm)
   .directive('fbFormObject', FbFormObject)
   .directive('dfPageEditable', DfPageEditable)
-  .directive('dfDragpages', DfDragpages);
+  .directive('dfDragpages', DfDragpages)
+  .directive('contenteditable', Contenteditable);

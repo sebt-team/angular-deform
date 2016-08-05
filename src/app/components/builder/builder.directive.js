@@ -13,7 +13,6 @@ export function FbBuilder ($injector) {
     controller: 'fbBuilderController',
     templateUrl: 'app/components/builder/templates/df-builder.directive.html',
     link: (scope, element, attrs) => {
-      debugger;
       // ----------------------------------------
       // valuables
       // ----------------------------------------
@@ -428,4 +427,27 @@ export function DfDragpages($injector) {
   }
 
   return directive;
+}
+
+export function Contenteditable() {
+  return {
+    require: 'ngModel',
+    replace: true,
+    link: function(scope, elm, attrs, ctrl) {
+        // view to model
+        elm.on('keyup', function() {
+            scope.$apply(function() {
+                ctrl.$setViewValue(elm.html());
+            });
+        });
+
+        // model to view
+        ctrl.$render = function() {
+            elm.html(ctrl.$viewValue);
+        };
+
+        // load init value from DOM
+        ctrl.$setViewValue(elm.html());
+    }
+  };
 }
