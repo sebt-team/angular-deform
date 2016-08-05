@@ -444,25 +444,28 @@ export function DfDragpages($injector) {
   return directive;
 }
 
-export function Contenteditable() {
+export function Contenteditable($injector) {
+  var $timeout = $injector.get('$timeout');
   return {
     require: '^?ngModel',
     replace: true,
     link: (scope, elm, attrs, ctrl) => {
-        // view to model
-        elm.on('keyup', () => {
-            scope.$apply(() => {
-                ctrl.$setViewValue(elm.html());
-            });
-        });
+      // view to model
+      elm.on('keyup', () => {
+          scope.$apply(() => {
+              ctrl.$setViewValue(elm.html());
+          });
+      });
 
-        // model to view
-        ctrl.$render = () => {
-          elm.html(ctrl.$viewValue);
-        };
+      // model to view
+      ctrl.$render = () => {
+        elm.html(ctrl.$viewValue);
+      };
 
-        // load init value from DOM
+      // load init value from DOM
+      $timeout(() => {
         ctrl.$setViewValue(elm.html());
+      });
     }
   };
 }
