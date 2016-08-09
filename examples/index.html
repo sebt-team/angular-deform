@@ -31,10 +31,10 @@
 
   <div class="container">
     <h1>Basic Example</h1>
-    <div class="row" ng-controller="DemoController">
+    <div class="example-container" ng-controller="DemoController">
       <hr/>
 
-      <div class="toolbox-container non-float">
+      <div class="toolbox-container">
         <div class="inputs-container df-tabs-container">
 
           <!-- Nav tabs -->
@@ -43,13 +43,13 @@
               <a role="tab" data-target="#inputs" data-toggle="tab" aria-controls="inputs">Inputs</a>
             </li>
             <li role="presentation">
-              <a role="tab" data-target="#page" data-toggle="tab" aria-controls="page">Pagina</a>
+              <a role="tab" data-target="#page" data-toggle="tab" aria-controls="page">Pages</a>
             </li>
             <li role="presentation">
-              <a role="tab" data-target="#survey" data-toggle="tab" aria-controls="survey">Encuesta</a>
+              <a role="tab" data-target="#survey" data-toggle="tab" aria-controls="survey">Survey</a>
             </li>
             <li role="presentation">
-              <a role="tab" data-target="#options" data-toggle="tab" aria-controls="options">Opciones</a>
+              <a role="tab" data-target="#options" data-toggle="tab" aria-controls="options">Options</a>
             </li>
           </ul>
 
@@ -88,12 +88,12 @@
           </div>
         </div>
         <div class="action-buttons well">
-          <a href="#" class="btn btn-primary btn-lg" data-toggle="tooltip" data-placement="bottom" title="Save"> <i class="fa fa-save"></i></a>
-          <a href="#" class="btn btn-warning btn-lg" data-toggle="tooltip" data-placement="bottom" title="Publish"> <i class="fa fa-rss"></i></a>
+          <a href="#" class="btn btn-primary btn-lg" data-toggle="tooltip" data-placement="top" title="Save"> <i class="fa fa-save"></i></a>
+          <a href="#" class="btn btn-warning btn-lg" data-toggle="tooltip" data-placement="top" title="Publish"> <i class="fa fa-rss"></i></a>
         </div>
       </div>
 
-      <div class="form-workarea-container non-float">
+      <div class="form-workarea-container">
         <div df-dragpages></div>
       </div>
     </div>
