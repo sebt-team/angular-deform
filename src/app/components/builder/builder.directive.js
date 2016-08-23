@@ -396,10 +396,12 @@ export function DfPageEditable($injector) {
     templateUrl: 'app/components/builder/templates/df-page-editable.directive.html',
     link: (scope, element, attrs) => {
 
+      scope.builer = $builder;
       scope.pages = $builder.pages;
       scope.currentPage = $builder.getCurrentPage();
 
       scope.$watch('builer.getCurrentPage()', function(currentPage) {
+        debugger;
         if(currentPage)
           scope.currentPage = $builder.getCurrentPage();
       });
@@ -450,19 +452,16 @@ export function DfDragpages($injector) {
 
 export function Contenteditable($injector) {
   var $timeout = $injector.get('$timeout');
-<<<<<<< HEAD
 
-=======
->>>>>>> 0113cb000ca879f7a2b67c1adb5a3b894ef458fd
   return {
     require: '^?ngModel',
     replace: true,
     link: (scope, elm, attrs, ctrl) => {
       // view to model
       elm.on('keyup', () => {
-          scope.$apply(() => {
-              ctrl.$setViewValue(elm.html());
-          });
+        scope.$apply(() => {
+            ctrl.$setViewValue(elm.html());
+        });
       });
 
       // model to view
@@ -470,18 +469,10 @@ export function Contenteditable($injector) {
         elm.html(ctrl.$viewValue);
       };
 
-<<<<<<< HEAD
-        debugger;
-        // load init value from DOM
-        $timeout(function(){
-          ctrl.$setViewValue(elm.html());
-        });
-=======
       // load init value from DOM
       $timeout(() => {
         ctrl.$setViewValue(elm.html());
       });
->>>>>>> 0113cb000ca879f7a2b67c1adb5a3b894ef458fd
     }
   };
 }
