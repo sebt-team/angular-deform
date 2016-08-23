@@ -407,6 +407,10 @@ export function DfPageEditable($injector) {
       scope.addNewPage = ()=> {
         $builder.addPage();
       }
+
+      scope.removePage = ()=> {
+        alert(1);
+      }
     }
   }
 
@@ -437,7 +441,7 @@ export function DfDragpages($injector) {
       }
 
       // create the first page
-      scope.addNewPage(0);
+      $builder.addPage();
     }
   }
 

@@ -278,6 +278,17 @@ export function BuilderProvider() {
     return this.reindexFormObject(name);
   };
 
+  this.duplicateFormObject = (name, formObject) => {
+    name = name || current.formName
+    formObject = formObject || current.formObject
+
+    let index = formObject.index
+    let formObjects = this.forms[name];
+    formObjects.splice(index, 0, angular.copy(formObject));
+
+    return this.reindexFormObject(name);
+  }
+
   this.updateFormObjectIndex = (name, oldIndex, newIndex) => {
     /*
     Update the index of the form object.
@@ -318,6 +329,7 @@ export function BuilderProvider() {
         addFormObject: this.addFormObject,
         insertFormObject: this.insertFormObject,
         removeFormObject: this.removeFormObject,
+        duplicateFormObject: this.duplicateFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex,
         broadcastChannel: this.broadcastChannel,
         registerComponent: this.registerComponent,

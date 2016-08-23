@@ -13,6 +13,7 @@
     <ul class="nav nav-tabs">
       <li ng-class="{ 'active': builder.getCurrentPage().index == $index }" ng-repeat="page in pages" ng-click="changePage($index)">
         <a data-target="page_{{$index}}" data-toggle="tab" aria-controls="page_{{$index}}">
+          <i class='glyphicon glyphicon-remove'></i>
           Página {{$index + 1}}
         </a>
       </li>

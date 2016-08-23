@@ -31,17 +31,13 @@ export function FbFormObjectEditableController($scope, $injector) {
     $scope.validationOptions = $builder.components[formObject.component].validationOptions;
   };
 
-  $scope.duplicate = () => {
-    let formObject = $builder.getCurrentFormObject();
-    let formName = $scope.formName;
-    $builder.forms[formName].splice(formObject.index, 0, angular.copy(formObject));
-    $timeout(() => {
-      $scope.$broadcast($builder.broadcastChannel.saveInput);
-    });
+  $scope.duplicate = (formObject) => {
+    $builder.duplicateFormObject($scope.$parent.formName, formObject);
   }
 
   $scope.remove = (formObject, event) => {
-    event.stopPropagation();
+    if(event)
+      event.stopPropagation();
     $builder.removeFormObject($scope.$parent.formName, formObject);
   }
 }
