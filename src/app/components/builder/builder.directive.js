@@ -155,7 +155,6 @@ export function FbFormObjectEditable($injector) {
             scope.$emit($builder.broadcastChannel.selectInput);
             let formName = scope.$parent.formName;
             let formObject = scope.formObject;
-            debugger;
             $builder.selectCurrentFormObject(formName, formObject, element, scope);
           });
         });
@@ -201,7 +200,6 @@ export function FbObjectEditable($injector, $animate, $timeout) {
           // scope.data.backup();
           let component = $builder.components[currentFormObject.component];
           let view = $compile(component.popoverTemplate)(scope);
-          debugger;
           let renderElement = element.children('.fb-o-editable').children();
           renderElement.html(view);
           // animate
@@ -401,7 +399,6 @@ export function DfPageEditable($injector) {
       scope.currentPage = $builder.getCurrentPage();
 
       scope.$watch('builer.getCurrentPage()', function(currentPage) {
-        debugger;
         if(currentPage)
           scope.currentPage = $builder.getCurrentPage();
       });

@@ -66,7 +66,7 @@ li.fb-draggable.dragging::before {
       background-color: white;
       -moz-box-sizing: border-box;
       box-sizing: border-box;
-      width: 45%;
+      width: 50%;
       max-width: 200px;
       line-height: 2em !important;
       padding: 4px;
@@ -140,4 +140,44 @@ html, body, .fullheight {
   padding-top: 50px;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+}
+
+
+
+
+.truncate {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.panel {
+  border-radius: 0px !important;
+  border: 1px solid #ccc;
+  .panel-heading {
+    background: #f5f5f5;
+    padding: 4px;
+    border-radius: 0px;
+    .panel-title {
+      font-size: 12px;
+      padding: 0;
+      margin: 0;
+    }
+  }
+}
+
+#collapsePints, #collapseDependency {
+  .form-group {
+    padding-bottom: 18px;
+    .control-label {
+      font-weight: normal;
+    }
+    .form-control {
+      height: 28px;
+    }
+    .btn {
+      padding: 5px 22px;
+      font-size: 12px;
+    }
+  }
 }
