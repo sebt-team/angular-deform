@@ -14,14 +14,14 @@ export function FbFormObjectEditableController($scope, $injector) {
     // 5. setup validationOptions
     $builder.copyObjectToScope(formObject, $scope);
 
-        // separate string to render option text textarea
-        $scope.optionsText = "";
-        angular.forEach(formObject.options, function(value, key) {
-          $scope.optionsText += value.text + '\n';
-        });
+    // separate string to render option text textarea
+    $scope.optionsText = "";
+    angular.forEach(formObject.options, function(value, key) {
+      $scope.optionsText += value.text + '\n';
+    });
 
+    // wtach normal attibutes
     $scope.$watch('[label, description, placeholder, required, options, validation]', () => {
-      debugger;
       formObject.label        = $scope.label;
       formObject.description  = $scope.description;
       formObject.placeholder  = $scope.placeholder;
@@ -30,12 +30,15 @@ export function FbFormObjectEditableController($scope, $injector) {
       formObject.validation   = $scope.validation;
     }, true);
 
+    // watch options (to selects, radios and checkboxes)
     $scope.$watch('optionsText', (text) => {
-      debugger;
-      $scope.options = text.split('\n').map(opt => {
-        // if(opt.length > 0) return {text: opt, value: 0};
-        return {text: opt, value: 0};
-      });
+      if(!text || text == '')
+        return;
+
+      $scope.options = text.split('\n').reduce((sum, opt) => {
+        if(opt.length > 0) sum.push({text: opt, value: 0});
+        return sum;
+      }, []);
       // $scope.inputText  = $scope.options[0];
     });
     $scope.validationOptions = $builder.components[formObject.component].validationOptions;
