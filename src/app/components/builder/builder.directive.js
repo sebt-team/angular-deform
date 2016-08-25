@@ -21,11 +21,6 @@ export function FbBuilder ($injector) {
       scope.formObjects = $builder.addForm(scope.formName);
       scope.builder = $builder;
 
-      // scope.$watch('builder.getCurrentFormObject()', (currentFormObject) => {
-      //   if(currentFormObject)
-      //     scope.updateChildAttributes(currentFormObject);
-      // }, true);
-
       $(element).addClass('fb-builder');
 
       $drag.droppable($(element), {

@@ -7,14 +7,13 @@ export function BuilderProvider() {
   this.config = { popoverPlacement: 'right' };
   this.components = {};
   this.groups = [];
+  this.forms = { 'default': [] };
+  this.pages = [];
   this.broadcastChannel = {
     selectInput: '$selectInput',
     updateInput: '$updateInput',
     saveInput: '$saveInput'
   };
-
-  this.forms = { 'default': [] };
-  this.pages = [];
 
   let current = {
     formObject: null,
@@ -24,8 +23,14 @@ export function BuilderProvider() {
     page: null,
     form: this.forms['default']
   }
-
   let currentForm = this.forms['default'];
+  let secretKey = '_' + Math.random().toString(36).substr(2, 9);
+  let createdKeys = 0;
+
+  function uniqKey() {
+    createdKeys++;
+    return `${secretKey}${Date.now()}${createdKeys}`
+  }
 
   this.convertComponent = (name, component) => {
     let ref;
@@ -56,6 +61,7 @@ export function BuilderProvider() {
 
     return result;
   };
+
   this.convertFormObject = (name, formObject) => {
     formObject = formObject || {};
     let ref;
@@ -66,6 +72,7 @@ export function BuilderProvider() {
 
     let result = {
       id: formObject.id,
+      key: (ref = formObject.key) != null ? ref : uniqKey(),
       component: formObject.component,
       editable: (ref = formObject.editable) != null ? ref : component.editable,
       label: (ref = formObject.label) != null ? ref : component.label,
