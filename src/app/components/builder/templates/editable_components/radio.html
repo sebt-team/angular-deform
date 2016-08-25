@@ -11,11 +11,6 @@
     <label class='control-label'>Options</label>
     <textarea class='form-control' rows='3' ng-model='optionsText'/>
   </div>
-  <div class='checkbox'>
-    <label>
-      <input type='checkbox' ng-model='required' />Required
-    </label>
-  </div>
   <hr/>
   <div class="df-accordeon panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel sidebar_section">
@@ -44,11 +39,59 @@
         </div>
       </div>
     </div>
+    <div class="panel sidebar_section">
+      <div class="panel-heading" role="tab" id="heading{{$index}}">
+        <h4 class="panel-title">
+          <a role="button" data-toggle="collapse" data-target="#collapseDependency">
+            Configuration
+          </a>
+        </h4>
+      </div>
+      <div id="collapseDependency" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
+        <div class="panel-body">
+          <form>
+            <div class="form-group" ng-repeat='item in options track by $index'>
+              <label class="control-label truncate col-sm-6" for="pwd">{{item.text}}:</label>
+              <div class="col-sm-6">
+                <input type="text" class="form-control" ng-model="item.value" placeholder="0">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-6 col-sm-6">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
-  <hr/>
   <div class='form-group'>
     <input type='submit' ng-click='duplicate()' class='btn btn-primary' value='Duplicate'/>
     <input type='button' ng-click='cancel()' class='btn btn-default' value='Cancel'/>
     <input type='button' ng-click='remove()' class='btn btn-danger' value='Delete'/>
   </div>
 </form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
