@@ -66,7 +66,7 @@ angular
   // CONFIG
 angular
   .module('builderComponents', ['builder', 'validator.rules'])
-  .config(['$builderProvider', ComponentsBuilder])
+  .config(['$builderProvider', ComponentsBuilder]);
 
   // CONTROLLERS
 angular
