@@ -1,0 +1,101 @@
+<form>
+  <div class='form-group'>
+    <label class='control-label'>Label</label>
+    <input type='text' ng-model='label' validator='[required]' class='form-control'/>
+  </div>
+  <div class='form-group'>
+    <label class='control-label'>Description</label>
+    <input type='text' ng-model='description' class='form-control'/>
+  </div>
+  <div class='form-group'>
+    <label class='control-label'>Options</label>
+    <textarea class='form-control' rows='3' ng-model='optionsText'/>
+  </div>
+  <hr/>
+  <div class="df-accordeon panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="panel sidebar_section">
+      <div class="panel-heading" role="tab" id="heading{{$index}}">
+        <h4 class="panel-title">
+          <a role="button" data-toggle="collapse" data-target="#collapsePints">
+            Points
+          </a>
+        </h4>
+      </div>
+      <div id="collapsePints" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
+        <div class="panel-body">
+          <form>
+            <div class="form-group" ng-repeat='item in options track by $index'>
+              <label class="control-label truncate col-sm-5" for="pwd">{{item.text}}:</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" ng-model="item.value" placeholder="0">
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-sm-offset-5 col-sm-7">
+                <button type="submit" class="btn btn-primary">Save</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="panel sidebar_section">
+      <div class="panel-heading" role="tab" id="heading{{$index}}">
+        <h4 class="panel-title">
+          <a role="button" data-toggle="collapse" data-target="#collapseDependency">
+            Dependency
+          </a>
+        </h4>
+      </div>
+      <div id='collapseDependency' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading{{$index}}'>
+        <div class='panel-body'>
+          <ng-form>
+            <div class='form-group' ng-repeat='item in options track by $index'>
+              <div class='checkbox'>
+                <div class="col-sm-5">
+                  <label>
+                    <input name='{{formName+index}}' ng-model='addDependency[$index]' validator-group='{{formName}}' value='{{item}}' type='checkbox' ng-change='$parent.dependency[$index] = undefined'/>{{item.text}}
+                  </label>
+                </div>
+                <div class='col-sm-7'>
+                  <select ng-disabled='!addDependency[$index]' ng-model='$parent.dependency[$index]' class='form-control' ng-options="fo.key as fo.label group by fo.page for fo in allFormObjects">
+                    <option value=''><i>-Select dependency-</i></option>
+                  </select>
+                </div>
+              </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class='form-group'>
+    <input type='submit' ng-click='duplicate()' class='btn btn-primary' value='Duplicate'/>
+    <input type='button' ng-click='cancel()' class='btn btn-default' value='Cancel'/>
+    <input type='button' ng-click='remove()' class='btn btn-danger' value='Delete'/>
+  </div>
+</form>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

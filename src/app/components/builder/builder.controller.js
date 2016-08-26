@@ -15,11 +15,20 @@ export function FbFormObjectEditableController($scope, $injector) {
     // 5. setup validationOptions
     $builder.copyObjectToScope(formObject, $scope);
 
-    // separate string to render option text textarea
+    // separate string to render options on text textarea
     $scope.optionsText = "";
     angular.forEach(formObject.options, function(value, key) {
       $scope.optionsText += value.text + '\n';
     });
+
+    // list all instanced objects pages
+    $scope.allFormObjects = $builder.pages.reduce((sum, page) => {
+      sum = sum.concat(page.form.content.map( fo => {
+        fo.page = `${page.title} (page ${page.index + 1})`;
+        return fo;
+      }));
+      return sum;
+    }, []);
 
     // wtach normal attibutes
     $scope.$watch('[label, description, placeholder, required, options, validation]', () => {
@@ -42,6 +51,7 @@ export function FbFormObjectEditableController($scope, $injector) {
       }, []);
       // $scope.inputText  = $scope.options[0];
     });
+
     $scope.validationOptions = $builder.components[formObject.component].validationOptions;
   };
 
