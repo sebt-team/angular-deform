@@ -97,7 +97,6 @@ export function FbFormController($scope, $injector) {
   var $builder = $injector.get('$builder');
   var $timeout = $injector.get('$timeout');
 
-  debugger;
   if ($scope.input == null) $scope.input = [];
 
   $scope.$watch('form', function() {
@@ -123,7 +122,6 @@ export function FbFormObjectController($scope, $injector) {
       label: $scope.formObject.label,
       value: value != null ? value : ''
     };
-    debugger;
     $scope.$parent.input.splice($scope.$index, 1, input);
   };
 

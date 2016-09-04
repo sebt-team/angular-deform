@@ -62,9 +62,9 @@ export function ComponentsBuilder($builderProvider) {
       icon: 'fa fa-list-alt',
       required: false,
       complexValues: true,
-      options: ['value one', 'value two'],
+      options: [{text: 'value one'}, {text: 'value two'}],
       showcaseTemplate: "<i class='{{icon}}'></i> <span>{{label}}</span>",
-      template: "<div class=\"form-group\">\n    <label for=\"{{formName+index}}\" class=\"col-sm-4 control-label\">{{label}}</label>\n    <div class=\"col-sm-8\">\n        <select ng-options=\"value for value in options\" id=\"{{formName+index}}\" class=\"form-control\"\n            ng-model=\"inputText\" ng-init=\"inputText = options[0]\"/>\n        <p class='help-block'>{{description}}</p>\n    </div>\n</div>",
-      popoverTemplate: "<form>\n    <div class=\"form-group\">\n        <label class='control-label'>Label</label>\n        <input type='text' ng-model=\"label\" validator=\"[required]\" class='form-control'/>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Description</label>\n        <input type='text' ng-model=\"description\" class='form-control'/>\n    </div>\n    <div class=\"form-group\">\n        <label class='control-label'>Options</label>\n        <textarea class=\"form-control\" rows=\"3\" ng-model=\"optionsText\"/>\n    </div>\n\n    <hr/>\n    <div class='form-group'>\n        <input type='submit' ng-click=\"duplicate()\" class='btn btn-primary' value='Duplicate'/>\n        <input type='button' ng-click=\"cancel()\" class='btn btn-default' value='Cancel'/>\n        <input type='button' ng-click=\"remove()\" class='btn btn-danger' value='Delete'/>\n    </div>\n</form>"
+      template: "<div class=\"form-group\">\n    <label for=\"{{formName+index}}\" class=\"col-sm-4 control-label\">{{label}}</label>\n    <div class=\"col-sm-8\">\n        <select ng-options=\"value.key as value.text for value in options\" id=\"{{formName+index}}\" class=\"form-control\"\n ng-model=\"inputText\" ng-init=\"inputText = inputText || options[0]\"><option value=''> - <option> </select> <p class='help-block'>{{description}}</p>\n    </div>\n</div>",
+      popoverTemplateUrl: 'app/components/builder/templates/editable_components/select.html'
     });
   }
