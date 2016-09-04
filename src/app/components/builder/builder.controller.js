@@ -30,13 +30,14 @@ export function FbFormObjectEditableController($scope, $injector) {
     }, []);
 
     // wtach normal attibutes
-    $scope.$watch('[label, description, placeholder, required, options, validation]', () => {
+    $scope.$watch('[label, description, placeholder, required, options, validation, dependency]', () => {
       formObject.label        = $scope.label;
       formObject.description  = $scope.description;
       formObject.placeholder  = $scope.placeholder;
       formObject.required     = $scope.required;
       formObject.options      = $scope.options;
       formObject.validation   = $scope.validation;
+      formObject.dependency   = $scope.dependency;
     }, true);
 
     // watch options (to selects, radios and checkboxes)
@@ -44,8 +45,17 @@ export function FbFormObjectEditableController($scope, $injector) {
       if(!text || text == '')
         return;
 
-      $scope.options = text.split('\n').reduce((sum, opt) => {
-        if(opt.length > 0) sum.push({text: opt, value: 0});
+      $scope.options = text.split('\n').reduce((sum, text, index) => {
+        if(text.length <= 0)
+          return sum;
+
+        let currentOption = $scope.options[index] || {};
+        currentOption.text = text;
+
+        if(!currentOption.key) currentOption.key = $builder.generateKey();
+        if(!currentOption.value) currentOption.value = 0;
+
+        sum.push(currentOption);
         return sum;
       }, []);
       // $scope.inputText  = $scope.options[0];
@@ -87,6 +97,7 @@ export function FbFormController($scope, $injector) {
   var $builder = $injector.get('$builder');
   var $timeout = $injector.get('$timeout');
 
+  debugger;
   if ($scope.input == null) $scope.input = [];
 
   $scope.$watch('form', function() {
@@ -112,8 +123,14 @@ export function FbFormObjectController($scope, $injector) {
       label: $scope.formObject.label,
       value: value != null ? value : ''
     };
+    debugger;
     $scope.$parent.input.splice($scope.$index, 1, input);
   };
+
+  $scope.findSelectedOption = (options, key) => {
+    let selectedOption = options.filter((option)=> { return option.key == key})[0];
+    return selectedOption || false;
+  }
 }
 export function DfDragpagesController($scope) {
   // TODO: adds logic code

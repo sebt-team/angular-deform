@@ -315,39 +315,37 @@ export function FbFormObject($injector) {
     link: (scope, element, attrs) => {
       scope.formObject = $parse(attrs.fbFormObject)(scope);
       scope.$component = $builder.components[scope.formObject.component];
+
       // listen (formObject updated)
       scope.$on($builder.broadcastChannel.updateInput, () => {
-        scope.updateInput(scope.inputText);
+        if (scope.$component.multipeChoice)
+          updateInputArray();
+        else
+          updateInputText();
       });
-      if (scope.$component.arrayToText) {
+
+      // watch multiples values
+      if (scope.$component.multipeChoice) {
         scope.inputArray = [];
         scope.$watch('inputArray', (newValue, oldValue) => {
-
-          if (newValue === oldValue)
-            return;
-
-          let checked = [];
-          let ref;
-          for (var i in scope.inputArray) {
-            if (scope.inputArray[i]) {
-              checked.push((ref = scope.options[i]) != null ? ref : scope.inputArray[i]);
-            }
-          }
-          scope.inputText = checked.join(', ');
+          if (newValue === oldValue) return;
+          updateInputArray();
         }, true);
       }
+
+      // watch single value
       scope.$watch('inputText', () => {
-        scope.updateInput(scope.inputText);
+        updateInputText();
       });
+
       // watch (management updated form objects)
       scope.$watch(attrs.fbFormObject, () => {
         scope.copyObjectToScope(scope.formObject);
       }, true);
-      scope.$watch('$component.template', (template) => {
 
-        if (!template) {
-          return;
-        }
+      // set component template on ui
+      scope.$watch('$component.template', (template) => {
+        if (!template) return;
 
         let $template = $(template);
         let view = $compile($template)(scope);
@@ -356,18 +354,27 @@ export function FbFormObject($injector) {
         return $(element).html(view);
       });
 
-      if (!scope.$component.arrayToText && scope.formObject.options.length > 0)
-        scope.inputText = scope.formObject.options[0];
+      function updateInputArray() {
+        let value = [];
+        scope.inputArray.forEach((input) => {
+          let selectedOption = scope.findSelectedOption(scope.options, input)
+          if(selectedOption) value.push(selectedOption);
+        });
+        scope.updateInput(value);
+      }
 
-      return scope.$watch("default['" + scope.formObject.id + "']", (value) => {
-        if (!value)
-          return;
+      function updateInputText() {
+        let options = scope.formObject.options;
+        if(options.length > 0) {
+          let selectedOption = scope.findSelectedOption(options, scope.inputText)
+          scope.updateInput(selectedOption);
+        } else
+          scope.updateInput(scope.inputText);
+      }
 
-        if (scope.$component.arrayToText)
-          scope.inputArray = value;
-        else
-          scope.inputText = value;
-      });
+      // set initial value from component
+      if (!scope.$component.multipeChoice && scope.formObject.options.length > 0)
+        scope.inputText = scope.formObject.options[0].key;
     }
   };
 

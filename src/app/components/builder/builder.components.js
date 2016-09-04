@@ -34,10 +34,11 @@ export function ComponentsBuilder($builderProvider) {
       placeholder: 'placeholder',
       icon: 'fa fa-check-square-o',
       required: false,
+      complexValues: true,
       options: [{text: 'value one'}, {text: 'value two'}],
-      arrayToText: true,
+      multipeChoice: true,
       showcaseTemplate: "<i class='{{icon}}'></i> <span>{{label}}</span>",
-      template: "<div class=\"form-group\">\n    <label for=\"{{formName+index}}\" class=\"col-sm-4 control-label\" ng-class=\"{'fb-required':required}\">{{label}}</label>\n    <div class=\"col-sm-8\">\n        <input type='hidden' ng-model=\"inputText\" validator-required=\"{{required}}\" validator-group=\"{{formName}}\"/>\n        <div class='checkbox' ng-repeat=\"item in options track by $index\">\n            <label><input type='checkbox' ng-model=\"$parent.inputArray[$index]\" value='item.value'/>\n                {{item.text}}\n            </label>\n        </div>\n        <p class='help-block'>{{description}}</p>\n    </div>\n</div>",
+      template: "<div class=\"form-group\">\n    <label for=\"{{formName+index}}\" class=\"col-sm-4 control-label\" ng-class=\"{'fb-required':required}\">{{label}}</label>\n    <div class=\"col-sm-8\">\n        <input type='hidden' ng-model=\"inputText\" validator-required=\"{{required}}\" validator-group=\"{{formName}}\"/>\n        <div class='checkbox' ng-repeat=\"item in options track by $index\">\n            <label><input type='checkbox' ng-model=\"$parent.inputArray[$index]\" ng-true-value=\"'{{item.key}}'\" ng-false-value=\"false\" />\n                {{item.text}}\n            </label>\n        </div>\n        <p class='help-block'>{{description}}</p>\n    </div>\n</div>",
       popoverTemplateUrl: 'app/components/builder/templates/editable_components/checkbox.html'
     });
     $builderProvider.registerComponent('radio', {
@@ -47,9 +48,10 @@ export function ComponentsBuilder($builderProvider) {
       placeholder: 'placeholder',
       icon: 'fa fa-list-ul',
       required: false,
+      complexValues: true,
       options: [{text: 'value one'}, {text: 'value two'}],
       showcaseTemplate: "<i class='{{icon}}'></i> <span>{{label}}</span>",
-      template: "<div class=\"form-group\">\n    <label for=\"{{formName+index}}\" class=\"col-sm-4 control-label\" ng-class=\"{'fb-required':required}\">{{label}}</label>\n    <div class=\"col-sm-8\">\n        <div class='radio' ng-repeat=\"item in options track by $index\">\n            <label><input name='{{formName+index}}' ng-model=\"$parent.inputText\" validator-group=\"{{formName}}\" value='{{item.value}}' type='radio'/>\n                {{item.text}}\n            </label>\n        </div>\n        <p class='help-block'>{{description}}</p>\n    </div>\n</div>",
+      template: "<div class=\"form-group\">\n    <label for=\"{{formName+index}}\" class=\"col-sm-4 control-label\" ng-class=\"{'fb-required':required}\">{{label}}</label>\n    <div class=\"col-sm-8\">\n        <div class='radio' ng-repeat=\"item in options track by $index\">\n            <label><input name='{{formName+index}}' ng-model=\"$parent.inputText\" validator-group=\"{{formName}}\" value='{{item.key}}' type='radio'/>\n                {{item.text}}\n            </label>\n        </div>\n        <p class='help-block'>{{description}}</p>\n    </div>\n</div>",
       popoverTemplateUrl: 'app/components/builder/templates/editable_components/radio.html'
     });
     $builderProvider.registerComponent('select', {
@@ -59,6 +61,7 @@ export function ComponentsBuilder($builderProvider) {
       placeholder: 'placeholder',
       icon: 'fa fa-list-alt',
       required: false,
+      complexValues: true,
       options: ['value one', 'value two'],
       showcaseTemplate: "<i class='{{icon}}'></i> <span>{{label}}</span>",
       template: "<div class=\"form-group\">\n    <label for=\"{{formName+index}}\" class=\"col-sm-4 control-label\">{{label}}</label>\n    <div class=\"col-sm-8\">\n        <select ng-options=\"value for value in options\" id=\"{{formName+index}}\" class=\"form-control\"\n            ng-model=\"inputText\" ng-init=\"inputText = options[0]\"/>\n        <p class='help-block'>{{description}}</p>\n    </div>\n</div>",

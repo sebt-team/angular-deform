@@ -54,11 +54,11 @@
               <div class='checkbox'>
                 <div class="col-sm-5">
                   <label>
-                    <input name='{{formName+index}}' ng-model='addDependency[$index]' validator-group='{{formName}}' value='{{item}}' type='checkbox' ng-change='$parent.dependency[$index] = undefined'/>{{item.text}}
+                    <input name='{{formName+index}}' ng-model='$parent.addDependency[$index]' validator-group='{{formName}}' value='{{item}}' type='checkbox' ng-change='$parent.dependency[$index] = undefined'/>{{item.text}}
                   </label>
                 </div>
                 <div class='col-sm-7'>
-                  <select ng-disabled='!addDependency[$index]' ng-model='$parent.dependency[$index]' class='form-control' ng-options="fo.key as fo.label group by fo.page for fo in allFormObjects">
+                  <select ng-disabled='!$parent.addDependency[$index]' ng-model='$parent.dependency[$index]' class='form-control' ng-options="fo.key as fo.label group by fo.page for fo in allFormObjects">
                     <option value=''><i>-Select dependency-</i></option>
                   </select>
                 </div>
