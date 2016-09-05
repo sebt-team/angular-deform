@@ -3,8 +3,9 @@ export function FbBuilderController($scope, $injector) {
 }
 
 export function FbFormObjectEditableController($scope, $injector) {
-  var $builder = $injector.get('$builder');
-  var $timeout = $injector.get('$timeout');
+  var $builder    = $injector.get('$builder');
+  var $timeout    = $injector.get('$timeout');
+  var $validator  = $injector.get('$validator');
 
   $scope.setupScope = (formObject) => {
     // 1. Copy origin formObject (ng-repeat="object in formObjects") to scope.
@@ -91,6 +92,23 @@ export function FbFormObjectEditableController($scope, $injector) {
       event.stopPropagation();
     $builder.removeFormObject($scope.$parent.formName, formObject);
   }
+
+  $scope.submit = () => {
+    let v = $validator.validate($scope, 'options');
+    $scope.validator = $validator
+    v.success ( () => {
+      // validated success
+      console.log('success');
+    });
+    v.error( () => {
+      // validated error
+      console.log('error');
+      console.log($scope.validator.broadcastChannel);
+    });
+    v.then( (e) => {
+      console.log("then");
+    });
+  };
 }
 
 export function FbComponentsController($scope, $injector) {

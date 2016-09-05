@@ -112,8 +112,8 @@ export function FbFormObjectEditable($injector) {
   var $builder = $injector.get('$builder');
   var $drag = $injector.get('$drag');
   var $compile = $injector.get('$compile');
-  var $validator = $injector.get('$validator');
-  var $rootScope = $injector.get('$rootScope');
+  // var $validator = $injector.get('$validator');
+  // var $rootScope = $injector.get('$rootScope');
   var $timeout = $injector.get('$timeout');
 
   // ----------------------------------------
