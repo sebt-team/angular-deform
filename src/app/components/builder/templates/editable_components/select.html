@@ -23,23 +23,23 @@
       </div>
       <div id="collapsePints" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
         <div class="panel-body">
-          <ng-form class="form-group">
-            <div class="row" ng-repeat='item in options track by $index'>
-              <label class="control-label truncate col-sm-12" for="pwd">{{item.text}}:</label>
-              <div class="col-sm-12">
-                <input type="number" class="form-control" ng-model="item.value" placeholder="0" validator="[maxPointsInOption]" validator-group="options">
+          <form>
+            <div class="form-group" ng-repeat='item in options track by $index'>
+              <label class="control-label truncate col-sm-5" for="pwd">{{item.text}}:</label>
+              <div class="col-sm-7">
+                <input type="text" class="form-control" ng-model="item.value" placeholder="0">
               </div>
             </div>
             <div class="form-group">
               <div class="col-sm-offset-5 col-sm-7">
-                <button type="submit" class="btn btn-primary" ng-click="submit(options)">Save</button>
+                <button type="submit" class="btn btn-primary">Save</button>
               </div>
             </div>
-          </ng-form>
+          </form>
         </div>
       </div>
     </div>
-    <div class="panel sidebar_section" ng-if="activatorsFormObjects.length">
+    <div class="panel sidebar_section">
       <div class="panel-heading" role="tab" id="heading{{$index}}">
         <h4 class="panel-title">
           <a role="button" data-toggle="collapse" data-target="#collapseDependency">
@@ -50,30 +50,22 @@
       <div id='collapseDependency' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading{{$index}}'>
         <div class='panel-body'>
           <ng-form>
-            <div class="form-group">
-              <div class="col-sm-offset-5 col-sm-7">
-                <label>
-                  <input type="checkbox" ng-model="conditionalDisplay"> show if the answer is
-                </label>
+            <div class='form-group' ng-repeat='item in options track by $index'>
+              <div class='checkbox'>
+                <div class="col-sm-5">
+                  <label>
+                    <input name='{{formName+index}}' ng-model='$parent.addDependency[$index]' validator-group='{{formName}}' value='{{item}}' type='checkbox' ng-change='$parent.dependency[$index] = undefined'/>{{item.text}}
+                  </label>
+                </div>
+                <div class='col-sm-7'>
+                  <select ng-disabled='!$parent.addDependency[$index]' ng-model='$parent.dependency[$index]' class='form-control' ng-options="fo.key as fo.label group by fo.page for fo in allFormObjects">
+                    <option value=''><i>-Select dependency-</i></option>
+                  </select>
+                </div>
+              </div>
               </div>
             </div>
-            <div class='form-group'>
-              <label class="control-label truncate col-sm-5">select question:</label>
-              <div class="col-sm-7">
-                <select ng-disabled='!conditionalDisplay' ng-model='dependency["question"]' class='form-control' ng-options='fo.key as fo.label group by fo.page for fo in activatorsFormObjects'>
-                  <option value=''><i>-Select dependency-</i></option>
-                </select>
-              </div>
-            </div>
-            <div class='form-group'>
-              <label class="control-label truncate col-sm-5">select answer:</label>
-              <div class="col-sm-7">
-                <select ng-disabled='!dependency["question"]' ng-model='dependency["answer"]' class='form-control' ng-options='o.key as o.text for o in getOptionsFromObjectKey(dependency["question"])'>
-                  <option value=''><i>-Select dependency-</i></option>
-                </select>
-              </div>
-            </div>
-          </ng-form>
+          </form>
         </div>
       </div>
     </div>

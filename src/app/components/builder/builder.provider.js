@@ -7,7 +7,7 @@ export function BuilderProvider() {
   this.config = { popoverPlacement: 'right' };
   this.components = {};
   this.groups = [];
-  this.forms = { 'default': [] };
+  this.forms = { 'default': [] }; // replace for map
   this.pages = [];
   this.broadcastChannel = {
     selectInput: '$selectInput',
@@ -25,11 +25,11 @@ export function BuilderProvider() {
   }
   let currentForm = this.forms['default'];
   let secretKey = '_' + Math.random().toString(36).substr(2, 9);
-  let createdKeys = 0;
+  let randomNumber = Math.floor((Math.random() * 100000));
 
-  function uniqKey() {
-    createdKeys++;
-    return `${secretKey}${Date.now()}${createdKeys}`
+  this.generateKey = ()=> {
+    randomNumber++;
+    return `${secretKey}${Date.now()}${randomNumber}`;
   }
 
   this.convertComponent = (name, component) => {
@@ -44,8 +44,9 @@ export function BuilderProvider() {
       required: (ref = component.required) != null ? ref : false,
       validation: (ref = component.validation) != null ? ref : '/.*/',
       validationOptions: (ref = component.validationOptions) != null ? ref : [],
+      complexValues: (ref = component.complexValues) != null ? ref : [],
       options: (ref = component.options) != null ? ref : [],
-      arrayToText: (ref = component.arrayToText) != null ? ref : false,
+      multipeChoice: (ref = component.multipeChoice) != null ? ref : false,
       template: component.template,
       templateUrl: component.templateUrl,
       showcaseTemplate: component.showcaseTemplate,
@@ -72,7 +73,7 @@ export function BuilderProvider() {
 
     let result = {
       id: formObject.id,
-      key: (ref = formObject.key) != null ? ref : uniqKey(),
+      key: (ref = formObject.key) != null ? ref : this.generateKey(),
       component: formObject.component,
       editable: (ref = formObject.editable) != null ? ref : component.editable,
       label: (ref = formObject.label) != null ? ref : component.label,
@@ -80,7 +81,8 @@ export function BuilderProvider() {
       placeholder: (ref = formObject.placeholder) != null ? ref : component.placeholder,
       options: (ref = formObject.options) != null ? ref : component.options,
       required: (ref = formObject.required) != null ? ref : component.required,
-      validation: (ref = formObject.validation) != null ? ref : component.validation
+      validation: (ref = formObject.validation) != null ? ref : component.validation,
+      complexValues: (ref = formObject.complexValues) != null ? ref : component.complexValues
     };
     return result;
   };
@@ -145,7 +147,7 @@ export function BuilderProvider() {
         validation: {string} angular-validator. "/regex/" or "[rule1, rule2]". (default is RegExp(.*))
         validationOptions: {array} [{rule: angular-validator, label: 'option label'}] the options for the validation. (default is [])
         options: {array} The input options.
-        arrayToText: {bool} checkbox could use this to convert input (default is no)
+        multipeChoice: {bool} checkbox could use this to convert input (default is no)
         template: {string} html template
         templateUrl: {string} The url of the template.
         popoverTemplate: {string} html template
@@ -330,6 +332,7 @@ export function BuilderProvider() {
         getCurrentPage: this.getCurrentPage,
         selectCurrentPage: this.selectCurrentPage,
         addForm: this.addForm,
+        getAllFormObjects: this.getAllFormObjects,
         getCurrentFormObject: this.getCurrentFormObject,
         selectCurrentFormObject: this.selectCurrentFormObject,
         updateFormObjectScope: this.updateFormObjectScope,
@@ -340,7 +343,8 @@ export function BuilderProvider() {
         updateFormObjectIndex: this.updateFormObjectIndex,
         broadcastChannel: this.broadcastChannel,
         registerComponent: this.registerComponent,
-        copyObjectToScope: this.copyObjectToScope
+        copyObjectToScope: this.copyObjectToScope,
+        generateKey: this.generateKey
       };
     }
   ];
