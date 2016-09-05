@@ -68,8 +68,8 @@ angular.module('deformExamples', ['angularDeforms', 'angular-sweetnotifier', 'ng
   $validatorProvider.register( 'maxPointsInOption', {
     validator: (value, scope, element, attrs, $injector) => {
       // example
-      options = [10, null, 40, 90]
-      max = Math.max(...options)
+      values = scope.$parent.options.map(function(o){return o.value})
+      max = Math.max(...values)
 
       return max >= 100
     },
@@ -88,7 +88,7 @@ angular.module('deformExamples', ['angularDeforms', 'angular-sweetnotifier', 'ng
 
       return total >= 100
     },
-    error: "La suma de los puntos de todas las alternativas debe ser a lo menos del 100%"
+    error: "La suma de los porcentajes de las alternativas debe ser a lo menos del 100%"
   });
 
 })

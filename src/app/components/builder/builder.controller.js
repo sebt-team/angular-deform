@@ -66,20 +66,7 @@ export function FbFormObjectEditableController($scope, $injector) {
   }
 
   $scope.submit = () => {
-    let v = $validator.validate($scope, 'options');
-    $scope.validator = $validator
-    v.success ( () => {
-      // validated success
-      console.log('success');
-    });
-    v.error( () => {
-      // validated error
-      console.log('error');
-      console.log($scope.validator.broadcastChannel);
-    });
-    v.then( (e) => {
-      console.log("then");
-    });
+    $validator.validate($scope, 'options');
   };
 }
 
