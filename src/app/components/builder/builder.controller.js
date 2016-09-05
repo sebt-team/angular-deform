@@ -21,13 +21,21 @@ export function FbFormObjectEditableController($scope, $injector) {
     });
 
     // list all instanced objects pages
-    $scope.allFormObjects = $builder.pages.reduce((sum, page) => {
+    $scope.activatorsFormObjects = $builder.pages.reduce((sum, page) => {
       sum = sum.concat(page.form.content.map( fo => {
+        // not show objects with a lower index
+        if($builder.getCurrentPage().index < page.index)
+          return;
+        else if($builder.getCurrentPage().index == page.index && $scope.index <= fo.index )
+          return;
+        // adds title to display in the grouped selector
         fo.page = `${page.title} (page ${page.index + 1})`;
         return fo;
       }));
       return sum;
-    }, []);
+    }, []).filter( fo => {
+      if(fo) return fo.component == 'radio' || fo.component == 'select';
+    });
 
     // wtach normal attibutes
     $scope.$watch('[label, description, placeholder, required, options, validation, dependency]', () => {
@@ -42,29 +50,39 @@ export function FbFormObjectEditableController($scope, $injector) {
 
     // watch options (to selects, radios and checkboxes)
     $scope.$watch('optionsText', (text) => {
-      if(!text || text == '')
-        return;
+      if(!text || text == '') return;
 
       $scope.options = text.split('\n').reduce((sum, text, index) => {
-        if(text.length <= 0)
-          return sum;
+        if(text.length <= 0) return sum;
 
         let currentOption = $scope.options[index] || {};
         currentOption.text = text;
 
         if(!currentOption.key) currentOption.key = $builder.generateKey();
         if(!currentOption.value) currentOption.value = 0;
-
         sum.push(currentOption);
         return sum;
       }, []);
-      // $scope.inputText  = $scope.options[0];
     });
 
     $scope.validationOptions = $builder.components[formObject.component].validationOptions;
   };
 
-  $scope.duplicate = (formObject) => {
+  $scope.getOptionsFromObjectKey = key => {
+    // 1. get array with all formObjects (in all pages)
+    // 2. find object with equal key
+    let selectedFormObject = Object.keys($builder.forms).reduce((sum, key)=>{
+      sum = sum.concat($builder.forms[key]);
+      return sum;
+    }, []).filter( fo => {
+      return fo.key == key;
+    })[0];
+
+    if(selectedFormObject) return selectedFormObject.options;
+    else return [];
+  }
+
+  $scope.duplicate = formObject => {
     $builder.duplicateFormObject($scope.$parent.formName, formObject);
   }
 

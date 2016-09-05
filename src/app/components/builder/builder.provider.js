@@ -332,6 +332,7 @@ export function BuilderProvider() {
         getCurrentPage: this.getCurrentPage,
         selectCurrentPage: this.selectCurrentPage,
         addForm: this.addForm,
+        getAllFormObjects: this.getAllFormObjects,
         getCurrentFormObject: this.getCurrentFormObject,
         selectCurrentFormObject: this.selectCurrentFormObject,
         updateFormObjectScope: this.updateFormObjectScope,
