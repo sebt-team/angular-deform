@@ -4,11 +4,11 @@ var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i 
   // -----------------------
 export function BuilderProvider() {
   var $injector = null, $http = null, $log = null, $templateCache = null;
-  this.config = { popoverPlacement: 'right' };
   this.components = {};
   this.groups = [];
   this.forms = { 'default': [] }; // replace for map
   this.pages = [];
+  this.dependencies = [];
   this.broadcastChannel = {
     selectInput: '$selectInput',
     updateInput: '$updateInput',
@@ -47,6 +47,7 @@ export function BuilderProvider() {
       complexValues: (ref = component.complexValues) != null ? ref : [],
       options: (ref = component.options) != null ? ref : [],
       multipeChoice: (ref = component.multipeChoice) != null ? ref : false,
+      dependentFrom: (ref = component.dependentFrom) != null ? ref : {},
       template: component.template,
       templateUrl: component.templateUrl,
       showcaseTemplate: component.showcaseTemplate,
@@ -82,6 +83,7 @@ export function BuilderProvider() {
       options: (ref = formObject.options) != null ? ref : component.options,
       required: (ref = formObject.required) != null ? ref : component.required,
       validation: (ref = formObject.validation) != null ? ref : component.validation,
+      dependentFrom: (ref = formObject.dependentFrom) != null ? ref : component.dependentFrom,
       complexValues: (ref = formObject.complexValues) != null ? ref : component.complexValues
     };
     return result;
@@ -265,6 +267,7 @@ export function BuilderProvider() {
 
     this.forms[name].splice(index, 0, this.convertFormObject(name, formObject));
     this.reindexFormObject(name);
+    // this.addAnswerDependency(formObject, answer);
     return this.forms[name][index];
   };
 
@@ -314,6 +317,21 @@ export function BuilderProvider() {
     return this.reindexFormObject(name);
   };
 
+  this.addAnswerDependency = (formObject, formAnswer, formObjectTargetKey) => {
+    this.dependencies.forEach((dependency, index) => {
+      if(dependency.formObjectTargetKey == formObjectTargetKey)
+        this.dependencies.splice(index, 1);
+    });
+
+    this.dependencies.push({
+      formObjectKey: formObject,
+      formAnswerKey: formAnswer,
+      formObjectTargetKey: formObjectTargetKey
+    });
+
+    debugger;
+  };
+
   this.$get = [
     '$injector', function($injector) {
       this.setupProviders($injector);
@@ -328,11 +346,11 @@ export function BuilderProvider() {
         groups: this.groups,
         forms: this.forms,
         pages: this.pages,
+        dependencies: this.dependencies,
         addPage: this.addPage,
         getCurrentPage: this.getCurrentPage,
         selectCurrentPage: this.selectCurrentPage,
         addForm: this.addForm,
-        getAllFormObjects: this.getAllFormObjects,
         getCurrentFormObject: this.getCurrentFormObject,
         selectCurrentFormObject: this.selectCurrentFormObject,
         updateFormObjectScope: this.updateFormObjectScope,
@@ -341,6 +359,7 @@ export function BuilderProvider() {
         removeFormObject: this.removeFormObject,
         duplicateFormObject: this.duplicateFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex,
+        addAnswerDependency: this.addAnswerDependency,
         broadcastChannel: this.broadcastChannel,
         registerComponent: this.registerComponent,
         copyObjectToScope: this.copyObjectToScope,

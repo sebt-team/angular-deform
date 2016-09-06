@@ -17,6 +17,7 @@ export function FbFormObjectEditableController($scope, $injector) {
 
     // separate string to render options on text textarea
     $scope.optionsText = "";
+
     angular.forEach(formObject.options, function(value, key) {
       $scope.optionsText += value.text + '\n';
     });
@@ -34,19 +35,20 @@ export function FbFormObjectEditableController($scope, $injector) {
         return fo;
       }));
       return sum;
-    }, []).filter( fo => {
-      if(fo) return fo.component == 'radio' || fo.component == 'select';
+    }, []).filter( (fo) => {
+      if(fo)
+        return fo.component == 'radio' || fo.component == 'select';
     });
 
     // wtach normal attibutes
-    $scope.$watch('[label, description, placeholder, required, options, validation, dependency]', () => {
-      formObject.label        = $scope.label;
-      formObject.description  = $scope.description;
-      formObject.placeholder  = $scope.placeholder;
-      formObject.required     = $scope.required;
-      formObject.options      = $scope.options;
-      formObject.validation   = $scope.validation;
-      formObject.dependency   = $scope.dependency;
+    $scope.$watch('[label, description, placeholder, required, options, validation, dependentFrom]', () => {
+      formObject.label           = $scope.label;
+      formObject.description     = $scope.description;
+      formObject.placeholder     = $scope.placeholder;
+      formObject.required        = $scope.required;
+      formObject.options         = $scope.options;
+      formObject.validation      = $scope.validation;
+      formObject.dependentFrom   = $scope.dependentFrom;
     }, true);
 
     // watch options (to selects, radios and checkboxes)
@@ -66,22 +68,34 @@ export function FbFormObjectEditableController($scope, $injector) {
       }, []);
     });
 
+    $scope.$watch('dependentFrom["formObjectKey"]', (formObjectKey) => {
+      // 1. get array with all formObjects (in all pages)
+      // 2. find object with equal key
+      if(!formObjectKey || formObjectKey == '') return;
+
+      let selectedFormObject = Object.keys($builder.forms).reduce((sum, key) => {
+        sum = sum.concat($builder.forms[key]);
+        return sum;
+      }, []).filter(fo => { return fo.key == formObjectKey; })[0];
+
+      debugger;
+
+      if(selectedFormObject) $scope.dependencyOptions = selectedFormObject.options;
+      else $scope.dependencyOptions = [];
+    });
+
+    $scope.$watch('dependentFrom["formAnswerKey"]', (optionKey) => {
+      if(optionKey && optionKey != '') {
+        let dependentFormObjectKey = $scope.dependentFrom.formObjectKey
+        $builder.addAnswerDependency(dependentFormObjectKey, optionKey, $scope.key);
+        $scope.dependentFrom.active = true;
+      } else {
+        $scope.dependentFrom.active = false;
+      }
+    });
+
     $scope.validationOptions = $builder.components[formObject.component].validationOptions;
   };
-
-  $scope.getOptionsFromObjectKey = key => {
-    // 1. get array with all formObjects (in all pages)
-    // 2. find object with equal key
-    let selectedFormObject = Object.keys($builder.forms).reduce((sum, key)=>{
-      sum = sum.concat($builder.forms[key]);
-      return sum;
-    }, []).filter( fo => {
-      return fo.key == key;
-    })[0];
-
-    if(selectedFormObject) return selectedFormObject.options;
-    else return [];
-  }
 
   $scope.duplicate = formObject => {
     $builder.duplicateFormObject($scope.$parent.formName, formObject);

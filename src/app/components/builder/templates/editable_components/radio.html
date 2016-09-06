@@ -60,7 +60,7 @@
             <div class='form-group'>
               <label class="control-label truncate col-sm-5">select question:</label>
               <div class="col-sm-7">
-                <select ng-disabled='!conditionalDisplay' ng-model='dependency["question"]' class='form-control' ng-options='fo.key as fo.label group by fo.page for fo in activatorsFormObjects'>
+                <select ng-disabled='!conditionalDisplay' ng-model='dependentFrom["formObjectKey"]' class='form-control' ng-options='fo.key as fo.label group by fo.page for fo in activatorsFormObjects'>
                   <option value=''><i>-Select dependency-</i></option>
                 </select>
               </div>
@@ -68,8 +68,8 @@
             <div class='form-group'>
               <label class="control-label truncate col-sm-5">select answer:</label>
               <div class="col-sm-7">
-                <select ng-disabled='!dependency["question"]' ng-model='dependency["answer"]' class='form-control' ng-options='o.key as o.text for o in getOptionsFromObjectKey(dependency["question"])'>
-                  <option value=''><i>-Select dependency-</i></option>
+                <select ng-disabled='!dependentFrom["formObjectKey"]' ng-model='dependentFrom["formAnswerKey"]' class='form-control' ng-options='o.key as o.text for o in dependencyOptions'>
+                  <option value=''><i>-Select option-</i></option>
                 </select>
               </div>
             </div>
