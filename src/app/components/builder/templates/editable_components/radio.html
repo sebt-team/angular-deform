@@ -47,7 +47,7 @@
           </a>
         </h4>
       </div>
-      <div id='collapseDependency' class='panel-collapse collapse' role='tabpanel' aria-labelledby='heading{{$index}}'>
+      <div id='collapseDependency' class='panel-collapse collapse'  ng-class='{ "in": dependentFrom["active"] }' role='tabpanel' aria-labelledby='heading{{$index}}'>
         <div class='panel-body'>
           <ng-form>
             <div class="form-group">

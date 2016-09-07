@@ -78,8 +78,6 @@ export function FbFormObjectEditableController($scope, $injector) {
         return sum;
       }, []).filter(fo => { return fo.key == formObjectKey; })[0];
 
-      debugger;
-
       if(selectedFormObject) $scope.dependencyOptions = selectedFormObject.options;
       else $scope.dependencyOptions = [];
     });

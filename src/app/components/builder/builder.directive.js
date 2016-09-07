@@ -93,7 +93,37 @@ export function FbBuilder ($injector) {
               let newIndex = $(element).find('.empty').index('.fb-form-object-editable');
               if (oldIndex < newIndex)
                 newIndex--;
-              $builder.updateFormObjectIndex(scope.formName, oldIndex, newIndex);
+
+              let dependentsTrouble = false;
+              let formObject = draggable.object.formObject;
+              let formObjectKey = formObject.key;
+              let dependentTargets = $builder.findDependencyTargets(formObjectKey);
+              let affectedDependentTargets = dependentTargets.filter(dt => {
+                return dt.index <= newIndex;
+              });
+              if(affectedDependentTargets.length)
+                dependentsTrouble = true;
+
+              let dependencyTrouble = false;
+              if(formObject.dependentFrom.active) {
+                let dependencyFormObjectKey = formObject.dependentFrom.formObjectKey;
+                let dependencyFormObject = $builder.findFormObjectByKey(dependencyFormObjectKey);
+                if(dependencyFormObject.index >= newIndex)
+                  dependencyTrouble = true;
+              }
+
+              let skipReindex = false;
+              if(dependentsTrouble || dependencyTrouble) {
+                var response = confirm("This change will break one or more dependencies\nDo you want to continue?");
+                if (response == true) {
+                  alert("You pressed OK!");
+                } else {
+                  skipReindex = true;
+                }
+              }
+
+              if(!skipReindex)
+                $builder.updateFormObjectIndex(scope.formName, oldIndex, newIndex);
             }
           }
           $(element).find('.empty').remove();

@@ -328,9 +328,23 @@ export function BuilderProvider() {
       formAnswerKey: formAnswer,
       formObjectTargetKey: formObjectTargetKey
     });
-
-    debugger;
   };
+
+  this.findDependencyTargets = (formObjectKey) => {
+    return this.dependencies.filter( d => {
+      return d.formObjectKey == formObjectKey;
+    }).map( d => {
+      return this.findFormObjectByKey(d.formObjectTargetKey)
+    });
+  }
+
+  this.findFormObjectByKey = (key) => {
+    let selectedFormObject = Object.keys(this.forms).reduce((sum, key) => {
+      sum = sum.concat(this.forms[key]);
+      return sum;
+    }, []).filter(fo => { return fo.key == key; })[0];
+    return selectedFormObject || false
+  }
 
   this.$get = [
     '$injector', function($injector) {
@@ -360,6 +374,8 @@ export function BuilderProvider() {
         duplicateFormObject: this.duplicateFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex,
         addAnswerDependency: this.addAnswerDependency,
+        findDependencyTargets: this.findDependencyTargets,
+        findFormObjectByKey: this.findFormObjectByKey,
         broadcastChannel: this.broadcastChannel,
         registerComponent: this.registerComponent,
         copyObjectToScope: this.copyObjectToScope,
