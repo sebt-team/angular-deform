@@ -17,9 +17,6 @@ angular
       'builderComponents'
     ])
 
-  // CONTANTS
-  .constant('moment', moment)
-
   // CONFIG
   .config(config)
 
