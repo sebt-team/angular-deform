@@ -73,11 +73,7 @@ export function FbFormObjectEditableController($scope, $injector) {
       // 2. find object with equal key
       if(!formObjectKey || formObjectKey == '') return;
 
-      let selectedFormObject = Object.keys($builder.forms).reduce((sum, key) => {
-        sum = sum.concat($builder.forms[key]);
-        return sum;
-      }, []).filter(fo => { return fo.key == formObjectKey; })[0];
-
+      let selectedFormObject = $builder.findFormObjectByKey(formObjectKey)
       if(selectedFormObject) $scope.dependencyOptions = selectedFormObject.options;
       else $scope.dependencyOptions = [];
     });
@@ -85,7 +81,7 @@ export function FbFormObjectEditableController($scope, $injector) {
     $scope.$watch('dependentFrom["formAnswerKey"]', (optionKey) => {
       if(optionKey && optionKey != '') {
         let dependentFormObjectKey = $scope.dependentFrom.formObjectKey
-        $builder.addAnswerDependency(dependentFormObjectKey, optionKey, $scope.key);
+        $builder.addAnswerDependency($scope, dependentFormObjectKey, optionKey);
         $scope.dependentFrom.active = true;
       } else {
         $scope.dependentFrom.active = false;

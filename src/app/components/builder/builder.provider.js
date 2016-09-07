@@ -317,18 +317,23 @@ export function BuilderProvider() {
     return this.reindexFormObject(name);
   };
 
-  this.addAnswerDependency = (formObject, formAnswer, formObjectTargetKey) => {
-    this.dependencies.forEach((dependency, index) => {
-      if(dependency.formObjectTargetKey == formObjectTargetKey)
-        this.dependencies.splice(index, 1);
-    });
-
+  this.addAnswerDependency = (formObject, formObjectHandler, formAnswer) => {
+    this.removeAnswerDependency(formObject);
     this.dependencies.push({
-      formObjectKey: formObject,
-      formAnswerKey: formAnswer,
-      formObjectTargetKey: formObjectTargetKey
+      formObjectTargetKey: formObject.key,
+      formObjectKey: formObjectHandler,
+      formAnswerKey: formAnswer
     });
   };
+
+  this.removeAnswerDependency = (formObject) => {
+    this.dependencies.forEach((d, index) => {
+      if(d.formObject.key == formObjectTargetKey) {
+        formObject.dependentFrom = {};
+        this.dependencies.splice(index, 1);
+      }
+    });
+  }
 
   this.findDependencyTargets = (formObjectKey) => {
     return this.dependencies.filter( d => {
@@ -374,6 +379,7 @@ export function BuilderProvider() {
         duplicateFormObject: this.duplicateFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex,
         addAnswerDependency: this.addAnswerDependency,
+        removeAnswerDependency: this.removeAnswerDependency,
         findDependencyTargets: this.findDependencyTargets,
         findFormObjectByKey: this.findFormObjectByKey,
         broadcastChannel: this.broadcastChannel,

@@ -116,7 +116,11 @@ export function FbBuilder ($injector) {
               if(dependentsTrouble || dependencyTrouble) {
                 var response = confirm("This change will break one or more dependencies\nDo you want to continue?");
                 if (response == true) {
-                  alert("You pressed OK!");
+                  if(dependencyTrouble)
+                    dependentTargets = dependentTargets.concat([formObject]);
+                  dependentTargets.forEach( dependentFormObject => {
+                    $builder.removeAnswerDependency(dependentFormObject);
+                  });
                 } else {
                   skipReindex = true;
                 }
