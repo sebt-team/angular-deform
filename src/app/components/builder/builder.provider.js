@@ -47,6 +47,7 @@ export function BuilderProvider() {
       complexValues: (ref = component.complexValues) != null ? ref : [],
       options: (ref = component.options) != null ? ref : [],
       multipeChoice: (ref = component.multipeChoice) != null ? ref : false,
+      display: (ref = component.display) != null ? ref : true,
       dependentFrom: (ref = component.dependentFrom) != null ? ref : {},
       template: component.template,
       templateUrl: component.templateUrl,
@@ -83,6 +84,7 @@ export function BuilderProvider() {
       options: (ref = formObject.options) != null ? ref : component.options,
       required: (ref = formObject.required) != null ? ref : component.required,
       validation: (ref = formObject.validation) != null ? ref : component.validation,
+      display: (ref = formObject.display) != null ? ref : component.display,
       dependentFrom: (ref = formObject.dependentFrom) != null ? ref : component.dependentFrom,
       complexValues: (ref = formObject.complexValues) != null ? ref : component.complexValues
     };
@@ -319,6 +321,7 @@ export function BuilderProvider() {
 
   this.addAnswerDependency = (formObject, formObjectHandler, formAnswer) => {
     this.removeAnswerDependency(formObject);
+    formObject.display = false;
     this.dependencies.push({
       formObjectTargetKey: formObject.key,
       formObjectKey: formObjectHandler,
@@ -326,11 +329,12 @@ export function BuilderProvider() {
     });
   };
 
-  this.removeAnswerDependency = (formObject) => {
+  this.removeAnswerDependency = (formObject, deepDestroy = false) => {
+    formObject.display = true;
     this.dependencies.forEach((d, index) => {
-      if(d.formObject.key == formObjectTargetKey) {
-        formObject.dependentFrom = {};
+      if(d.formObjectTargetKey == formObject.key) {
         this.dependencies.splice(index, 1);
+        if(deepDestroy) formObject.dependentFrom = {};
       }
     });
   }

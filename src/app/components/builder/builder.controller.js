@@ -13,6 +13,7 @@ export function FbFormObjectEditableController($scope, $injector) {
     // 3. Watch scope.label, .description, .placeholder, .required, .options then copy to origin formObject.
     // 4. Watch scope.optionsText then convert to scope.options.
     // 5. setup validationOptions
+
     $builder.copyObjectToScope(formObject, $scope);
 
     // separate string to render options on text textarea
@@ -41,14 +42,15 @@ export function FbFormObjectEditableController($scope, $injector) {
     });
 
     // wtach normal attibutes
-    $scope.$watch('[label, description, placeholder, required, options, validation, dependentFrom]', () => {
-      formObject.label           = $scope.label;
-      formObject.description     = $scope.description;
-      formObject.placeholder     = $scope.placeholder;
-      formObject.required        = $scope.required;
-      formObject.options         = $scope.options;
-      formObject.validation      = $scope.validation;
-      formObject.dependentFrom   = $scope.dependentFrom;
+    $scope.$watch('[label, description, placeholder, required, options, validation, display, dependentFrom]', () => {
+      formObject.label         = $scope.label;
+      formObject.description   = $scope.description;
+      formObject.placeholder   = $scope.placeholder;
+      formObject.required      = $scope.required;
+      formObject.options       = $scope.options;
+      formObject.validation    = $scope.validation;
+      formObject.display       = $scope.display;
+      formObject.dependentFrom = $scope.dependentFrom;
     }, true);
 
     // watch options (to selects, radios and checkboxes)
@@ -68,6 +70,11 @@ export function FbFormObjectEditableController($scope, $injector) {
       }, []);
     });
 
+    $scope.$watch('dependentFrom["active"]', (active) => {
+      if(active == false)
+        $builder.removeAnswerDependency($scope, true);
+    });
+
     $scope.$watch('dependentFrom["formObjectKey"]', (formObjectKey) => {
       // 1. get array with all formObjects (in all pages)
       // 2. find object with equal key
@@ -82,13 +89,13 @@ export function FbFormObjectEditableController($scope, $injector) {
       if(optionKey && optionKey != '') {
         let dependentFormObjectKey = $scope.dependentFrom.formObjectKey
         $builder.addAnswerDependency($scope, dependentFormObjectKey, optionKey);
-        $scope.dependentFrom.active = true;
       } else {
-        $scope.dependentFrom.active = false;
+         $builder.removeAnswerDependency($scope);
       }
     });
 
     $scope.validationOptions = $builder.components[formObject.component].validationOptions;
+    $scope.colapseDependency = $scope.dependentFrom.active;
   };
 
   $scope.duplicate = formObject => {
