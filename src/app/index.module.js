@@ -71,13 +71,13 @@ angular
   // CONTROLLERS
 angular
   .module('builderController', ['builderProvider'])
-  .controller('fbBuilderController', FbBuilderController)
-  .controller('fbFormObjectEditableController', FbFormObjectEditableController)
-  .controller('fbComponentsController', FbComponentsController)
-  .controller('fbFormObjectController', FbFormObjectController)
-  .controller('fbComponentController', FbComponentController)
-  .controller('fbFormController', FbFormController)
-  .controller('dfDragpagesController', DfDragpagesController);
+  .controller('fbBuilderController', ['$scope', '$injector', FbBuilderController])
+  .controller('fbFormObjectEditableController', ['$scope', '$injector', FbFormObjectEditableController])
+  .controller('fbComponentsController', ['$scope', '$injector', FbComponentsController])
+  .controller('fbFormObjectController', ['$scope', '$injector', FbFormObjectController])
+  .controller('fbComponentController', ['$scope', '$injector', FbComponentController])
+  .controller('fbFormController', ['$scope', '$injector', FbFormController])
+  .controller('dfDragpagesController', ['$scope', DfDragpagesController]);
 
   // DRAG
 angular
@@ -87,13 +87,13 @@ angular
   // DIRECTIVES
 angular
   .module('builderDirective', ['builderProvider', 'builderController', 'builderDrag', 'validator'])
-  .directive('fbBuilder', FbBuilder)
-  .directive('fbFormObjectEditable', FbFormObjectEditable)
-  .directive('fbObjectEditable', FbObjectEditable)
-  .directive('fbComponent', FbComponent)
+  .directive('fbBuilder', ['$injector', FbBuilder])
+  .directive('fbFormObjectEditable', ['$injector', FbFormObjectEditable])
+  .directive('fbObjectEditable', ['$injector', FbObjectEditable])
+  .directive('fbComponent', ['$injector', FbComponent])
   .directive('fbComponents', FbComponents)
-  .directive('fbForm', FbForm)
-  .directive('fbFormObject', FbFormObject)
-  .directive('dfPageEditable', DfPageEditable)
-  .directive('dfDragpages', DfDragpages)
-  .directive('contenteditable', Contenteditable);
+  .directive('fbForm', ['$injector', FbForm])
+  .directive('fbFormObject', ['$injector', FbFormObject])
+  .directive('dfPageEditable', ['$injector', DfPageEditable])
+  .directive('dfDragpages', ['$injector', DfDragpages])
+  .directive('contenteditable', ['$injector', Contenteditable]);

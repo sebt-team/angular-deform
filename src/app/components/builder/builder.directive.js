@@ -204,12 +204,14 @@ export function FbFormObjectEditable($injector) {
   return directive;
 }
 
-export function FbObjectEditable($injector, $animate, $timeout) {
+export function FbObjectEditable($injector) {
   // ----------------------------------------
   // providers
   // ----------------------------------------
   var $builder = $injector.get('$builder');
   var $compile = $injector.get('$compile');
+  var $animate = $injector.get('$animate');
+  var $timeout = $injector.get('$timeout');
 
   // ----------------------------------------
   // directive
