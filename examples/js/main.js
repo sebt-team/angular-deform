@@ -69,9 +69,9 @@ angular.module('deformExamples', ['angularDeforms'])
     //   });
     // };
 
-    // $scope.$on($builder.broadcastChannel.selectInput, function() {
-    //   $('a[data-target="#options"]').tab('show')
-    // });
+    $scope.$on($builder.broadcastChannel.selectInput, function() {
+      $('a[data-target="#options"]').tab('show')
+    });
 
     // $('[data-toggle="tooltip"]').tooltip();
 
