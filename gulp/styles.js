@@ -20,9 +20,11 @@ function watchStyles(watchPaths, example) {
       if(example)
         return normalStyles(path.join(conf.paths.examples, '/**/*.css'), 'examples.css')
           .pipe(browserSync.stream());
-      else
+      else{
+        console.log("EEEEENTEEEERR!!!!!!")
         return sassWrapper()
           .pipe(browserSync.stream());
+      }
     } else {
       gulp.start('inject-reload');
     }
@@ -74,7 +76,7 @@ gulp.task('styles', function() {
 });
 
 gulp.task('styles:watch', function() {
-  return watchStyles([path.join(conf.paths.src, '/app/**/*.css')], false);
+  return watchStyles([path.join(conf.paths.src, '/app/**/*.css'), path.join(conf.paths.src, '/app/**/*.scss')], false);
 });
 
 gulp.task('styles:examples', function() {
