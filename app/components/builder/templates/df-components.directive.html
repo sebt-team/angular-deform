@@ -1,0 +1,29 @@
+<div class="df-shared">
+  <div class="row">
+    <div class="col-md-12 col-sm-12">
+      <!-- start accordeon -->
+      <div class="df-accordeon panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+        <div class="panel sidebar_section" ng-repeat="(group, components) in groupedComponents track by $index">
+          <div class="panel-heading" role="tab" id="heading{{$index}}">
+            <h4 class="panel-title">
+              <a role="button" data-toggle="collapse" data-target="#collapse{{$index}}">
+                {{group}}
+              </a>
+            </h4>
+          </div>
+          <div id="collapse{{$index}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{$index}}">
+            <div class="panel-body">
+              <div class="row">
+                <ul>
+                  <li ng-repeat="component in components" fb-component="component">
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end accordeon -->
+    </div>
+  </div>
+</div>
