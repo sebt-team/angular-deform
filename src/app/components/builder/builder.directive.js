@@ -160,7 +160,7 @@ export function FbFormObjectEditable($injector) {
     scope: {
       formObject: '=fbFormObjectEditable'
     },
-    link: (scope, element, attrs, ctrl) => {
+    link: (scope, element) => {
       scope.inputArray = [];
       scope.builder = $builder;
       scope.$component = $builder.components[scope.formObject.component];
@@ -211,7 +211,6 @@ export function FbObjectEditable($injector) {
   var $builder = $injector.get('$builder');
   var $compile = $injector.get('$compile');
   var $animate = $injector.get('$animate');
-  var $timeout = $injector.get('$timeout');
 
   // ----------------------------------------
   // directive
@@ -324,7 +323,7 @@ export function FbForm($injector) {
     },
     template: '<div class="fb-form-object" ng-repeat="object in form" fb-form-object="object"></div>',
     controller: 'fbFormController',
-    link: (scope, element, attrs) => {
+    link: (scope) => {
       $builder = $injector.get('$builder');
       $builder.forms[scope.formName] = $builder.forms[scope.formName] || []
       scope.form = $builder.forms[scope.formName]
@@ -422,7 +421,6 @@ export function DfPageEditable($injector) {
   // providers
   // ----------------------------------------
   var $builder = $injector.get('$builder');
-  var $timeout = $injector.get('$timeout');
 
   // ----------------------------------------
   // directive
@@ -430,7 +428,7 @@ export function DfPageEditable($injector) {
   let directive = {
     restrict: 'A',
     templateUrl: 'app/components/builder/templates/df-page-editable.directive.html',
-    link: (scope, element, attrs) => {
+    link: (scope) => {
 
       scope.builer = $builder;
       scope.pages = $builder.pages;
@@ -468,7 +466,7 @@ export function DfDragpages($injector) {
     restrict: 'A',
     templateUrl: 'app/components/builder/templates/df-dragpages.directive.html',
     controller: 'dfDragpagesController',
-    link: (scope, element, attrs) => {
+    link: (scope) => {
       scope.forms = $builder.forms
       scope.pages = $builder.pages;
       scope.builder = $builder;
@@ -491,22 +489,22 @@ export function Contenteditable($injector) {
   return {
     require: '^?ngModel',
     replace: true,
-    link: (scope, elm, attrs, ctrl) => {
+    link: (scope, element, attrs, ctrl) => {
       // view to model
-      elm.on('keyup', () => {
+      element.on('keyup', () => {
         scope.$apply(() => {
-            ctrl.$setViewValue(elm.html());
+            ctrl.$setViewValue(element.html());
         });
       });
 
       // model to view
       ctrl.$render = () => {
-        elm.html(ctrl.$viewValue);
+        element.html(ctrl.$viewValue);
       };
 
       // load init value from DOM
       $timeout(() => {
-        ctrl.$setViewValue(elm.html());
+        ctrl.$setViewValue(element.html());
       });
     }
   };

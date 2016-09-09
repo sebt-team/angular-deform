@@ -23,7 +23,6 @@ export function BuilderProvider() {
     page: null,
     form: this.forms['default']
   }
-  let currentForm = this.forms['default'];
   let secretKey = '_' + Math.random().toString(36).substr(2, 9);
   let randomNumber = Math.floor((Math.random() * 100000));
 

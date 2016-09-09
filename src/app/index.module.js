@@ -1,4 +1,5 @@
-import { config } from './index.config';
+/*eslint angular/di: [2,"array"]*/
+
 import { BuilderProvider }                from './components/builder/builder.provider';
 import { DragProvider }                   from './components/builder/builder.drag';
 import { FbFormObjectEditableController } from './components/builder/builder.controller';
@@ -32,9 +33,7 @@ angular
       'builder',
       'validator.rules',
       'builderComponents'
-    ])
-  // CONFIG
-  .config(config)
+    ]);
 
 // DIRECTIVE
 angular
@@ -43,28 +42,28 @@ angular
 // PROVIDERS
 angular
   .module('builderProvider', [])
-  .provider('$builder', BuilderProvider);
+  .provider('$builder', [BuilderProvider]);
 
 // CONFIG
 angular
   .module('builderComponents', ['builder', 'validator.rules'])
-  .config(['$builderProvider', ComponentsBuilder]);
+  .config(['$logProvider', 'toastrConfig', '$builderProvider', ComponentsBuilder]);
 
 // CONTROLLERS
 angular
   .module('builderController', ['builderProvider'])
-  .controller('fbBuilderController', ['$scope', '$injector', FbBuilderController])
-  .controller('fbFormObjectEditableController', ['$scope', '$injector', FbFormObjectEditableController])
+  .controller('fbBuilderController', [FbBuilderController])
+  .controller('fbFormObjectEditableController', ['$scope', '$injector', '$log', FbFormObjectEditableController])
   .controller('fbComponentsController', ['$scope', '$injector', FbComponentsController])
   .controller('fbFormObjectController', ['$scope', '$injector', FbFormObjectController])
   .controller('fbComponentController', ['$scope', '$injector', FbComponentController])
   .controller('fbFormController', ['$scope', '$injector', FbFormController])
-  .controller('dfDragpagesController', ['$scope', DfDragpagesController]);
+  .controller('dfDragpagesController', [DfDragpagesController]);
 
 // DRAG
 angular
   .module('builderDrag', [])
-  .provider('$drag', DragProvider);
+  .provider('$drag', [DragProvider]);
 
 // DIRECTIVES
 angular
@@ -73,7 +72,7 @@ angular
   .directive('fbFormObjectEditable', ['$injector', FbFormObjectEditable])
   .directive('fbObjectEditable', ['$injector', FbObjectEditable])
   .directive('fbComponent', ['$injector', FbComponent])
-  .directive('fbComponents', FbComponents)
+  .directive('fbComponents', [FbComponents])
   .directive('fbForm', ['$injector', FbForm])
   .directive('fbFormObject', ['$injector', FbFormObject])
   .directive('dfPageEditable', ['$injector', DfPageEditable])

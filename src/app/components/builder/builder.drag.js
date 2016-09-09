@@ -1,8 +1,8 @@
-export function DragProvider() {
+export function DragProvider () {
   //  ----------------------------------------
   //  provider
   //  ----------------------------------------
-  var $injector, $rootScope = null;
+  var $injector, $rootScope = null, $timeout = null;
 
   //  ----------------------------------------
   //  properties
@@ -56,6 +56,7 @@ export function DragProvider() {
     // Setup providers
     $injector = injector;
     $rootScope = $injector.get('$rootScope');
+    $timeout = $injector.get('$timeout');
   };
 
   this.isHover = ($elementA, $elementB) => {
@@ -78,7 +79,7 @@ export function DragProvider() {
   };
 
   var delay = (ms, func) => {
-    setTimeout(function() {
+    $timeout(function() {
       return func();
     }, ms);
   };
@@ -246,17 +247,17 @@ export function DragProvider() {
       element: $element[0],
       move: (e, draggable) => {
         $rootScope.$apply(function() {
-          typeof options.move === "function" ? options.move(e, draggable) : void 0;
+          angular.isFunction(options.move) ? options.move(e, draggable) : void 0;
         });
       },
       up: (e, isHover, draggable) => {
         $rootScope.$apply(() => {
-          typeof options.up === "function" ? options.up(e, isHover, draggable) : void 0;
+          angular.isFunction(options.up) ? options.up(e, isHover, draggable) : void 0;
         });
       },
       out: (e, draggable) => {
         $rootScope.$apply(() => {
-          typeof options.out === "function" ? options.out(e, draggable) : void 0;
+          angular.isFunction(options.out) ? options.out(e, draggable) : void 0;
         });
       }
     };
