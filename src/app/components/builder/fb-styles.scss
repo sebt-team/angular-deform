@@ -2,7 +2,7 @@ body, .form-control {
   font-size: 12px;
 }
 
-.fb-component {
+.df-component {
   padding: 10px;
   cursor: move;
   input { cursor: move; }
@@ -10,7 +10,7 @@ body, .form-control {
   select { cursor: move; }
   textarea { cursor: move; }
 }
-.fb-form-object-editable {
+.df-form-object-editable {
   padding: 10px;
   border: 1px solid #fff;
   margin-top: 5px;
@@ -27,14 +27,14 @@ body, .form-control {
     border: 1px dashed #8fb5d6;
   }
 }
-.fb-form-object-editable.fb-draggable {
+.df-form-object-editable.df-draggable {
   cursor: move;
   input { cursor: move; }
   label { cursor: pointer; }
   select { cursor: move; }
   textarea { cursor: move; }
 }
-.fb-form-object-editable.empty {
+.df-form-object-editable.empty {
   cursor: default;
   margin: 6px;
   height: 80px;
@@ -42,27 +42,27 @@ body, .form-control {
   background-color: #eee;
 }
 
-.fb-draggable.dragging {
+.df-draggable.dragging {
   background-color: #ffffff;
   position: absolute;
   z-index: 800;
   @include box-shadow(#666 0 0 20px);
 }
 
-.fb-required:after {
+.df-required:after {
   color: #b94a48;
   content: ' *';
 }
 
-.fb-builder {
+.df-builder {
   min-height: 250px;
 }
 
-.fb-o-editable-out {
+.df-o-editable-out {
   opacity: 0;
 }
 
-.fb-o-editable-in{
+.df-o-editable-in{
   opacity: 1 !important;
   -webkit-transition: all .5s linear;
   -moz-transition: all .5s linear;
@@ -70,16 +70,16 @@ body, .form-control {
   transition: all .5s linear;
 }
 
-.fb-remove-btn {
+.df-remove-btn {
   width: 20px;
   color: #d9534f;
 }
 
-.fb-title-form, .fb-desc-form {
+.df-title-form, .df-desc-form {
   outline: none;
 }
 
-.fb-title-form {
+.df-title-form {
   margin-top: 0;
 }
 

@@ -2,24 +2,24 @@
 
 import { BuilderProvider }                from './components/builder/builder.provider';
 import { DragProvider }                   from './components/builder/builder.drag';
-import { FbFormObjectEditableController } from './components/builder/builder.controller';
-import { FbBuilderController }            from './components/builder/builder.controller';
-import { FbComponentsController }         from './components/builder/builder.controller';
-import { FbComponentController }          from './components/builder/builder.controller';
-import { FbFormController }               from './components/builder/builder.controller';
-import { FbFormObjectController }         from './components/builder/builder.controller';
+import { DfFormObjectEditableController } from './components/builder/builder.controller';
+import { DfBuilderController }            from './components/builder/builder.controller';
+import { DfComponentsController }         from './components/builder/builder.controller';
+import { DfComponentController }          from './components/builder/builder.controller';
+import { DfFormController }               from './components/builder/builder.controller';
+import { DfFormObjectController }         from './components/builder/builder.controller';
 import { DfDragpagesController }          from './components/builder/builder.controller';
-import { FbBuilder }                      from './components/builder/builder.directive';
-import { FbFormObjectEditable }           from './components/builder/builder.directive';
-import { FbObjectEditable }               from './components/builder/builder.directive';
-import { FbComponents }                   from './components/builder/builder.directive';
-import { FbComponent }                    from './components/builder/builder.directive';
-import { FbForm }                         from './components/builder/builder.directive';
-import { FbFormObject }                   from './components/builder/builder.directive';
+import { DfBuilder }                      from './components/builder/builder.directive';
+import { DfFormObjectEditable }           from './components/builder/builder.directive';
+import { DfObjectEditable }               from './components/builder/builder.directive';
+import { DfComponents }                   from './components/builder/builder.directive';
+import { DfComponent }                    from './components/builder/builder.directive';
+import { DfForm }                         from './components/builder/builder.directive';
+import { DfFormObject }                   from './components/builder/builder.directive';
 import { DfPageEditable }                 from './components/builder/builder.directive';
 import { DfDragpages }                    from './components/builder/builder.directive';
 import { Contenteditable }                from './components/builder/builder.directive';
-import { ComponentsBuilder }              from './components/builder/builder.components';
+import { ConfigBuilder }                  from './components/builder/builder.config';
 
 // MAIN
 angular
@@ -47,17 +47,17 @@ angular
 // CONFIG
 angular
   .module('builderComponents', ['builder', 'validator.rules'])
-  .config(['$logProvider', 'toastrConfig', '$builderProvider', ComponentsBuilder]);
+  .config(['$logProvider', 'toastrConfig', '$builderProvider', ConfigBuilder]);
 
 // CONTROLLERS
 angular
   .module('builderController', ['builderProvider'])
-  .controller('fbBuilderController', [FbBuilderController])
-  .controller('fbFormObjectEditableController', ['$scope', '$injector', '$log', FbFormObjectEditableController])
-  .controller('fbComponentsController', ['$scope', '$injector', FbComponentsController])
-  .controller('fbFormObjectController', ['$scope', '$injector', FbFormObjectController])
-  .controller('fbComponentController', ['$scope', '$injector', FbComponentController])
-  .controller('fbFormController', ['$scope', '$injector', FbFormController])
+  .controller('dfBuilderController', [DfBuilderController])
+  .controller('dfFormObjectEditableController', ['$scope', '$injector', '$log', DfFormObjectEditableController])
+  .controller('dfComponentsController', ['$scope', '$injector', DfComponentsController])
+  .controller('dfFormObjectController', ['$scope', '$injector', DfFormObjectController])
+  .controller('dfComponentController', ['$scope', '$injector', DfComponentController])
+  .controller('dfFormController', ['$scope', '$injector', DfFormController])
   .controller('dfDragpagesController', [DfDragpagesController]);
 
 // DRAG
@@ -68,13 +68,13 @@ angular
 // DIRECTIVES
 angular
   .module('builderDirective', ['builderProvider', 'builderController', 'builderDrag', 'validator'])
-  .directive('fbBuilder', ['$injector', FbBuilder])
-  .directive('fbFormObjectEditable', ['$injector', FbFormObjectEditable])
-  .directive('fbObjectEditable', ['$injector', FbObjectEditable])
-  .directive('fbComponent', ['$injector', FbComponent])
-  .directive('fbComponents', [FbComponents])
-  .directive('fbForm', ['$injector', FbForm])
-  .directive('fbFormObject', ['$injector', FbFormObject])
+  .directive('dfBuilder', ['$injector', DfBuilder])
+  .directive('dfFormObjectEditable', ['$injector', DfFormObjectEditable])
+  .directive('dfObjectEditable', ['$injector', DfObjectEditable])
+  .directive('dfComponent', ['$injector', DfComponent])
+  .directive('dfComponents', [DfComponents])
+  .directive('dfForm', ['$injector', DfForm])
+  .directive('dfFormObject', ['$injector', DfFormObject])
   .directive('dfPageEditable', ['$injector', DfPageEditable])
   .directive('dfDragpages', ['$injector', DfDragpages])
   .directive('contenteditable', ['$injector', Contenteditable]);

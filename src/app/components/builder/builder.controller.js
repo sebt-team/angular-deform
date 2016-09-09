@@ -1,8 +1,8 @@
-export function FbBuilderController() {
+export function DfBuilderController() {
   // TODO: adds logic code
 }
 
-export function FbFormObjectEditableController($scope, $injector, $log) {
+export function DfFormObjectEditableController($scope, $injector, $log) {
   var $builder    = $injector.get('$builder');
   var $validator  = $injector.get('$validator');
 
@@ -124,7 +124,7 @@ export function FbFormObjectEditableController($scope, $injector, $log) {
   };
 }
 
-export function FbComponentsController($scope, $injector) {
+export function DfComponentsController($scope, $injector) {
   // providers
   var $builder = $injector.get('$builder');
 
@@ -137,12 +137,12 @@ export function FbComponentsController($scope, $injector) {
   });
 }
 
-export function FbComponentController($scope, $injector) {
+export function DfComponentController($scope, $injector) {
   var $builder = $injector.get('$builder');
   $scope.copyObjectToScope = (object) => $builder.copyObjectToScope(object, $scope);
 }
 
-export function FbFormController($scope, $injector) {
+export function DfFormController($scope, $injector) {
   var $builder = $injector.get('$builder');
   var $timeout = $injector.get('$timeout');
 
@@ -158,7 +158,7 @@ export function FbFormController($scope, $injector) {
   }, true);
 }
 
-export function FbFormObjectController($scope, $injector) {
+export function DfFormObjectController($scope, $injector) {
   // providers
   var $builder = $injector.get('$builder');
   // it comes with the sourcecode but isn't used
