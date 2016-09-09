@@ -89,16 +89,20 @@ gulp.task('other', function () {
 });
 
 
-gulp.task('build', ['clean', 'scripts', 'styles'], function () {
+gulp.task('build', ['clean', 'partials', 'scripts', 'styles'], function () {
 
   var jsFilter = $.filter('**/*.js', { restore: true });
   var cssFilter = $.filter('**/*.css', { restore: true });
 
-  return gulp.src([path.join(conf.paths.tmp, '/serve/app/index.module.js'), path.join(conf.paths.tmp, '/serve/app/index.css')])
+  return gulp.src([
+    path.join(conf.paths.tmp, '/serve/app/index.module.js'),
+    path.join(conf.paths.tmp, '/partials/*.js'),
+    path.join(conf.paths.tmp, '/serve/app/index.css')
+  ])
     .pipe($.useref())
     .pipe(jsFilter)
     .pipe($.sourcemaps.init())
-    .pipe($.rename('angular-deforms.js'))
+    .pipe($.concat('angular-deforms.js'))
     .pipe(gulp.dest('dist'))
     .pipe($.uglify({ preserveComments: $.uglifySaveLicense })).on('error', conf.errorHandler('Uglify'))
     .pipe($.rename('angular-deforms.min.js'))
