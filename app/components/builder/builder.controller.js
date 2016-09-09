@@ -1,10 +1,9 @@
-export function FbBuilderController($scope, $injector) {
+export function FbBuilderController() {
   // TODO: adds logic code
 }
 
-export function FbFormObjectEditableController($scope, $injector) {
+export function FbFormObjectEditableController($scope, $injector, $log) {
   var $builder    = $injector.get('$builder');
-  var $timeout    = $injector.get('$timeout');
   var $validator  = $injector.get('$validator');
 
   $scope.setupScope = (formObject) => {
@@ -19,7 +18,7 @@ export function FbFormObjectEditableController($scope, $injector) {
     // separate string to render options on text textarea
     $scope.optionsText = "";
 
-    angular.forEach(formObject.options, function(value, key) {
+    angular.forEach(formObject.options, function(value) {
       $scope.optionsText += value.text + '\n';
     });
 
@@ -113,15 +112,14 @@ export function FbFormObjectEditableController($scope, $injector) {
     $scope.validator = $validator
     v.success ( () => {
       // validated success
-      console.log('success');
+      $log.info('success');
     });
     v.error( () => {
       // validated error
-      console.log('error');
-      console.log($scope.validator.broadcastChannel);
+      $log.error($scope.validator.broadcastChannel);
     });
-    v.then( (e) => {
-      console.log("then");
+    v.then( () => {
+      $log.info("then");
     });
   };
 }
@@ -132,7 +130,7 @@ export function FbComponentsController($scope, $injector) {
 
   $scope.groupedComponents = {};
   angular.forEach($builder.components, (component) => {
-    if (!angular.isDefined($scope.groupedComponents[component.group])) {
+    if (angular.isUndefined($scope.groupedComponents[component.group])) {
       $scope.groupedComponents[component.group] = [];
     }
     $scope.groupedComponents[component.group].push(component);
@@ -181,6 +179,6 @@ export function FbFormObjectController($scope, $injector) {
     return selectedOption || false;
   }
 }
-export function DfDragpagesController($scope) {
+export function DfDragpagesController() {
   // TODO: adds logic code
 }
