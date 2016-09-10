@@ -22,7 +22,7 @@ $active-element-background: #7d90b3;
 }
 
 // TABS INPUTS
-li.fb-draggable.dragging {
+li.df-draggable.dragging {
   list-style-type: none;
   display: inline-block;
   zoom: 1;
@@ -46,7 +46,7 @@ li.fb-draggable.dragging {
   border-radius: 3px;
   border: 1px solid #ddd;
 }
-li.fb-draggable.dragging::before {
+li.df-draggable.dragging::before {
   padding: 0px 5px;
   content: "\f" !important;
  }
@@ -180,4 +180,86 @@ html, body, .fullheight {
       font-size: 12px;
     }
   }
+}
+
+
+.df-component {
+  padding: 10px;
+  cursor: move;
+  input { cursor: move; }
+  label { cursor: move; }
+  select { cursor: move; }
+  textarea { cursor: move; }
+}
+.df-form-object-editable {
+  padding: 10px;
+  border: 1px solid #fff;
+  margin-top: 5px;
+  background: repeating-linear-gradient( 45deg, #f7f7f7, #f3eded 1px, #f7f7f7 2px, #f7f7f7 3px );
+  &.active {
+    background: #e5f4fb !important;
+    border: 1px solid #8fb5d6;
+    margin-left: 1px;
+    margin-right: 1px;
+    // @include transition(background-color 600ms linear);
+  }
+  &:hover {
+    background: #f3fbff;
+    border: 1px dashed #8fb5d6;
+  }
+}
+.df-form-object-editable.df-draggable {
+  cursor: move;
+  input { cursor: move; }
+  label { cursor: pointer; }
+  select { cursor: move; }
+  textarea { cursor: move; }
+}
+.df-form-object-editable.empty {
+  cursor: default;
+  margin: 6px;
+  height: 80px;
+  border:dashed 1px #aaa;
+  background-color: #eee;
+}
+
+.df-draggable.dragging {
+  background-color: #ffffff;
+  position: absolute;
+  z-index: 800;
+  // @include box-shadow(#666 0 0 20px);
+}
+
+.df-required:after {
+  color: #b94a48;
+  content: ' *';
+}
+
+.df-builder {
+  min-height: 250px;
+}
+
+.df-o-editable-out {
+  opacity: 0;
+}
+
+.df-o-editable-in{
+  opacity: 1 !important;
+  -webkit-transition: all .5s linear;
+  -moz-transition: all .5s linear;
+  -o-transition: all .5s linear;
+  transition: all .5s linear;
+}
+
+.df-remove-btn {
+  width: 20px;
+  color: #d9534f;
+}
+
+.df-title-form, .df-desc-form {
+  outline: none;
+}
+
+.df-title-form {
+  margin-top: 0;
 }

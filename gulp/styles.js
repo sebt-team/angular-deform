@@ -8,6 +8,7 @@ var _ = require('lodash');
 var $ = require('gulp-load-plugins')();
 var browserSync = require('browser-sync');
 var wiredep = require('wiredep').stream;
+var gulpif = require('gulp-if');
 
 
 function watchStyles(watchPaths, example) {
@@ -21,8 +22,7 @@ function watchStyles(watchPaths, example) {
         return normalStyles(path.join(conf.paths.examples, '/**/*.css'), 'examples.css')
           .pipe(browserSync.stream());
       else{
-        console.log("EEEEENTEEEERR!!!!!!")
-        return sassWrapper()
+        return sassWrapper(true)
           .pipe(browserSync.stream());
       }
     } else {
@@ -31,15 +31,14 @@ function watchStyles(watchPaths, example) {
   });
 }
 
-function sassWrapper() {
+function sassWrapper(injectBower) {
 
   var sassOptions = {
     style: 'expanded'
   };
 
   var injectFiles = gulp.src([
-    path.join(conf.paths.src, '/app/**/*.scss'),
-    path.join('!' + conf.paths.src, '/app/index.scss')
+    path.join(conf.paths.src, '/app/**/*.scss')
   ], { read: false });
 
   var injectOptions = {
@@ -56,7 +55,7 @@ function sassWrapper() {
     path.join(conf.paths.src, '/app/index.scss')
   ])
     .pipe($.inject(injectFiles, injectOptions))
-    .pipe(wiredep(_.extend({}, conf.wiredep)))
+    .pipe(gulpif(injectBower, wiredep(_.extend({}, conf.wiredep))))
     .pipe($.sourcemaps.init())
     .pipe($.sass(sassOptions)).on('error', conf.errorHandler('Sass'))
     .pipe($.autoprefixer()).on('error', conf.errorHandler('Autoprefixer'))
@@ -72,7 +71,11 @@ function normalStyles(baseDir, scriptName) {
 }
 
 gulp.task('styles', function() {
-  return sassWrapper();
+  return sassWrapper(true);
+});
+
+gulp.task('styles:with-out-bower', function() {
+  return sassWrapper(false);
 });
 
 gulp.task('styles:watch', function() {

@@ -26,9 +26,7 @@ angular
   .module('angularDeforms',
     [
       'ngAnimate',
-      'ngTouch',
       'ngMessages',
-      'ngAria',
       'toastr',
       'builder',
       'validator.rules',

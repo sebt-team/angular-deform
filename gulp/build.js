@@ -20,7 +20,7 @@ gulp.task('partials', function () {
       collapseWhitespace: true
     }))
     .pipe($.angularTemplatecache('templateCacheHtml.js', {
-      module: 'angularDeforms',
+      module: 'builder',
       root: 'app'
     }))
     .pipe(gulp.dest(conf.paths.tmp + '/partials/'));
@@ -89,7 +89,7 @@ gulp.task('other', function () {
 });
 
 
-gulp.task('build', ['clean', 'partials', 'scripts', 'styles'], function () {
+gulp.task('build', ['clean', 'partials', 'scripts', 'styles:with-out-bower'], function () {
 
   var jsFilter = $.filter('**/*.js', { restore: true });
   var cssFilter = $.filter('**/*.css', { restore: true });
