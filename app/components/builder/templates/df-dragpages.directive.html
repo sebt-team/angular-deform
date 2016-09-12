@@ -3,10 +3,10 @@
     <div class="tab-content">
       <div class="tab-pane fade row" ng-class="{ 'active in' : builder.getCurrentPage().index == $index }" ng-repeat="page in pages" id="page_{{$index}}">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bhoechie-tab-container dragzone-tab-container">
-          <h3 class="fb-title-form" contenteditable="true" ng-model="page.title"></h3>
-          <h5 class="fb-title-form" contenteditable="true" ng-model="page.description"></h5>
+          <h3 class="df-title-form" contenteditable="true" ng-model="page.title"></h3>
+          <h5 class="df-title-form" contenteditable="true" ng-model="page.description"></h5>
           <hr>
-          <div fb-builder="{{page.form.name}}"></div>
+          <div df-builder="{{page.form.name}}"></div>
         </div>
       </div>
     </div>

@@ -143,7 +143,7 @@ export function DragProvider () {
         e.preventDefault();
         let $clone = $element.clone();
         result.element = $clone[0];
-        $clone.addClass("fb-draggable form-horizontal prepare-dragging");
+        $clone.addClass("df-draggable form-horizontal prepare-dragging");
         that.hooks.move.drag = (e, defer) => {
           if ($clone.hasClass('prepare-dragging')) {
             $clone.css({
@@ -195,7 +195,7 @@ export function DragProvider () {
         element: $element[0],
         object: object
       };
-      $element.addClass('fb-draggable');
+      $element.addClass('df-draggable');
       $element.on('mousedown', (e) => {
         e.preventDefault();
         if ($element.hasClass('dragging')) return;

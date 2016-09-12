@@ -1,4 +1,4 @@
-export function FbBuilder ($injector) {
+export function DfBuilder ($injector) {
   // ----------------------------------------
   // providers
   // ----------------------------------------
@@ -10,30 +10,30 @@ export function FbBuilder ($injector) {
   // ----------------------------------------
   let directive = {
     restrict: 'A',
-    controller: 'fbBuilderController',
+    controller: 'dfBuilderController',
     templateUrl: 'app/components/builder/templates/df-builder.directive.html',
     link: (scope, element, attrs) => {
       // ----------------------------------------
       // valuables
       // ----------------------------------------
       var beginMove = true;
-      scope.formName = attrs.fbBuilder;
+      scope.formName = attrs.dfBuilder;
       scope.formObjects = $builder.addForm(scope.formName);
       scope.builder = $builder;
 
-      $(element).addClass('fb-builder');
+      $(element).addClass('df-builder');
 
       $drag.droppable($(element), {
         move: (e) => {
           if(beginMove) {
-            $("div.fb-form-object-editable").popover('hide');
+            $("div.df-form-object-editable").popover('hide');
             beginMove = false;
           }
 
-          let $formObjects = $(element).find('.fb-form-object-editable:not(.empty,.dragging)');
+          let $formObjects = $(element).find('.df-form-object-editable:not(.empty,.dragging)');
           if ($formObjects.length === 0) {
-            if ($(element).find('.fb-form-object-editable.empty').length === 0) {
-              $(element).find('>div:first').append($("<div class='fb-form-object-editable empty'></div>"));
+            if ($(element).find('.df-form-object-editable.empty').length === 0) {
+              $(element).find('>div:first').append($("<div class='df-form-object-editable empty'></div>"));
             }
             return;
           }
@@ -53,7 +53,7 @@ export function FbBuilder ($injector) {
           for (var i = 0; i < positions.length; i++) {
             if (e.pageY > positions[i] && e.pageY <= positions[i + 1]) {
               $(element).find('.empty').remove();
-              let $empty = $("<div class='fb-form-object-editable empty'></div>");
+              let $empty = $("<div class='df-form-object-editable empty'></div>");
               if (i < $formObjects.length) {
                 $empty.insertBefore($($formObjects[i]));
               } else {
@@ -65,7 +65,7 @@ export function FbBuilder ($injector) {
         },
         out: () => {
           if (beginMove) {
-            $("div.fb-form-object-editable").popover('hide');
+            $("div.df-form-object-editable").popover('hide');
             beginMove = false;
           }
           $(element).find('.empty').remove();
@@ -81,16 +81,16 @@ export function FbBuilder ($injector) {
           if (!isHover && draggable.mode === 'drag') {
             let formObject = draggable.object.formObject;
             if (formObject.editable)
-              $builder.removeFormObject(attrs.fbBuilder, formObject.index);
+              $builder.removeFormObject(attrs.dfBuilder, formObject.index);
           } else if (isHover) {
             if (draggable.mode === 'mirror') {
-              $builder.insertFormObject(scope.formName, $(element).find('.empty').index('.fb-form-object-editable'), {
+              $builder.insertFormObject(scope.formName, $(element).find('.empty').index('.df-form-object-editable'), {
                 component: draggable.object.componentName
               });
             }
             if (draggable.mode === 'drag') {
               let oldIndex = draggable.object.formObject.index;
-              let newIndex = $(element).find('.empty').index('.fb-form-object-editable');
+              let newIndex = $(element).find('.empty').index('.df-form-object-editable');
               if (oldIndex < newIndex)
                 newIndex--;
 
@@ -139,7 +139,7 @@ export function FbBuilder ($injector) {
   return directive;
 }
 
-export function FbFormObjectEditable($injector) {
+export function DfFormObjectEditable($injector) {
   // ----------------------------------------
   // providers
   // ----------------------------------------
@@ -155,10 +155,10 @@ export function FbFormObjectEditable($injector) {
   // ----------------------------------------
   let directive = {
     restrict: 'A',
-    controller: 'fbFormObjectEditableController',
-    require:'^fbBuilder',
+    controller: 'dfFormObjectEditableController',
+    require:'^dfBuilder',
     scope: {
-      formObject: '=fbFormObjectEditable'
+      formObject: '=dfFormObjectEditable'
     },
     link: (scope, element) => {
       scope.inputArray = [];
@@ -170,7 +170,7 @@ export function FbFormObjectEditable($injector) {
         if (!template)
           return;
 
-        template = `<div><div class="fb-remove-btn" ng-click='remove(formObject, $event)'>
+        template = `<div><div class="df-remove-btn" ng-click='remove(formObject, $event)'>
                       <i class='glyphicon glyphicon-remove'></i></div>${template}
                     </div>`;
         let view = $compile(template)(scope);
@@ -204,7 +204,7 @@ export function FbFormObjectEditable($injector) {
   return directive;
 }
 
-export function FbObjectEditable($injector) {
+export function DfObjectEditable($injector) {
   // ----------------------------------------
   // providers
   // ----------------------------------------
@@ -218,11 +218,11 @@ export function FbObjectEditable($injector) {
 
   let directive = {
     restrict: 'A',
-    controller: 'fbFormObjectEditableController',
+    controller: 'dfFormObjectEditableController',
     templateUrl: 'app/components/builder/templates/df-object-editable.directive.html',
     link: (scope, element, attrs) => {
       scope.builder = $builder;
-      scope.formName = attrs.fbObjectEditable;
+      scope.formName = attrs.dfObjectEditable;
       scope.showForm = true;
       scope.$watch('builder.getCurrentFormObject()', (currentFormObject) => {
         if(currentFormObject) {
@@ -230,13 +230,13 @@ export function FbObjectEditable($injector) {
           // scope.data.backup();
           let component = $builder.components[currentFormObject.component];
           let view = $compile(component.popoverTemplate)(scope);
-          let renderElement = element.children('.fb-o-editable').children();
+          let renderElement = element.children('.df-o-editable').children();
           renderElement.html(view);
           // animate
-          renderElement.addClass('fb-o-editable-out')
-          $animate.addClass(renderElement, 'fb-o-editable-in').then(() => {
-            $animate.removeClass(renderElement,'fb-o-editable-out');
-            $animate.removeClass(renderElement,'fb-o-editable-in');
+          renderElement.addClass('df-o-editable-out')
+          $animate.addClass(renderElement, 'df-o-editable-in').then(() => {
+            $animate.removeClass(renderElement,'df-o-editable-out');
+            $animate.removeClass(renderElement,'df-o-editable-in');
           });
         }
       });
@@ -252,7 +252,7 @@ export function FbObjectEditable($injector) {
 }
 
 
-export function FbComponents() {
+export function DfComponents() {
   // ----------------------------------------
   // directive
   // ----------------------------------------
@@ -260,13 +260,13 @@ export function FbComponents() {
   let directive = {
     restrict: 'A',
     templateUrl: 'app/components/builder/templates/df-components.directive.html',
-    controller: 'fbComponentsController'
+    controller: 'dfComponentsController'
   };
 
   return directive;
 }
 
-export function FbComponent($injector) {
+export function DfComponent($injector) {
   // ----------------------------------------
   // providers
   // ----------------------------------------
@@ -279,9 +279,9 @@ export function FbComponent($injector) {
   let directive = {
     restrict: 'A',
     scope: {
-      component: '=fbComponent'
+      component: '=dfComponent'
     },
-    controller: 'fbComponentController',
+    controller: 'dfComponentController',
     link: (scope, element) => {
       scope.copyObjectToScope(scope.component);
       $drag.draggable($(element), {
@@ -304,7 +304,7 @@ export function FbComponent($injector) {
   return directive;
 }
 
-export function FbForm($injector) {
+export function DfForm($injector) {
   // ----------------------------------------
   // providers
   // ----------------------------------------
@@ -317,12 +317,12 @@ export function FbForm($injector) {
     restrict: 'A',
     require: 'ngModel',
     scope: {
-      formName: '@fbForm',
+      formName: '@dfForm',
       input: '=ngModel',
-      "default": '=fbDefault'
+      "default": '=dfDefault'
     },
-    template: '<div class="fb-form-object" ng-repeat="object in form" fb-form-object="object"></div>',
-    controller: 'fbFormController',
+    template: '<div class="df-form-object" ng-repeat="object in form" df-form-object="object"></div>',
+    controller: 'dfFormController',
     link: (scope) => {
       $builder = $injector.get('$builder');
       $builder.forms[scope.formName] = $builder.forms[scope.formName] || []
@@ -333,7 +333,7 @@ export function FbForm($injector) {
   return directive;
 }
 
-export function FbFormObject($injector) {
+export function DfFormObject($injector) {
   // ----------------------------------------
   // providers
   // ----------------------------------------
@@ -346,9 +346,9 @@ export function FbFormObject($injector) {
   // ----------------------------------------
   let directive = {
     restrict: 'A',
-    controller: 'fbFormObjectController',
+    controller: 'dfFormObjectController',
     link: (scope, element, attrs) => {
-      scope.formObject = $parse(attrs.fbFormObject)(scope);
+      scope.formObject = $parse(attrs.dfFormObject)(scope);
       scope.$component = $builder.components[scope.formObject.component];
 
       // listen (formObject updated)
@@ -374,7 +374,7 @@ export function FbFormObject($injector) {
       });
 
       // watch (management updated form objects)
-      scope.$watch(attrs.fbFormObject, () => {
+      scope.$watch(attrs.dfFormObject, () => {
         scope.copyObjectToScope(scope.formObject);
       }, true);
 
