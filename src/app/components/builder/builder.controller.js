@@ -107,7 +107,7 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
     $builder.removeFormObject($scope.$parent.formName, formObject);
   }
 
-  $scope.submit = () => {
+  $scope.submitPoints = () => {
     let v = $validator.validate($scope, 'options');
     $scope.validator = $validator
     v.success ( () => {

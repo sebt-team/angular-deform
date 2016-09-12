@@ -1,4 +1,4 @@
-angular.module('deformExamples', ['angularDeforms'])
+angular.module('deformExamples', ['angularDeforms', 'validator', 'validator.rules'])
 
 .run([
   '$builder', function($builder) {
@@ -31,7 +31,29 @@ angular.module('deformExamples', ['angularDeforms'])
   }
 ])
 
+.config(function($validatorProvider) {
+  $validatorProvider.register( 'maxPointsInOption', {
+    validator: (value, scope, element, attrs, $injector) => {
+      values = scope.$parent.options.map(function(o){return o.value})
+      max = Math.max(...values)
+      return max >= 100
+    },
+    error: "Al menos una opción debe tener el 100% de los puntos"
+  });
 
+  $validatorProvider.register( 'totalPoints', {
+    invoke: 'submit',
+    validator: (value, scope, element, attrs, $injector) => {
+      values = scope.$parent.options.map(function(o){return o.value})
+      total = values.reduce(function(memo, num){
+        return memo+num
+      });
+      return total >= 100
+    },
+    error: "La suma de los porcentajes de las alternativas debe ser a lo menos del 100%"
+  });
+
+})
 
 .controller('DemoController', [
   '$scope', '$builder', function($scope, $builder) {

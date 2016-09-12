@@ -1,3 +1,15 @@
+body {
+  font-size: 12px;
+}
+
+.points-form label {
+  margin-bottom: 0px !important;
+}
+
+.points-form .form-block {
+  float: left;
+  padding-bottom: 10px;
+}
 body>.container {
   padding-left: 0;
   padding-right: 0;
