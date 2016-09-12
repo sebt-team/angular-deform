@@ -166,7 +166,7 @@ export function BuilderProvider() {
         this.groups.push(newComponent.group);
 
     } else {
-      $log.info("The component " + name + " was registered.");
+      // $log.info("The component " + name + " was registered.");
     }
   };
 

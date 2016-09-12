@@ -1,49 +1,34 @@
 angular.module('deformExamples', ['angularDeforms', 'validator', 'validator.rules'])
 
-.run([
-  '$builder', function($builder) {
-    // $builder.registerComponent('sampleInput', {
-    //   group: 'from html',
-    //   label: 'File',
-    //   description: 'Select a file',
-    //   icon: 'fa fa-file-archive-o',
-    //   required: false,
-    //   validationOptions: [
-    //     {label: 'none', rule: '/.*/'},
-    //     {label: 'number', rule: '[number]'},
-    //     {label: 'email', rule: '[email]'},
-    //     {label: 'url', rule: '[url]'}
-    //   ],
-    //   showcaseTemplate: "<i class='{{icon}}'></i> <span>{{label}}</span>",
-    //   templateUrl: '../views/basic-template.html',
-    //   popoverTemplateUrl: '../views/basic-popover-template.html'
-    // });
-    // return $builder.registerComponent('name', {
-    //   group: 'Default',
-    //   label: 'User',
-    //   icon: 'fa fa-user',
-    //   required: false,
-    //   arrayToText: true,
-    //   showcaseTemplate: "<i class='{{icon}}'></i> <span>{{label}}</span>",
-    //   template: "<div class=\"form-group\">\n    <label for=\"{{formName+index}}\" class=\"col-md-4 control-label\" ng-class=\"{'fb-required':required}\">{{label}}</label>\n    <div class=\"col-md-8\">\n        <input type='hidden' ng-model=\"inputText\" validator-required=\"{{required}}\" validator-group=\"{{formName}}\"/>\n        <div class=\"col-sm-6\" style=\"padding-left: 0;\">\n            <input type=\"text\"\n                ng-model=\"inputArray[0]\"\n                class=\"form-control\" id=\"{{formName+index}}-0\"/>\n            <p class='help-block'>First name</p>\n        </div>\n        <div class=\"col-sm-6\" style=\"padding-left: 0;\">\n            <input type=\"text\"\n                ng-model=\"inputArray[1]\"\n                class=\"form-control\" id=\"{{formName+index}}-1\"/>\n            <p class='help-block'>Last name</p>\n        </div>\n    </div>\n</div>",
-    //   popoverTemplate: "<form>\n    <div class=\"form-group\">\n        <label class='control-label'>Label</label>\n        <input type='text' ng-model=\"label\" validator=\"[required]\" class='form-control'/>\n    </div>\n    <div class=\"checkbox\">\n        <label>\n            <input type='checkbox' ng-model=\"required\" />\n            Required\n        </label>\n    </div>\n\n    <hr/>\n    <div class='form-group'>\n        <input type='submit' ng-click=\"duplicate()\" class='btn btn-primary' value='Save'/>\n        <input type='button' ng-click=\"cancel()\" class='btn btn-default' value='Cancel'/>\n        <input type='button' ng-click=\"remove()\" class='btn btn-danger' value='Delete'/>\n    </div>\n</form>"
-    // });
+.run(['$builder', function($builder) {
+    // register new custom component on inputs section
+    return $builder.registerComponent('name', {
+      group: 'Default',
+      label: 'User',
+      icon: 'glyphicon glyphicon-user',
+      required: false,
+      arrayToText: true,
+      showcaseTemplate: "<i class='{{icon}}'></i><span>{{label}}</span>",
+      template: "<div class='form-group'><label for='{{formName+index}}' class='col-md-4 control-label' ng-class='{'fb-required':required}'>{{label}}</label><div class='col-md-8'><input type='hidden' ng-model='inputText' validator-required='{{required}}' validator-group='{{formName}}'/><div class='col-sm-6' style='padding-left: 0;'><input type='text' ng-model='inputArray[0]' class='form-control' id='{{formName+index}}-0'/><p class='help-block'>First name</p></div><div class='col-sm-6' style='padding-left: 0;'><input type='text' ng-model='inputArray[1]' class='form-control' id='{{formName+index}}-1'/><p class='help-block'>Last name</p></div></div></div>",
+      popoverTemplate: "<form><div class='form-group'><label class='control-label'>Label</label><input type='text' ng-model='label' validator='[required]' class='form-control'/></div><div class='checkbox'><label><input type='checkbox' ng-model='required' />Required</label></div><hr/><div class='form-group'><input type='submit' ng-click='duplicate()' class='btn btn-primary' value='Save'/><input type='button' ng-click='cancel()' class='btn btn-default' value='Cancel'/><input type='button' ng-click='remove()' class='btn btn-danger' value='Delete'/></div></form>"
+    });
   }
 ])
 
-.config(function($validatorProvider) {
+.config(['$validatorProvider', function($validatorProvider) {
+  // adds custom validaions from point sections
   $validatorProvider.register( 'maxPointsInOption', {
-    validator: (value, scope, element, attrs, $injector) => {
+    validator: function(value, scope, element, attrs, $injector) {
       values = scope.$parent.options.map(function(o){return o.value})
-      max = Math.max(...values)
+      max = Math.max.apply(null, values);
       return max >= 100
     },
     error: "Al menos una opción debe tener el 100% de los puntos"
   });
-
+  // adds custom validaions from point sections
   $validatorProvider.register( 'totalPoints', {
     invoke: 'submit',
-    validator: (value, scope, element, attrs, $injector) => {
+    validator: function(value, scope, element, attrs, $injector){
       values = scope.$parent.options.map(function(o){return o.value})
       total = values.reduce(function(memo, num){
         return memo+num
@@ -52,11 +37,9 @@ angular.module('deformExamples', ['angularDeforms', 'validator', 'validator.rule
     },
     error: "La suma de los porcentajes de las alternativas debe ser a lo menos del 100%"
   });
+}])
 
-})
-
-.controller('DemoController', [
-  '$scope', '$builder', function($scope, $builder) {
+.controller('DemoController', ['$scope', '$builder', function($scope, $builder) {
     // var checkbox, textbox;
     // textbox = $builder.addFormObject('default', {
     //   id: 'textbox',
@@ -94,8 +77,6 @@ angular.module('deformExamples', ['angularDeforms', 'validator', 'validator.rule
     $scope.$on($builder.broadcastChannel.selectInput, function() {
       $('a[data-target="#options"]').tab('show')
     });
-
-    // $('[data-toggle="tooltip"]').tooltip();
 
   }
 ]);

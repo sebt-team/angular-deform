@@ -1,21 +1,14 @@
-export function ConfigBuilder($logProvider, toastrConfig, $builderProvider) {
+export function ConfigBuilder($logProvider, $builderProvider) {
     'ngInject';
     // Enable log
     $logProvider.debugEnabled(true);
-
-    // Set options third-party lib
-    toastrConfig.allowHtml = true;
-    toastrConfig.timeOut = 3000;
-    toastrConfig.positionClass = 'toast-top-right';
-    toastrConfig.preventDuplicates = true;
-    toastrConfig.progressBar = true;
 
     $builderProvider.registerComponent('textInput', {
       group: 'Default',
       label: 'Text Input',
       description: 'description',
       placeholder: 'placeholder',
-      icon: 'fa fa-font',
+      icon: 'glyphicon glyphicon-font',
       required: false,
       validationOptions: [
         {label: 'none',   rule: '/.*/'},
@@ -32,7 +25,7 @@ export function ConfigBuilder($logProvider, toastrConfig, $builderProvider) {
       label: 'Text Area',
       description: 'description',
       placeholder: 'placeholder',
-      icon: 'fa fa-text-width',
+      icon: 'glyphicon glyphicon-text-width',
       required: false,
       showcaseTemplate: "<i class='{{icon}}'></i> <span>{{label}}</span>",
       templateUrl: "app/components/builder/templates/form_objects/textArea.html",
@@ -43,7 +36,7 @@ export function ConfigBuilder($logProvider, toastrConfig, $builderProvider) {
       label: 'Checkbox',
       description: 'description',
       placeholder: 'placeholder',
-      icon: 'fa fa-check-square-o',
+      icon: 'glyphicon glyphicon-ok',
       required: false,
       complexValues: true,
       options: [{text: 'Value one'}, {text: 'Value two'}],
@@ -57,7 +50,7 @@ export function ConfigBuilder($logProvider, toastrConfig, $builderProvider) {
       label: 'Radio',
       description: 'description',
       placeholder: 'placeholder',
-      icon: 'fa fa-list-ul',
+      icon: 'glyphicon glyphicon-list',
       required: false,
       complexValues: true,
       options: [{text: 'Value one'}, {text: 'Value two'}],
@@ -70,7 +63,7 @@ export function ConfigBuilder($logProvider, toastrConfig, $builderProvider) {
       label: 'Select',
       description: 'description',
       placeholder: 'placeholder',
-      icon: 'fa fa-list-alt',
+      icon: 'glyphicon glyphicon-th-list',
       required: false,
       complexValues: true,
       options: [{text: 'Value one'}, {text: 'Value two'}],

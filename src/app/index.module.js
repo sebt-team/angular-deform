@@ -26,11 +26,10 @@ angular
   .module('angularDeforms',
     [
       'ngAnimate',
-      'ngMessages',
-      'toastr',
-      'builder',
       'validator.rules',
-      'builderComponents'
+      'builderDirective',
+      'builderComponents',
+      'builderProvider'
     ]);
 
 // DIRECTIVE
@@ -45,7 +44,7 @@ angular
 // CONFIG
 angular
   .module('builderComponents', ['builder', 'validator.rules'])
-  .config(['$logProvider', 'toastrConfig', '$builderProvider', ConfigBuilder]);
+  .config(['$logProvider', '$builderProvider', ConfigBuilder]);
 
 // CONTROLLERS
 angular
