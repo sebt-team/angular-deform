@@ -28,7 +28,7 @@ angular
       'ngAnimate',
       'ngMessages',
       'validator.rules',
-      'builder',
+      'builderDirective',
       'builderComponents',
       'builderProvider'
     ]);
@@ -42,11 +42,6 @@ angular
   .module('builderProvider', [])
   .provider('$builder', [BuilderProvider]);
 
-Gracias por aclarar mis dudas.
-
-Por el momento la parcela que mas me llama la atencion es la que usted esta ofreciendo.
-
-Ya tengo pre aprobado el credito hipotecario en mi banco. Estoy consiguiendo financiamineto para contruir la casa, apenas tenga todo claro me vuelvo a poner en contacto con usted.
 // CONFIG
 angular
   .module('builderComponents', ['builder', 'validator.rules'])
