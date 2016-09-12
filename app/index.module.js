@@ -26,7 +26,6 @@ angular
   .module('angularDeforms',
     [
       'ngAnimate',
-      'ngMessages',
       'validator.rules',
       'builderDirective',
       'builderComponents',
