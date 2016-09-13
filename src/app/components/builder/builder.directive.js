@@ -230,7 +230,7 @@ export function DfObjectEditable($injector) {
           // scope.data.backup();
           let component = $builder.components[currentFormObject.component];
           let view = $compile(component.popoverTemplate)(scope);
-          let renderElement = element.children('.df-o-editable').children();
+          let renderElement = element.children().children('.df-o-editable').children();
           renderElement.html(view);
           // animate
           renderElement.addClass('df-o-editable-out')
