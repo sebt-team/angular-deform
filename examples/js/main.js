@@ -3,7 +3,8 @@ angular.module('deformExamples', [
   'angularDeforms',
   'validator',
   'validator.rules',
-  'ui.router'
+  'ui.router',
+  'ngTagsInput'
 ])
 // RUN SAMPLE APP ========================================
 .run(['$builder', function($builder) {
