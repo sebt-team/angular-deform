@@ -2,7 +2,6 @@
 $pages-tab-color: #7d90b3;
 $active-element-background: #7d90b3;
 
-
 // SHARED
 .df-shared {
   // GENERALS STYLES
@@ -20,248 +19,228 @@ $active-element-background: #7d90b3;
     }
   }
 
-
-// TABS INPUTS
-li.df-draggable.dragging {
-  list-style-type: none;
-  display: inline-block;
-  zoom: 1;
-  background-color: white;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-  width: 49% !important;
-  height: 32px !important;
-  max-width: 200px;
-  line-height: 2em !important;
-  padding: 4px;
-  margin: 2px 0 0 0;
-  font-size: 11px;
-  vertical-align: top;
-  list-style-type: none;
-  text-align: left;
-  -webkit-border-radius: 3px;
-  -moz-border-radius: 3px;
-  -ms-border-radius: 3px;
-  -o-border-radius: 3px;
-  border-radius: 3px;
-  border: 1px solid #ddd;
-}
-li.df-draggable.dragging::before {
-  padding: 0px 5px;
-  content: "\f" !important;
- }
-
-.df-accordeon {
-  ul { padding: 3%;}
-  .panel-body {
-    li.fa-ellipsis-v:before {
-      float: right;
-      font-size: 15px;
-      color: #b5b2b2;
-    }
-    li {
-      list-style-type: none;
-      display: inline-block;
-      zoom: 1;
-      background-color: white;
-      -moz-box-sizing: border-box;
-      box-sizing: border-box;
-      width: 50%;
-      max-width: 200px;
-      line-height: 2em !important;
-      padding: 4px;
-      margin: 2px 0 0 0;
-      font-size: 11px;
-      vertical-align: top;
-      list-style-type: none;
-      text-align: left;
-      -webkit-border-radius: 3px;
-      -moz-border-radius: 3px;
-      -ms-border-radius: 3px;
-      -o-border-radius: 3px;
-      border-radius: 3px;
-      border: 1px solid #ddd;
-      >i { padding: 0 6px; }
-    }
-    li:hover {
-      cursor: hand;
-      cursor: grab;
-      cursor: -webkit-grab;
-      cursor: -moz-grab;
-      cursor: -ms-grab;
-    }
-  }
-
-}
-
-
-// DRAGPAGE
-.action-buttons {
-  > .nav-tabs {
-    > li {
-      border: 1px solid transparent;
-      > a {
-        border: 1px solid transparent;
-        margin-top: 0;
-        text-decoration: none;
-        border-right-color: transparent;
-        border-left-color: transparent;
-        border-radius: 2px;
-      }
-
-    }
-    > li.active a {
-      color: lighten($pages-tab-color, 90%);
-      background-image: linear-gradient(180deg, $pages-tab-color 70%, $pages-tab-color);
-      border-color: darken($pages-tab-color, 10%);
-     }
-  }
-  > .tab-content {
-    padding-bottom: 15px;
-  }
-}
-
-html, body, .fullheight {
-  min-height: 100% !important;
-  height: 100%;
-}
-
-.nav > li > a {
-  position: relative;
-  display: block;
-  padding: 10px 9px;
-}
-
-.container
-{
-  display:table;
-  width: 100%;
-  margin-top: -50px;
-  padding-top: 50px;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-
-
-
-.truncate {
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-}
-
-.panel {
-  border-radius: 0px !important;
-  border: 1px solid #ccc;
-  .panel-heading {
-    background: #f5f5f5;
+  // TABS INPUTS
+  li.df-draggable.dragging {
+    list-style-type: none;
+    display: inline-block;
+    zoom: 1;
+    background-color: white;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 49% !important;
+    height: 32px !important;
+    max-width: 200px;
+    line-height: 2em !important;
     padding: 4px;
-    border-radius: 0px;
-    .panel-title {
-      font-size: 12px;
-      padding: 0;
-      margin: 0;
+    margin: 2px 0 0 0;
+    font-size: 11px;
+    vertical-align: top;
+    list-style-type: none;
+    text-align: left;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -ms-border-radius: 3px;
+    -o-border-radius: 3px;
+    border-radius: 3px;
+    border: 1px solid #ddd;
+  }
+  li.df-draggable.dragging::before {
+    padding: 0px 5px;
+    content: "\f" !important;
+  }
+
+  .df-accordeon {
+    ul { padding: 3%;}
+    .panel-body {
+      li.fa-ellipsis-v:before {
+        float: right;
+        font-size: 15px;
+        color: #b5b2b2;
+      }
+      li {
+        list-style-type: none;
+        display: inline-block;
+        zoom: 1;
+        background-color: white;
+        -moz-box-sizing: border-box;
+        box-sizing: border-box;
+        width: 50%;
+        max-width: 200px;
+        line-height: 2em !important;
+        padding: 4px;
+        margin: 2px 0 0 0;
+        font-size: 11px;
+        vertical-align: top;
+        list-style-type: none;
+        text-align: left;
+        -webkit-border-radius: 3px;
+        -moz-border-radius: 3px;
+        -ms-border-radius: 3px;
+        -o-border-radius: 3px;
+        border-radius: 3px;
+        border: 1px solid #ddd;
+        >i { padding: 0 6px; }
+      }
+      li:hover {
+        cursor: hand;
+        cursor: grab;
+        cursor: -webkit-grab;
+        cursor: -moz-grab;
+        cursor: -ms-grab;
+      }
+    }
+
+  }
+
+
+  // DRAGPAGE
+  .action-buttons {
+    > .nav-tabs {
+      > li {
+        border: 1px solid transparent;
+        > a {
+          border: 1px solid transparent;
+          margin-top: 0;
+          text-decoration: none;
+          border-right-color: transparent;
+          border-left-color: transparent;
+          border-radius: 2px;
+        }
+
+      }
+      > li.active a {
+        color: lighten($pages-tab-color, 90%);
+        background-image: linear-gradient(180deg, $pages-tab-color 70%, $pages-tab-color);
+        border-color: darken($pages-tab-color, 10%);
+      }
+    }
+    > .tab-content {
+      padding-bottom: 15px;
     }
   }
-}
 
-#collapsePints, #collapseDependency {
-  .form-group {
-    padding-bottom: 18px;
-    .control-label {
-      font-weight: normal;
-    }
-    .form-control {
-      height: 28px;
-    }
-    .btn {
-      padding: 5px 54px;
-      font-size: 12px;
+  .nav > li > a {
+    position: relative;
+    display: block;
+    padding: 10px 9px;
+  }
+
+  .truncate {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+
+  .panel {
+    border-radius: 0px !important;
+    border: 1px solid #ccc;
+    .panel-heading {
+      background: #f5f5f5;
+      padding: 4px;
+      border-radius: 0px;
+      .panel-title {
+        font-size: 12px;
+        padding: 0;
+        margin: 0;
+      }
     }
   }
-}
 
-
-.df-component {
-  padding: 10px;
-  cursor: move;
-  input { cursor: move; }
-  label { cursor: move; }
-  select { cursor: move; }
-  textarea { cursor: move; }
-}
-.df-form-object-editable {
-  padding: 10px;
-  border: 1px solid #fff;
-  margin-top: 5px;
-  background: repeating-linear-gradient( 45deg, #f7f7f7, #f3eded 1px, #f7f7f7 2px, #f7f7f7 3px );
-  &.active {
-    background: #e5f4fb !important;
-    border: 1px solid #8fb5d6;
-    margin-left: 1px;
-    margin-right: 1px;
-    // @include transition(background-color 600ms linear);
+  #collapsePints, #collapseDependency {
+    .form-group {
+      padding-bottom: 18px;
+      .control-label {
+        font-weight: normal;
+      }
+      .form-control {
+        height: 28px;
+      }
+      .btn {
+        padding: 5px 54px;
+        font-size: 12px;
+      }
+    }
   }
-  &:hover {
-    background: #f3fbff;
-    border: 1px dashed #8fb5d6;
+
+  .df-component {
+    padding: 10px;
+    cursor: move;
+    input { cursor: move; }
+    label { cursor: move; }
+    select { cursor: move; }
+    textarea { cursor: move; }
   }
-}
-.df-form-object-editable.df-draggable {
-  cursor: move;
-  input { cursor: move; }
-  label { cursor: pointer; }
-  select { cursor: move; }
-  textarea { cursor: move; }
-}
-.df-form-object-editable.empty {
-  cursor: default;
-  margin: 6px;
-  height: 80px;
-  border:dashed 1px #aaa;
-  background-color: #eee;
-}
+  .df-form-object-editable {
+    padding: 10px;
+    border: 1px solid #fff;
+    margin-top: 5px;
+    background: repeating-linear-gradient( 45deg, #f7f7f7, #f3eded 1px, #f7f7f7 2px, #f7f7f7 3px );
+    &.active {
+      background: #e5f4fb !important;
+      border: 1px solid #8fb5d6;
+      margin-left: 1px;
+      margin-right: 1px;
+      // @include transition(background-color 600ms linear);
+    }
+    &:hover {
+      background: #f3fbff;
+      border: 1px dashed #8fb5d6;
+    }
+  }
+  .df-form-object-editable.df-draggable {
+    cursor: move;
+    input { cursor: move; }
+    label { cursor: pointer; }
+    select { cursor: move; }
+    textarea { cursor: move; }
+  }
+  .df-form-object-editable.empty {
+    cursor: default;
+    margin: 6px;
+    height: 80px;
+    border:dashed 1px #aaa;
+    background-color: #eee;
+  }
 
-.df-draggable.dragging {
-  background-color: #ffffff;
-  position: absolute;
-  z-index: 800;
-  // @include box-shadow(#666 0 0 20px);
-}
+  .df-draggable.dragging {
+    background-color: #ffffff;
+    position: absolute;
+    z-index: 800;
+    // @include box-shadow(#666 0 0 20px);
+  }
 
-.df-required:after {
-  color: #b94a48;
-  content: ' *';
-}
+  .df-required:after {
+    color: #b94a48;
+    content: ' *';
+  }
 
-.df-builder {
-  min-height: 250px;
-}
+  .df-builder {
+    min-height: 250px;
+  }
 
-.df-o-editable-out {
-  opacity: 0;
-}
+  .df-o-editable-out {
+    opacity: 0;
+  }
 
-.df-o-editable-in{
-  opacity: 1 !important;
-  -webkit-transition: all .5s linear;
-  -moz-transition: all .5s linear;
-  -o-transition: all .5s linear;
-  transition: all .5s linear;
-}
+  .df-o-editable-in{
+    opacity: 1 !important;
+    -webkit-transition: all .5s linear;
+    -moz-transition: all .5s linear;
+    -o-transition: all .5s linear;
+    transition: all .5s linear;
+  }
 
-.df-remove-btn {
-  width: 20px;
-  color: #d9534f;
-}
+  .df-remove-btn {
+    width: 20px;
+    color: #d9534f;
+  }
 
-.df-title-form, .df-desc-form {
-  outline: none;
-  font-weight: 200;
-}
+  .df-title-form, .df-desc-form {
+    outline: none;
+    font-weight: 200;
+  }
 
-.df-title-form {
-  margin-top: 0;
-}
+  .df-title-form {
+    margin-top: 0;
+  }
 }
