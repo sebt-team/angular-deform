@@ -1,4 +1,4 @@
-<!doctype html><html ng-app=deformExamples class=full-height><head><meta charset=utf-8><title>angularDeforms</title><meta name=description content=""><meta name=viewport content="width=device-width"><!--   <link rel="stylesheet" href="../css/angular-sweetnotifier.min.css" charset="utf-8"> --><!-- Place favicon.ico and apple-touch-icon.png in the root directory --><link rel=stylesheet href=styles/vendor-9472fa3abf.css><link rel=stylesheet href=styles/app-698d3c1924.css></head><body ng-app=deformExamples class=full-height><!--[if lt IE 10]>
+<!doctype html><html ng-app=deformExamples class=full-height><head><meta charset=utf-8><title>angularDeforms</title><meta name=description content=""><meta name=viewport content="width=device-width"><!--   <link rel="stylesheet" href="../css/angular-sweetnotifier.min.css" charset="utf-8"> --><!-- Place favicon.ico and apple-touch-icon.png in the root directory --><link rel=stylesheet href=styles/vendor-8a3b1124f1.css><link rel=stylesheet href=styles/app-d7aca0b3fc.css></head><body ng-app=deformExamples class=full-height><!--[if lt IE 10]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]--><nav class="navbar navbar-default navbar-static-top"><div class=container-fluid><div class=navbar-header><a href=# class=navbar-brand>COMPLEX EXAMPLE</a></div><div class="collapse navbar-collapse" id=bs-example-navbar-collapse-8><ul class="nav navbar-nav navbar-right"><li><a href=#>Builder</a></li><li><a href=#>Render</a></li></ul></div></div></nav><div class="example-container full-height" ng-controller=DemoController><hr><div ui-view class=full-height></div></div><script type=text/ng-template id=/partial-builder.html><div class="toolbox-container full-height">
         <div class="inputs-container df-tabs-container full-height">
@@ -41,6 +41,11 @@
                     <textarea name="Name" rows="8" cols="35" class="form-control"></textarea>
                     <p class="help-block">Opcional</p>
                   </div>
+                  <div class="form-group">
+                    <label>Categories</label>
+                    <tags-input ng-model="tags"></tags-input>
+                    <p class="help-block">Opcional</p>
+                  </div>
                 </div>
               </div>
             </div>
@@ -61,4 +66,4 @@
 
       <div class="form-workarea-container">
         <div df-dragpages></div>
-      </div></script><script type=text/ng-template id=/partial-render.html><h1>POTO</h1></script><!--   <div ng-model="input" df-form="form0" df-default="defaultValue"></div> {{input}} --><script src=scripts/vendor-dfdad2697d.js></script><script src=scripts/examples-bundler-e62c4ffc8a.js></script></body></html>
+      </div></script><script type=text/ng-template id=/partial-render.html><h1>POTO</h1></script><!--   <div ng-model="input" df-form="form0" df-default="defaultValue"></div> {{input}} --><script src=scripts/vendor-cde6ba6a8d.js></script><script src=scripts/examples-bundler-b3037fb6a5.js></script></body></html>
