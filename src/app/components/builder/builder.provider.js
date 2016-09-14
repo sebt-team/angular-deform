@@ -226,7 +226,7 @@ export function BuilderProvider() {
       formName: `form${pageNumber}`,
       form: {
         name: `form${pageNumber}`,
-        content: this.addForm(`form${pageNumber}`)
+        components: this.addForm(`form${pageNumber}`)
       }
     };
     this.pages.push(page);

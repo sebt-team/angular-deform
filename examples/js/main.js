@@ -4,7 +4,8 @@ angular.module('deformExamples', [
   'validator',
   'validator.rules',
   'ui.router',
-  'ngTagsInput'
+  'ngTagsInput',
+  'ngJsonExplorer'
 ])
 // RUN SAMPLE APP ========================================
 .run(['$builder', function($builder) {
@@ -64,6 +65,7 @@ angular.module('deformExamples', [
 }])
 
 .controller('DemoController', ['$scope', '$builder', function($scope, $builder) {
+    $scope.form = {};
     // var checkbox, textbox;
     // textbox = $builder.addFormObject('default', {
     //   id: 'textbox',
@@ -97,6 +99,11 @@ angular.module('deformExamples', [
     //     return console.log('error');
     //   });
     // };
+
+    $scope.formatOutput = function(input) {
+      console.log(input);
+      return JSON.stringify(input);
+    }
 
     $scope.$on($builder.broadcastChannel.selectInput, function() {
       $('a[data-target="#options"]').tab('show')

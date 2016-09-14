@@ -11,7 +11,8 @@
     "animate.css": "~3.4.0",
     "angular-validator": ">=0.2.3",
     "angular-ui-router": "^0.3.1",
-    "ng-tags-input": "^3.1.1"
+    "ng-tags-input": "^3.1.1",
+    "ng-json-explorer": "*"
   },
   "devDependencies": {
     "angular-mocks": "~1.5.3"

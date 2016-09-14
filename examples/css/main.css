@@ -11,7 +11,6 @@ html {
   font-size: 13px;
 }
 .well{
-  height: 62px;
   padding: 11px;
   border-radius: 0px;
   box-shadow: none;
@@ -26,6 +25,11 @@ html {
   color: #fff;
   font-weight: 200;
   text-transform: uppercase;
+}
+.navbar-default .navbar-nav > li > a:hover,
+.navbar-default .navbar-nav > li > a:focus {
+  color: #fff;
+  background-color: #337ab7;
 }
 body>.container {
   padding-left: 0;
@@ -88,6 +92,13 @@ body>.container {
 .form-workarea-container hr {
   border-top: 1px dashed #c0c0c0;
 }
+.json-container {
+  padding-bottom: 130px;
+}
+.json-container .well {
+  overflow-y: scroll;
+}
+
 .points-form label {
   margin-bottom: 0px !important;
 }

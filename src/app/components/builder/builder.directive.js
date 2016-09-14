@@ -453,7 +453,7 @@ export function DfPageEditable($injector) {
 }
 
 
-export function DfDragpages($injector) {
+export function DfFormBuilder($injector) {
   // ----------------------------------------
   // providers
   // ----------------------------------------
@@ -466,17 +466,22 @@ export function DfDragpages($injector) {
     restrict: 'A',
     templateUrl: 'app/components/builder/templates/df-dragpages.directive.html',
     controller: 'dfDragpagesController',
+    scope: {
+      output: '=dfFormBuilder'
+    },
     link: (scope) => {
       scope.forms = $builder.forms
       scope.pages = $builder.pages;
       scope.builder = $builder;
+      scope.output = scope.pages;
 
       scope.changePage = (index)=> {
         $builder.selectCurrentPage(index);
       }
 
       // create the first page
-      $builder.addPage();
+      if(!$builder.pages.length)
+        $builder.addPage();
     }
   }
 
