@@ -1,11 +1,6 @@
-// VARIABLES
-$pages-tab-color: #7d90b3;
-$active-element-background: #7d90b3;
-
-// SHARED
+// START SHARED ------------------------------
 .df-shared {
   // GENERALS STYLES
-  // input {width: 100% !important;border-radius: 3px !important;}
   a {cursor: pointer;}
   [contenteditable^="true"] {
     border-bottom: 1px dashed #ddd;
@@ -18,8 +13,9 @@ $active-element-background: #7d90b3;
       width: 240px;
     }
   }
+  // END SHARED ------------------------------
 
-  // TABS INPUTS
+  // START TABS INPUTS -----------------------
   li.df-draggable.dragging {
     list-style-type: none;
     display: inline-block;
@@ -48,7 +44,12 @@ $active-element-background: #7d90b3;
     padding: 0px 5px;
     content: "\f" !important;
   }
-
+  .df-draggable.dragging {
+    background-color: #ffffff;
+    position: absolute;
+    z-index: 800;
+    // @include box-shadow(#666 0 0 20px);
+  }
   .df-accordeon {
     ul { padding: 3%;}
     .panel-body {
@@ -91,84 +92,15 @@ $active-element-background: #7d90b3;
     }
 
   }
+  // END TABS INPUTS -------------------------
 
-
-  // DRAGPAGE
-  .action-buttons {
-    > .nav-tabs {
-      > li {
-        border: 1px solid transparent;
-        > a {
-          border: 1px solid transparent;
-          margin-top: 0;
-          text-decoration: none;
-          border-right-color: transparent;
-          border-left-color: transparent;
-          border-radius: 2px;
-        }
-
-      }
-      > li.active a {
-        color: lighten($pages-tab-color, 90%);
-        background-image: linear-gradient(180deg, $pages-tab-color 70%, $pages-tab-color);
-        border-color: darken($pages-tab-color, 10%);
-      }
-    }
-    > .tab-content {
-      padding-bottom: 15px;
-    }
+  // START DRAGPAGE --------------------------
+  .df-title-form, .df-desc-form {
+    outline: none;
+    font-weight: 200;
   }
-
-  .nav > li > a {
-    position: relative;
-    display: block;
-    padding: 10px 9px;
-  }
-
-  .truncate {
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-  }
-
-  .panel {
-    border-radius: 0px !important;
-    border: 1px solid #ccc;
-    .panel-heading {
-      background: #f5f5f5;
-      padding: 4px;
-      border-radius: 0px;
-      .panel-title {
-        font-size: 12px;
-        padding: 0;
-        margin: 0;
-      }
-    }
-  }
-
-  #collapsePints, #collapseDependency {
-    .form-group {
-      padding-bottom: 18px;
-      .control-label {
-        font-weight: normal;
-      }
-      .form-control {
-        height: 28px;
-      }
-      .btn {
-        padding: 5px 54px;
-        font-size: 12px;
-      }
-    }
-  }
-
-  .df-component {
-    padding: 10px;
-    cursor: move;
-    input { cursor: move; }
-    label { cursor: move; }
-    select { cursor: move; }
-    textarea { cursor: move; }
+  .df-title-form {
+    margin-top: 0;
   }
   .df-form-object-editable {
     padding: 10px;
@@ -201,23 +133,50 @@ $active-element-background: #7d90b3;
     border:dashed 1px #aaa;
     background-color: #eee;
   }
-
-  .df-draggable.dragging {
-    background-color: #ffffff;
-    position: absolute;
-    z-index: 800;
-    // @include box-shadow(#666 0 0 20px);
+  .df-builder {
+    min-height: 250px;
   }
+  .df-remove-btn {
+    width: 20px;
+    color: #d9534f;
+  }
+// END DRAGPAGE ------------------------------
+
+// START COMPONENTS --------------------------
+  #collapsePints, #collapseDependency {
+    .form-group {
+      padding-bottom: 18px;
+      .control-label {
+        font-weight: normal;
+      }
+      .form-control {
+        height: 28px;
+      }
+      .btn {
+        padding: 5px 54px;
+        font-size: 12px;
+      }
+    }
+  }
+  .df-component {
+    padding: 10px;
+    cursor: move;
+    input { cursor: move; }
+    label { cursor: move; }
+    select { cursor: move; }
+    textarea { cursor: move; }
+  }
+  .truncate {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+  }
+  // END COMPONENTS --------------------------
 
   .df-required:after {
     color: #b94a48;
     content: ' *';
   }
-
-  .df-builder {
-    min-height: 250px;
-  }
-
   .df-o-editable-out {
     opacity: 0;
   }
@@ -230,17 +189,25 @@ $active-element-background: #7d90b3;
     transition: all .5s linear;
   }
 
-  .df-remove-btn {
-    width: 20px;
-    color: #d9534f;
+  // START FOOTER ----------------------------
+  .action-buttons {
+    > .tab-content {
+      padding-bottom: 15px;
+    }
   }
-
-  .df-title-form, .df-desc-form {
-    outline: none;
-    font-weight: 200;
+  .panel {
+    border-radius: 0px !important;
+    border: 1px solid #ccc;
+    .panel-heading {
+      background: #f5f5f5;
+      padding: 4px;
+      border-radius: 0px;
+      .panel-title {
+        font-size: 12px;
+        padding: 0;
+        margin: 0;
+      }
+    }
   }
-
-  .df-title-form {
-    margin-top: 0;
-  }
+  // END FOOTER ------------------------------
 }
