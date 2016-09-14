@@ -5,16 +5,27 @@ html {
   height: 100%;
 }
 .form-control {
-  font-size: 12px !important;
+  font-size: 12px;
 }
 .btn-lg {
-  font-size: 13px !important;
+  font-size: 13px;
 }
 .well{
   height: 62px;
-  padding: 11px !important;
-  border-radius: 0px !important;
-  box-shadow: none !important;
+  padding: 11px;
+  border-radius: 0px;
+  box-shadow: none;
+}
+.navbar-default {
+  background-color: #004974;
+  border-color: #183854;
+  color: #fff;
+}
+.navbar-default .navbar-brand,
+.navbar-default .navbar-nav > li > a {
+  color: #fff;
+  font-weight: 200;
+  text-transform: uppercase;
 }
 body>.container {
   padding-left: 0;
@@ -24,7 +35,7 @@ body>.container {
 .example-container {
   overflow-y: hidden;
   height: 100%;
-  font-size: 12px !important;
+  font-size: 12px;
 }
 .example-title {
   padding-left: 12px;

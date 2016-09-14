@@ -77,11 +77,11 @@ gulp.task('scripts:watch', ['scripts'], function (callback) {
 });
 
 gulp.task('scripts:examples', function () {
-  return normalScript(false, path.join(conf.paths.examples, '/**/*.js'), 'examples.js');
+  return normalScript(false, path.join(conf.paths.examples, '/**/*.js'), 'samples.js');
 });
 
 gulp.task('scripts:examples-watch', function () {
-  normalScript(true, path.join(conf.paths.examples, '/**/*.js'), 'examples.js');
+  normalScript(true, path.join(conf.paths.examples, '/**/*.js'), 'samples.js');
 });
 
 gulp.task('scripts:test', function () {

@@ -19,7 +19,7 @@ function watchStyles(watchPaths, example) {
   gulp.watch(watchPaths, function(event) {
     if(isOnlyChange(event)) {
       if(example)
-        return normalStyles(path.join(conf.paths.examples, '/**/*.css'), 'examples.css')
+        return normalStyles(path.join(conf.paths.examples, '/**/*.css'), 'sample.css')
           .pipe(browserSync.stream());
       else{
         return sassWrapper(true)
@@ -83,7 +83,7 @@ gulp.task('styles:watch', function() {
 });
 
 gulp.task('styles:examples', function() {
-  return normalStyles(path.join(conf.paths.examples, '/**/*.css'), 'examples.css');
+  return normalStyles(path.join(conf.paths.examples, '/**/*.css'), 'sample.css');
 });
 
 gulp.task('styles:examples-watch', function() {
