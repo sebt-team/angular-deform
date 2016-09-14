@@ -1,4 +1,9 @@
-angular.module('deformExamples', ['angularDeforms', 'validator', 'validator.rules'])
+angular.module('deformExamples', [
+  'angularDeforms',
+  'validator',
+  'validator.rules',
+  'ui.router'
+])
 
 .run(['$builder', function($builder) {
     // register new custom component on inputs section
