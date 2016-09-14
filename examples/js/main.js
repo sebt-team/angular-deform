@@ -1,21 +1,39 @@
+// SAMPLE APP ========================================
 angular.module('deformExamples', [
   'angularDeforms',
   'validator',
   'validator.rules',
   'ui.router'
 ])
-
+// RUN SAMPLE APP ========================================
 .run(['$builder', function($builder) {
-    // register new custom component on inputs section
-    return $builder.registerComponent('name', {
-      group: 'Default',
-      label: 'User',
-      icon: 'glyphicon glyphicon-user',
-      required: false,
-      arrayToText: true,
-      showcaseTemplate: "<i class='{{icon}}'></i><span>{{label}}</span>",
-      template: "<div class='form-group'><label for='{{formName+index}}' class='col-md-4 control-label' ng-class='{'fb-required':required}'>{{label}}</label><div class='col-md-8'><input type='hidden' ng-model='inputText' validator-required='{{required}}' validator-group='{{formName}}'/><div class='col-sm-6' style='padding-left: 0;'><input type='text' ng-model='inputArray[0]' class='form-control' id='{{formName+index}}-0'/><p class='help-block'>First name</p></div><div class='col-sm-6' style='padding-left: 0;'><input type='text' ng-model='inputArray[1]' class='form-control' id='{{formName+index}}-1'/><p class='help-block'>Last name</p></div></div></div>",
-      popoverTemplate: "<form><div class='form-group'><label class='control-label'>Label</label><input type='text' ng-model='label' validator='[required]' class='form-control'/></div><div class='checkbox'><label><input type='checkbox' ng-model='required' />Required</label></div><hr/><div class='form-group'><input type='submit' ng-click='duplicate()' class='btn btn-primary' value='Save'/><input type='button' ng-click='cancel()' class='btn btn-default' value='Cancel'/><input type='button' ng-click='remove()' class='btn btn-danger' value='Delete'/></div></form>"
+  // register new custom component on inputs section
+  return $builder.registerComponent('name', {
+    group: 'Default',
+    label: 'User',
+    icon: 'glyphicon glyphicon-user',
+    required: false,
+    arrayToText: true,
+    showcaseTemplate: "<i class='{{icon}}'></i><span>{{label}}</span>",
+    template: "<div class='form-group'><label for='{{formName+index}}' class='col-md-4 control-label' ng-class='{'fb-required':required}'>{{label}}</label><div class='col-md-8'><input type='hidden' ng-model='inputText' validator-required='{{required}}' validator-group='{{formName}}'/><div class='col-sm-6' style='padding-left: 0;'><input type='text' ng-model='inputArray[0]' class='form-control' id='{{formName+index}}-0'/><p class='help-block'>First name</p></div><div class='col-sm-6' style='padding-left: 0;'><input type='text' ng-model='inputArray[1]' class='form-control' id='{{formName+index}}-1'/><p class='help-block'>Last name</p></div></div></div>",
+    popoverTemplate: "<form><div class='form-group'><label class='control-label'>Label</label><input type='text' ng-model='label' validator='[required]' class='form-control'/></div><div class='checkbox'><label><input type='checkbox' ng-model='required' />Required</label></div><hr/><div class='form-group'><input type='submit' ng-click='duplicate()' class='btn btn-primary' value='Save'/><input type='button' ng-click='cancel()' class='btn btn-default' value='Cancel'/><input type='button' ng-click='remove()' class='btn btn-danger' value='Delete'/></div></form>"
+  });
+  }
+])
+
+// CONFIG ROUTER FOR THE SAMLE APP ========================================
+.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
+  // default router
+  $urlRouterProvider.otherwise('/builder');
+
+  $stateProvider
+    .state('builder', {
+      url: '/builder',
+      templateUrl: '/partial-builder.html'
+    })
+    .state('render', {
+      url: '/render',
+      templateUrl: '/partial-render.html'
     });
   }
 ])
