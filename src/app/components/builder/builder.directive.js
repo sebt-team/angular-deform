@@ -578,12 +578,15 @@ export function DfPaginator($injector) {
         return scope.currentPageNumber === scope.pageCount() ? "disabled":" ";
       };
       scope.setPage = function(set){
-        $builder.selectCurrentPage(set)
         scope.currentPageNumber = set;
       };
       scope.$watch('builer.getCurrentPage()', function(currentPage) {
         if(currentPage)
           scope.setPage(currentPage.index)
+      });
+      scope.$watch('currentPageNumber', function(currentPage) {
+        if(typeof currentPage == 'number')
+          $builder.selectCurrentPage(currentPage)
       });
 
     }
