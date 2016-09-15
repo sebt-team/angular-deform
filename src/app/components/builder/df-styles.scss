@@ -140,9 +140,40 @@
     width: 20px;
     color: #d9534f;
   }
-// END DRAGPAGE ------------------------------
+  // pagination
+  .pagination-container {
+    .pagination {
+      margin: auto;
+    }
+    ul.page{
+      list-style: none;
+    }
+    ul.page li{
+      margin: 5px;
+      padding: 10px;
+      background-color: #2A9BB0;
+      font-weight: bold;
+      font-family: 'Open Sans Condensed', sans-serif;
+    }
+    ul.page li a{
+      color: #fff;
+      text-decoration: none;
+      font-weight: bold;
+      font-family: 'Open Sans Condensed', sans-serif;
+    }
+    .pagination>.active>a{
+      background-color:#004974;
+      color: white;
+      border-color: #2A9BB0;
+      /* This would work if I could move the .css file link under bootstrap.css.*/
+    }
+    .pagination>li>a, .pagination>li>span{
+      color: #555;
+    }
+  }
+  // END DRAGPAGE ------------------------------
 
-// START COMPONENTS --------------------------
+  // START COMPONENTS --------------------------
   #collapsePints, #collapseDependency {
     .form-group {
       padding-bottom: 18px;

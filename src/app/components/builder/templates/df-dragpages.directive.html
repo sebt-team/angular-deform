@@ -10,14 +10,8 @@
         </div>
       </div>
     </div>
-    <div class="action-buttons well">
-      <ul class="nav nav-tabs">
-        <li ng-class="{ 'active': builder.getCurrentPage().index == $index }" ng-repeat="page in pages" ng-click="changePage($index)">
-          <a data-target="page_{{$index}}" data-toggle="tab" aria-controls="page_{{$index}}">
-            Página {{$index + 1}}
-          </a>
-        </li>
-      </ul>
+    <div class="action-buttons well pagination-container">
+      <df-paginator></df-paginator>
     </div>
   </div>
 </div>
