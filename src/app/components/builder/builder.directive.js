@@ -537,7 +537,6 @@ export function DfPaginator($injector) {
         var start;
 
         start = scope.currentPageNumber;
-        console.log(scope.currentPageNumber);
 
         if ( start > scope.pageCount()-rangeSize ) {
           start = scope.pageCount()-rangeSize+1;
