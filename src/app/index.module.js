@@ -17,21 +17,21 @@ import { DfComponent }                    from './components/builder/builder.dir
 import { DfForm }                         from './components/builder/builder.directive';
 import { DfFormObject }                   from './components/builder/builder.directive';
 import { DfPageEditable }                 from './components/builder/builder.directive';
-import { DfDragpages }                    from './components/builder/builder.directive';
-import { Contenteditable }                from './components/builder/builder.directive';
+import { DfFormBuilder }                  from './components/builder/builder.directive';
 import { DfPaginator }                    from './components/builder/builder.directive';
+import { Contenteditable }                from './components/builder/builder.directive';
 import { ConfigBuilder }                  from './components/builder/builder.config';
 import { DfOffsetFilter }                 from './components/builder/builder.filter';
 
 // MAIN
 angular
-  .module('angularDeforms',
-    [
+  .module('angularDeforms',[
       'ngAnimate',
       'validator.rules',
       'builderDirective',
       'builderComponents',
-      'builderProvider'
+      'builderProvider',
+      'mgo-angular-wizard'
     ]);
 
 // DIRECTIVE
@@ -76,6 +76,6 @@ angular
   .directive('dfForm', ['$injector', DfForm])
   .directive('dfFormObject', ['$injector', DfFormObject])
   .directive('dfPageEditable', ['$injector', DfPageEditable])
-  .directive('dfDragpages', ['$injector', DfDragpages])
-  .directive('contenteditable', ['$injector', Contenteditable])
-  .directive('dfPaginator', ['$injector', DfPaginator]);
+  .directive('dfPaginator', ['$injector', DfPaginator])
+  .directive('dfFormBuilder', ['$injector', DfFormBuilder])
+  .directive('contenteditable', ['$injector', Contenteditable]);

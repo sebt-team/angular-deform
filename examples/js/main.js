@@ -4,7 +4,8 @@ angular.module('deformExamples', [
   'validator',
   'validator.rules',
   'ui.router',
-  'ngTagsInput'
+  'ngTagsInput',
+  'ngJsonExplorer'
 ])
 // RUN SAMPLE APP ========================================
 .run(['$builder', function($builder) {
@@ -97,6 +98,16 @@ angular.module('deformExamples', [
     //     return console.log('error');
     //   });
     // };
+
+    $scope.form = undefined;
+    $scope.formDisplay = 'single';
+
+    $scope.changeFormBuilderDisplay = function(display) {
+      if(display == 'single')
+        $builder.setDisplay($builder.displayTypes.SINGLE)
+      else if(display == 'wizard')
+        $builder.setDisplay($builder.displayTypes.WIZARD)
+    }
 
     $scope.$on($builder.broadcastChannel.selectInput, function() {
       $('a[data-target="#options"]').tab('show')

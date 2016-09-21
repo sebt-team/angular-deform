@@ -24,7 +24,7 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
 
     // list all instanced objects pages
     $scope.activatorsFormObjects = $builder.pages.reduce((sum, page) => {
-      sum = sum.concat(page.form.content.map( fo => {
+      sum = sum.concat(page.form.components.map( fo => {
         // not show objects with a lower index
         if($builder.getCurrentPage().index < page.index)
           return;
@@ -171,6 +171,7 @@ export function DfFormObjectController($scope, $injector) {
       label: $scope.formObject.label,
       value: value != null ? value : ''
     };
+    debugger;
     $scope.$parent.input.splice($scope.$index, 1, input);
   };
 

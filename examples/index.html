@@ -28,12 +28,12 @@
     <nav class="navbar navbar-default navbar-static-top">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a href="#" class="navbar-brand">COMPLEX EXAMPLE</a>
+          <a href="#" class="navbar-brand">DEFORM EXAMPLE</a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8">
           <ul class="nav navbar-nav navbar-right">
-            <li><a href="#">Builder</a></li>
-            <li><a href="#">Render</a></li>
+            <li><a ui-sref="builder">Builder</a></li>
+            <li><a ui-sref="render">Render</a></li>
           </ul>
         </div>
       </div>
@@ -84,8 +84,15 @@
                   </div>
                   <div class="form-group">
                     <label>Descripcion</label>
-                    <textarea name="Name" rows="8" cols="35" class="form-control"></textarea>
+                    <textarea rows="8" cols="35" class="form-control"></textarea>
                     <p class="help-block">Opcional</p>
+                  </div>
+                  <div class="form-group">
+                    <label>Display</label>
+                    <select class="form-control" ng-model="formDisplay" ng-change="changeFormBuilderDisplay(formDisplay)">
+                      <option value="single">Single</option>
+                      <option value="wizard">Wizard</option>
+                    </select>
                   </div>
                   <div class="form-group">
                     <label>Categories</label>
@@ -111,15 +118,28 @@
       </div>
 
       <div class="form-workarea-container">
-        <div df-dragpages></div>
+        <div df-form-builder="$parent.form"></div>
       </div>
     </script>
 
     <script type="text/ng-template" id="/partial-render.html">
-      <h1>POTO</h1>
+      <div class="form-container full-height">
+        <div class="col-md-6">
+          <div ng-model="data" df-form="form"></div>
+        </div>
+        <div class="col-md-3 full-height json-container">
+          <div class="well full-height">
+            <json-explorer data="form" collapsed="false"></json-explorer>
+          </div>
+        </div>
+        <div class="col-md-3 full-height json-container">
+          <div class="well full-height">
+            <json-explorer data="data" collapsed="false"></json-explorer>
+          </div>
+        </div>
+      </div>
     </script>
 
-    <!--   <div ng-model="input" df-form="form0" df-default="defaultValue"></div> {{input}} -->
 
     <!-- build:js(src) scripts/vendor.js -->
     <!-- bower:js -->

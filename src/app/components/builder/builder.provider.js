@@ -1,8 +1,19 @@
+// TODO LIST:
+// 1. Replace js object from ES Class
+// 2. Replace forms and arrays for ES Map
+
 var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
-  // -----------------------
-  // BuilderProvider
-  // -----------------------
+// -----------------------
+// BuilderProvider
+// -----------------------
 export function BuilderProvider() {
+
+  // Constants
+  const displayTypes = Object.freeze({
+    SINGLE: 'SINGLE',
+    WIZARD: 'WIZARD'
+  });
+
   var $injector = null, $http = null, $log = null, $templateCache = null;
   this.components = {};
   this.groups = [];
@@ -23,6 +34,7 @@ export function BuilderProvider() {
     page: null,
     form: this.forms['default']
   }
+  let display = displayTypes.SINGLE;
   let secretKey = '_' + Math.random().toString(36).substr(2, 9);
   let randomNumber = Math.floor((Math.random() * 100000));
 
@@ -226,7 +238,7 @@ export function BuilderProvider() {
       formName: `form${pageNumber}`,
       form: {
         name: `form${pageNumber}`,
-        content: this.addForm(`form${pageNumber}`)
+        components: this.addForm(`form${pageNumber}`)
       }
     };
     this.pages.push(page);
@@ -354,6 +366,29 @@ export function BuilderProvider() {
     return selectedFormObject || false
   }
 
+  this.setDisplay = (displayType) => {
+    if(displayType == displayTypes.SINGLE || displayType == displayTypes.WIZARD) {
+      display = displayType
+      if(display == displayTypes.SINGLE)
+        this.selectCurrentPage(0);
+    }
+    else
+      $log.error("The display type is not permited");
+  }
+
+  this.getDisplay = () => {
+    return display;
+  }
+
+  // this.init = (defaultValues) => {
+  //   if(defaultValues.display)
+  //     this.display = defaultValues.display;
+  //   if(defaultValues.groups)
+  //     this.groups = defaultValues.groups;
+  //   if(defaultValues.pages)
+  //     this.pages = defaultValues.pages;
+  // }
+
   this.$get = [
     '$injector', function($injector) {
       this.setupProviders($injector);
@@ -363,15 +398,17 @@ export function BuilderProvider() {
         this.loadTemplate(component);
       }
       return {
-        config: this.config,
+        // Objects & Arrays
         components: this.components,
         groups: this.groups,
         forms: this.forms,
         pages: this.pages,
         dependencies: this.dependencies,
+        // Pages handlers
         addPage: this.addPage,
         getCurrentPage: this.getCurrentPage,
         selectCurrentPage: this.selectCurrentPage,
+        // Form Objects handlers
         addForm: this.addForm,
         getCurrentFormObject: this.getCurrentFormObject,
         selectCurrentFormObject: this.selectCurrentFormObject,
@@ -381,12 +418,19 @@ export function BuilderProvider() {
         removeFormObject: this.removeFormObject,
         duplicateFormObject: this.duplicateFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex,
+        // Dependencies hadlers
         addAnswerDependency: this.addAnswerDependency,
         removeAnswerDependency: this.removeAnswerDependency,
         findDependencyTargets: this.findDependencyTargets,
         findFormObjectByKey: this.findFormObjectByKey,
-        broadcastChannel: this.broadcastChannel,
+        // Display handlers
+        setDisplay: this.setDisplay,
+        getDisplay: this.getDisplay,
+        displayTypes: displayTypes,
+        // Components HANDLERS
         registerComponent: this.registerComponent,
+        // Other utils functions
+        broadcastChannel: this.broadcastChannel,
         copyObjectToScope: this.copyObjectToScope,
         generateKey: this.generateKey
       };

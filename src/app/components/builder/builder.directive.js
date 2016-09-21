@@ -317,16 +317,17 @@ export function DfForm($injector) {
     restrict: 'A',
     require: 'ngModel',
     scope: {
-      formName: '@dfForm',
+      formData: '=dfForm',
       input: '=ngModel',
-      "default": '=dfDefault'
     },
-    template: '<div class="df-form-object" ng-repeat="object in form" df-form-object="object"></div>',
+    templateUrl: 'app/components/builder/templates/df-form.directive.html',
     controller: 'dfFormController',
     link: (scope) => {
       $builder = $injector.get('$builder');
-      $builder.forms[scope.formName] = $builder.forms[scope.formName] || []
-      scope.form = $builder.forms[scope.formName]
+      scope.builder = $builder;
+      scope.pages = $builder.pages;
+      // $builder.forms[scope.formName] = $builder.forms[scope.formName] || []
+      // scope.form = $builder.forms[scope.formName]
     }
   };
 
@@ -430,11 +431,11 @@ export function DfPageEditable($injector) {
     templateUrl: 'app/components/builder/templates/df-page-editable.directive.html',
     link: (scope) => {
 
-      scope.builer = $builder;
+      scope.builder = $builder;
       scope.pages = $builder.pages;
       scope.currentPage = $builder.getCurrentPage();
 
-      scope.$watch('builer.getCurrentPage()', function(currentPage) {
+      scope.$watch('builder.getCurrentPage()', function(currentPage) {
         if(currentPage)
           scope.currentPage = $builder.getCurrentPage();
       });
@@ -453,7 +454,7 @@ export function DfPageEditable($injector) {
 }
 
 
-export function DfDragpages($injector) {
+export function DfFormBuilder($injector) {
   // ----------------------------------------
   // providers
   // ----------------------------------------
@@ -466,17 +467,22 @@ export function DfDragpages($injector) {
     restrict: 'A',
     templateUrl: 'app/components/builder/templates/df-dragpages.directive.html',
     controller: 'dfDragpagesController',
+    scope: {
+      output: '=dfFormBuilder'
+    },
     link: (scope) => {
       scope.forms = $builder.forms
       scope.pages = $builder.pages;
       scope.builder = $builder;
+      scope.output = scope.pages;
 
       scope.changePage = (index)=> {
         $builder.selectCurrentPage(index);
       }
 
       // create the first page
-      $builder.addPage();
+      if(!$builder.pages.length)
+        $builder.addPage();
     }
   }
 
@@ -579,7 +585,7 @@ export function DfPaginator($injector) {
       scope.setPage = function(set){
         scope.currentPageNumber = set;
       };
-      scope.$watch('builer.getCurrentPage()', function(currentPage) {
+      scope.$watch('builder.getCurrentPage()', function(currentPage) {
         if(currentPage)
           scope.setPage(currentPage.index)
       });
