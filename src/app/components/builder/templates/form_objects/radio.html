@@ -1,14 +1,14 @@
-<div class='form-group'>
-  <label for='{{formName+index}}' class='col-sm-4 control-label' ng-class="{'df-required':required}">
+<div class="form-group">
+  <label for="{{formName+index}}" class="col-sm-4 control-label" ng-class="{'df-required':required}">
     {{label}}
   </label>
-  <div class='col-sm-8'>
-    <div class='radio' ng-repeat='item in options track by $index'>
+  <div class="col-sm-8">
+    <div class="radio" ng-repeat="item in options track by $index">
       <label>
-        <input name='{{formName+index}}' ng-model='$parent.inputText' validator-group='{{formName}}' value='{{item.key}}' type='radio'/>
+        <input name="{{formName+index}}" ng-model="$parent.inputText" validator-group="{{formName}}" value="{{item.key}}" type="radio"/>
         {{item.text}}
       </label>
     </div>
-    <p class='help-block'>{{description}}</p>
+    <p class="help-block">{{description}}</p>
   </div>
 </div>
