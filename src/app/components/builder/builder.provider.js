@@ -367,9 +367,11 @@ export function BuilderProvider() {
   }
 
   this.setDisplay = (displayType) => {
-    debugger;
-    if(displayType == displayTypes.SINGLE || displayType == displayTypes.WIZARD)
+    if(displayType == displayTypes.SINGLE || displayType == displayTypes.WIZARD) {
       display = displayType
+      if(display == displayTypes.SINGLE)
+        this.selectCurrentPage(0);
+    }
     else
       $log.error("The display type is not permited");
   }

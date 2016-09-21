@@ -25,13 +25,13 @@ import { DfOffsetFilter }                 from './components/builder/builder.fil
 
 // MAIN
 angular
-  .module('angularDeforms',
-    [
+  .module('angularDeforms',[
       'ngAnimate',
       'validator.rules',
       'builderDirective',
       'builderComponents',
-      'builderProvider'
+      'builderProvider',
+      'mgo-angular-wizard'
     ]);
 
 // DIRECTIVE

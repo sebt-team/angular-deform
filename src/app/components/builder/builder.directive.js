@@ -320,12 +320,12 @@ export function DfForm($injector) {
       formData: '=dfForm',
       input: '=ngModel',
     },
-
-    template: '<div class="df-form-object" ng-repeat="object in form" df-form-object="object"></div>',
+    templateUrl: 'app/components/builder/templates/df-form.directive.html',
     controller: 'dfFormController',
     link: (scope) => {
       $builder = $injector.get('$builder');
-      debugger;
+      scope.builder = $builder;
+      scope.pages = $builder.pages;
       // $builder.forms[scope.formName] = $builder.forms[scope.formName] || []
       // scope.form = $builder.forms[scope.formName]
     }

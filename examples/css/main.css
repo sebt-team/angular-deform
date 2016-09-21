@@ -3,6 +3,9 @@ html, body {
   height: 100%;
   overflow: hidden;
 }
+hr {
+  margin-bottom: 0;
+}
 .full-height {
   height: 100%;
 }
@@ -76,6 +79,7 @@ body>.container {
   height: 100%;
   padding-left: 15px;
   padding-right: 15px;
+  padding-top: 20px;
 }
 .toolbox-container .panel {
   box-shadow: none;
@@ -144,4 +148,19 @@ body>.container {
 }
 .action-buttons .nav > li > a {
     padding: 12px 9px;
+}
+
+
+
+.form-container {
+  overflow-y: scroll;
+  padding-bottom: 100px;
+  padding-top: 20px;
+}
+.form-container .panel {
+  margin-bottom: 0px;
+}
+.form-container .panel h3,
+.form-container .steps-indicator li a {
+  font-weight: 200;
 }
