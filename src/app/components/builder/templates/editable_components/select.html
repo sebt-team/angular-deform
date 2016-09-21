@@ -23,19 +23,17 @@
       </div>
       <div id="collapsePints" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
         <div class="panel-body">
-          <form>
-            <div class="form-group" ng-repeat='item in options track by $index'>
-              <label class="control-label truncate col-sm-5" for="pwd">{{item.text}}:</label>
-              <div class="col-sm-7">
-                <input type="text" class="form-control" ng-model="item.value" placeholder="0">
-              </div>
+          <ng-form class="form-group">
+            <div ng-repeat='item in options track by $index'>
+              <label class="control-label truncate" for="pwd">{{item.text}}:</label>
+              <input type="number" class="form-control" ng-model="item.value" placeholder="0">
             </div>
-            <div class="form-group">
+            <div>
               <div class="col-sm-offset-5 col-sm-7">
                 <button type="submit" class="btn btn-primary">Save</button>
               </div>
             </div>
-          </form>
+          </ng-form>
         </div>
       </div>
     </div>

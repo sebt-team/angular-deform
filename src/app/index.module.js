@@ -17,9 +17,11 @@ import { DfComponent }                    from './components/builder/builder.dir
 import { DfForm }                         from './components/builder/builder.directive';
 import { DfFormObject }                   from './components/builder/builder.directive';
 import { DfPageEditable }                 from './components/builder/builder.directive';
-import { DfFormBuilder }                    from './components/builder/builder.directive';
+import { DfFormBuilder }                  from './components/builder/builder.directive';
+import { DfPaginator }                    from './components/builder/builder.directive';
 import { Contenteditable }                from './components/builder/builder.directive';
 import { ConfigBuilder }                  from './components/builder/builder.config';
+import { DfOffsetFilter }                 from './components/builder/builder.filter';
 
 // MAIN
 angular
@@ -34,7 +36,8 @@ angular
 
 // DIRECTIVE
 angular
-  .module('builder', ['builderDirective']);
+  .module('builder', ['builderDirective'])
+  .filter('offset', [DfOffsetFilter]);
 
 // PROVIDERS
 angular
@@ -73,5 +76,6 @@ angular
   .directive('dfForm', ['$injector', DfForm])
   .directive('dfFormObject', ['$injector', DfFormObject])
   .directive('dfPageEditable', ['$injector', DfPageEditable])
+  .directive('dfPaginator', ['$injector', DfPaginator])
   .directive('dfFormBuilder', ['$injector', DfFormBuilder])
   .directive('contenteditable', ['$injector', Contenteditable]);

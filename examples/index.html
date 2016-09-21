@@ -84,8 +84,15 @@
                   </div>
                   <div class="form-group">
                     <label>Descripcion</label>
-                    <textarea name="Name" rows="8" cols="35" class="form-control"></textarea>
+                    <textarea rows="8" cols="35" class="form-control"></textarea>
                     <p class="help-block">Opcional</p>
+                  </div>
+                  <div class="form-group">
+                    <label>Display</label>
+                    <select class="form-control" ng-model="formDisplay" ng-change="changeFormBuilderDisplay(formDisplay)">
+                      <option value="single">Single</option>
+                      <option value="wizard">Wizard</option>
+                    </select>
                   </div>
                   <div class="form-group">
                     <label>Categories</label>
@@ -117,7 +124,7 @@
 
     <script type="text/ng-template" id="/partial-render.html">
         <div class="col-md-6">
-          <div ng-model="data" df-form="form0" df-default="defaultValue"></div>
+          <div ng-model="data" df-form="form"></div>
         </div>
         <div class="col-md-3 full-height json-container">
           <div class="well full-height">

@@ -65,7 +65,6 @@ angular.module('deformExamples', [
 }])
 
 .controller('DemoController', ['$scope', '$builder', function($scope, $builder) {
-    $scope.form = {};
     // var checkbox, textbox;
     // textbox = $builder.addFormObject('default', {
     //   id: 'textbox',
@@ -100,9 +99,14 @@ angular.module('deformExamples', [
     //   });
     // };
 
-    $scope.formatOutput = function(input) {
-      console.log(input);
-      return JSON.stringify(input);
+    $scope.form = undefined;
+    $scope.formDisplay = 'single';
+
+    $scope.changeFormBuilderDisplay = function(display) {
+      if(display == 'single')
+        $builder.setDisplay($builder.displayTypes.SINGLE)
+      else if(display == 'wizard')
+        $builder.setDisplay($builder.displayTypes.WIZARD)
     }
 
     $scope.$on($builder.broadcastChannel.selectInput, function() {

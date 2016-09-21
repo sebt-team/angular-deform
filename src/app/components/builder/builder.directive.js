@@ -317,16 +317,17 @@ export function DfForm($injector) {
     restrict: 'A',
     require: 'ngModel',
     scope: {
-      formName: '@dfForm',
+      formData: '=dfForm',
       input: '=ngModel',
-      "default": '=dfDefault'
     },
+
     template: '<div class="df-form-object" ng-repeat="object in form" df-form-object="object"></div>',
     controller: 'dfFormController',
     link: (scope) => {
       $builder = $injector.get('$builder');
-      $builder.forms[scope.formName] = $builder.forms[scope.formName] || []
-      scope.form = $builder.forms[scope.formName]
+      debugger;
+      // $builder.forms[scope.formName] = $builder.forms[scope.formName] || []
+      // scope.form = $builder.forms[scope.formName]
     }
   };
 
@@ -430,11 +431,11 @@ export function DfPageEditable($injector) {
     templateUrl: 'app/components/builder/templates/df-page-editable.directive.html',
     link: (scope) => {
 
-      scope.builer = $builder;
+      scope.builder = $builder;
       scope.pages = $builder.pages;
       scope.currentPage = $builder.getCurrentPage();
 
-      scope.$watch('builer.getCurrentPage()', function(currentPage) {
+      scope.$watch('builder.getCurrentPage()', function(currentPage) {
         if(currentPage)
           scope.currentPage = $builder.getCurrentPage();
       });
@@ -511,6 +512,89 @@ export function Contenteditable($injector) {
       $timeout(() => {
         ctrl.$setViewValue(element.html());
       });
+    }
+  };
+}
+
+export function DfPaginator($injector) {
+  // ----------------------------------------
+  // providers
+  // ----------------------------------------
+  var $builder = $injector.get('$builder');
+
+  // ----------------------------------------
+  // directive
+  // ----------------------------------------
+  return {
+    restrict: 'E',
+    templateUrl: 'app/components/builder/templates/df-paginator.directive.html',
+    link: (scope) => {
+      scope.forms = $builder.forms;
+      scope.pages = $builder.pages;
+
+      // custom methods
+      scope.currentPageNumber = 0; // 0 is page one. Look on df-paginator.directive.html, line 9: <a href>{{n+1}}</a>
+      scope.itemsPerPage = 1; //pretty self explanitory I think. This is where you get to change the listing of how many entries/items per page. This can be any number.
+
+      scope.range = function() {
+        //rangeSize is the number of pages (in numerical form) displayed in the pagination.
+        var rangeSize = scope.pages.length; //This should be an odd number.
+        var ret = [];
+        var start;
+
+        start = scope.currentPageNumber;
+        console.log(scope.currentPageNumber);
+
+        if ( start > scope.pageCount()-rangeSize ) {
+          start = scope.pageCount()-rangeSize+1;
+        }
+
+        for (var i=start; i<start+rangeSize; i++) {
+          ret.push(i);
+        }
+        return ret;
+      };
+      scope.prevPage = function(){
+        if(scope.currentPageNumber > 0){
+          scope.currentPageNumber--;
+        }
+      };
+      scope.firstPage = function(){
+        if(scope.currentPageNumber > 0){
+          scope.currentPageNumber=0;
+        }
+      };
+      scope.prevPageDisabled = function(){
+        return scope.currentPageNumber === 0 ? "disabled":" ";
+      };
+      scope.pageCount = function(){
+        return Math.ceil(scope.pages.length/scope.itemsPerPage)-1;
+      };
+      scope.nextPage = function(){
+        if(scope.currentPageNumber < scope.pageCount()){
+          scope.currentPageNumber++;
+        }
+      };
+      scope.lastPage = function(){
+        if(scope.currentPageNumber < scope.pageCount()){
+          scope.currentPageNumber = scope.pageCount();
+        }
+      };
+      scope.nextPageDisabled = function(){
+        return scope.currentPageNumber === scope.pageCount() ? "disabled":" ";
+      };
+      scope.setPage = function(set){
+        scope.currentPageNumber = set;
+      };
+      scope.$watch('builder.getCurrentPage()', function(currentPage) {
+        if(currentPage)
+          scope.setPage(currentPage.index)
+      });
+      scope.$watch('currentPageNumber', function(currentPage) {
+        if(typeof currentPage == 'number')
+          $builder.selectCurrentPage(currentPage)
+      });
+
     }
   };
 }

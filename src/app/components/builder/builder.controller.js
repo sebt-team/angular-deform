@@ -171,6 +171,7 @@ export function DfFormObjectController($scope, $injector) {
       label: $scope.formObject.label,
       value: value != null ? value : ''
     };
+    debugger;
     $scope.$parent.input.splice($scope.$index, 1, input);
   };
 
