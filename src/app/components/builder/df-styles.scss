@@ -16,40 +16,6 @@
   // END SHARED ------------------------------
 
   // START TABS INPUTS -----------------------
-  li.df-draggable.dragging {
-    list-style-type: none;
-    display: inline-block;
-    zoom: 1;
-    background-color: white;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    width: 49% !important;
-    height: 32px !important;
-    max-width: 200px;
-    line-height: 2em !important;
-    padding: 4px;
-    margin: 2px 0 0 0;
-    font-size: 11px;
-    vertical-align: top;
-    list-style-type: none;
-    text-align: left;
-    -webkit-border-radius: 3px;
-    -moz-border-radius: 3px;
-    -ms-border-radius: 3px;
-    -o-border-radius: 3px;
-    border-radius: 3px;
-    border: 1px solid #ddd;
-  }
-  li.df-draggable.dragging::before {
-    padding: 0px 5px;
-    content: "\f" !important;
-  }
-  .df-draggable.dragging {
-    background-color: #ffffff;
-    position: absolute;
-    z-index: 800;
-    // @include box-shadow(#666 0 0 20px);
-  }
   .df-accordeon {
     ul { padding: 3%;}
     .panel-body {
@@ -241,4 +207,39 @@
     }
   }
   // END FOOTER ------------------------------
+}
+// EXCEPTIONS --------------------------------
+li.df-draggable.dragging {
+  list-style-type: none;
+  display: inline-block;
+  zoom: 1;
+  background-color: white;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 49% !important;
+  height: 32px !important;
+  max-width: 200px;
+  line-height: 2em !important;
+  padding: 4px;
+  margin: 2px 0 0 0;
+  font-size: 11px;
+  vertical-align: top;
+  list-style-type: none;
+  text-align: left;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  -ms-border-radius: 3px;
+  -o-border-radius: 3px;
+  border-radius: 3px;
+  border: 1px solid #ddd;
+}
+li.df-draggable.dragging::before {
+  padding: 0px 5px;
+  content: "\f" !important;
+}
+.df-draggable.dragging {
+  background-color: #ffffff;
+  position: absolute;
+  z-index: 800;
+  // @include box-shadow(#666 0 0 20px);
 }
