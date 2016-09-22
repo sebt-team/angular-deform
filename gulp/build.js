@@ -15,7 +15,7 @@ gulp.task('partials', function () {
   ])
     .pipe($.htmlmin({
       removeEmptyAttributes: true,
-      removeAttributeQuotes: true,
+      removeAttributeQuotes: false,
       collapseBooleanAttributes: true,
       collapseWhitespace: true
     }))
@@ -57,7 +57,7 @@ gulp.task('html', ['inject', 'partials'], function () {
     .pipe(htmlFilter)
     .pipe($.htmlmin({
       removeEmptyAttributes: true,
-      removeAttributeQuotes: true,
+      removeAttributeQuotes: false,
       collapseBooleanAttributes: true,
       collapseWhitespace: true
     }))

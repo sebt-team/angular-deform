@@ -318,7 +318,7 @@ export function DfForm($injector) {
     require: 'ngModel',
     scope: {
       formData: '=dfForm',
-      input: '=ngModel',
+      input: '=ngModel'
     },
     templateUrl: 'app/components/builder/templates/df-form.directive.html',
     controller: 'dfFormController',

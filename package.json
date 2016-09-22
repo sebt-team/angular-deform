@@ -1,6 +1,6 @@
 {
   "name": "angularDeforms",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "dependencies": {},
   "scripts": {
     "test": "gulp test"
@@ -22,7 +22,7 @@
     "eslint-plugin-angular": "~0.12.0",
     "estraverse": "~4.1.0",
     "gulp": "~3.9.0",
-    "gulp-angular-templatecache": "~1.8.0",
+    "gulp-angular-templatecache": "~2.0.0",
     "gulp-autoprefixer": "~3.0.2",
     "gulp-clean": "^0.3.2",
     "gulp-concat": "^2.6.0",
