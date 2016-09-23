@@ -58,7 +58,16 @@ export class FormObject {
 }
 
 export class Page {
-  constructor() {
+  constructor(attributes) {
+    let ref;
+
+    this.id = attributes.id;
+    this.key = (ref = attributes.key) != null ? ref : new Utils().generateKey();
+    this.title = (ref = attributes.title) != null ? ref : `Page ${attributes.index + 1}`;
+    this.description = (ref = attributes.description) != null ? ref : `Description number ${attributes.index + 1}`;
+    this.index = attributes.index;
+    this.formName = attributes.formName;
+    this.components = attributes.components;
   }
 }
 

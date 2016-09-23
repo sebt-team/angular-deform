@@ -7,8 +7,10 @@ var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i 
 // BuilderProvider
 // -----------------------
 
+import { Utils }         from './builder.classes';
 import { Component }     from './builder.classes';
 import { FormObject }    from './builder.classes';
+import { Page }          from './builder.classes';
 
 export function BuilderProvider() {
 
@@ -190,18 +192,22 @@ export function BuilderProvider() {
     return current.page = this.pages[index];
   }
 
-  this.addPage = () => {
+  this.addPage = (page) => {
     let pageNumber = this.pages.length;
-    let page = {
-      title: `Page ${pageNumber + 1}`,
-      description: `Description number ${pageNumber + 1}`,
+
+    if(page)
+      return this.insertPage(page, pageNumber)
+
+    let newPage = {
       index: pageNumber,
       formName: `form${pageNumber}`,
-      form: {
-        name: `form${pageNumber}`,
-        components: this.addForm(`form${pageNumber}`)
-      }
-    };
+      components: this.addForm(`form${pageNumber}`)
+    }
+    return this.insertPage(newPage, pageNumber);
+  }
+
+  this.insertPage = (page, pageNumber) => {
+    page = new Page(page);
     this.pages.push(page);
     this.selectCurrentPage(pageNumber);
     return page;
@@ -329,7 +335,7 @@ export function BuilderProvider() {
 
   this.findPageByFormObjectKey = (key) => {
     let selectedPage = this.pages.find((page) => {
-      let selectedComponent = page.form.components.find((component) => {
+      let selectedComponent = page.components.find((component) => {
         return component.key == key;
       });
       return selectedComponent;
@@ -404,7 +410,7 @@ export function BuilderProvider() {
         // Other utils functions
         broadcastChannel: this.broadcastChannel,
         copyObjectToScope: this.copyObjectToScope,
-        generateKey: this.generateKey
+        generateKey: new Utils().generateKey()
       };
     }
   ];

@@ -1,3 +1,5 @@
+import { Utils } from './builder.classes';
+
 export function DfBuilderController() {
   // TODO: adds logic code
 }
@@ -24,7 +26,7 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
 
     // list all instanced objects pages
     $scope.activatorsFormObjects = $builder.pages.reduce((sum, page) => {
-      sum = sum.concat(page.form.components.map( fo => {
+      sum = sum.concat(page.components.map( fo => {
         // not show objects with a lower index
         if($builder.getCurrentPage().index < page.index)
           return;
@@ -62,7 +64,7 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
         let currentOption = $scope.options[index] || {};
         currentOption.text = text;
 
-        if(!currentOption.key) currentOption.key = $builder.generateKey();
+        if(!currentOption.key) currentOption.key = new Utils().generateKey();
         if(!currentOption.value) currentOption.value = 0;
         sum.push(currentOption);
         return sum;
@@ -224,7 +226,7 @@ export function DfFormBuilderController($scope, $injector) {
     if($builder.getDisplay() == $builder.displayTypes.WIZARD)
       $scope.output = $builder.pages;
     else
-      $scope.output = $builder.pages[0].form;
+      $scope.output = $builder.pages[0].components;
   }
 
   // create the first page
