@@ -8,7 +8,7 @@ import { DfComponentsController }         from './components/builder/builder.con
 import { DfComponentController }          from './components/builder/builder.controller';
 import { DfFormController }               from './components/builder/builder.controller';
 import { DfFormObjectController }         from './components/builder/builder.controller';
-import { DfDragpagesController }          from './components/builder/builder.controller';
+import { DfFormBuilderController }          from './components/builder/builder.controller';
 import { DfBuilder }                      from './components/builder/builder.directive';
 import { DfFormObjectEditable }           from './components/builder/builder.directive';
 import { DfObjectEditable }               from './components/builder/builder.directive';
@@ -58,7 +58,7 @@ angular
   .controller('dfFormObjectController', ['$scope', '$injector', DfFormObjectController])
   .controller('dfComponentController', ['$scope', '$injector', DfComponentController])
   .controller('dfFormController', ['$scope', '$injector', DfFormController])
-  .controller('dfDragpagesController', [DfDragpagesController]);
+  .controller('dfFormBuilderController', ['$scope', '$injector', DfFormBuilderController]);
 
 // DRAG
 angular

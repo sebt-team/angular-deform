@@ -417,6 +417,9 @@ export function DfFormObject($injector) {
   return directive;
 }
 
+// TODO LIST:
+// 1. Move bussines logic to controller
+
 export function DfPageEditable($injector) {
   // ----------------------------------------
   // providers
@@ -453,7 +456,8 @@ export function DfPageEditable($injector) {
   return directive;
 }
 
-
+// TODO LIST:
+// 1. Move bussines logic to controller
 export function DfFormBuilder($injector) {
   // ----------------------------------------
   // providers
@@ -466,23 +470,14 @@ export function DfFormBuilder($injector) {
   let directive = {
     restrict: 'A',
     templateUrl: 'app/components/builder/templates/df-dragpages.directive.html',
-    controller: 'dfDragpagesController',
+    controller: 'dfFormBuilderController',
     scope: {
       output: '=dfFormBuilder'
     },
     link: (scope) => {
-      scope.forms = $builder.forms
+      scope.forms = $builder.forms;
       scope.pages = $builder.pages;
       scope.builder = $builder;
-      scope.output = scope.pages;
-
-      scope.changePage = (index)=> {
-        $builder.selectCurrentPage(index);
-      }
-
-      // create the first page
-      if(!$builder.pages.length)
-        $builder.addPage();
     }
   }
 
@@ -516,6 +511,8 @@ export function Contenteditable($injector) {
   };
 }
 
+// TODO LIST:
+// 1. Move bussines logic to controller
 export function DfPaginator($injector) {
   // ----------------------------------------
   // providers

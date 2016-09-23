@@ -366,6 +366,16 @@ export function BuilderProvider() {
     return selectedFormObject || false
   }
 
+  this.findPageByFormObjectKey = (key) => {
+    let selectedPage = this.pages.find((page) => {
+      let selectedComponent = page.form.components.find((component) => {
+        return component.key == key;
+      });
+      return selectedComponent;
+    });
+    return selectedPage || false;
+  }
+
   this.setDisplay = (displayType) => {
     if(displayType == displayTypes.SINGLE || displayType == displayTypes.WIZARD) {
       display = displayType
@@ -408,6 +418,7 @@ export function BuilderProvider() {
         addPage: this.addPage,
         getCurrentPage: this.getCurrentPage,
         selectCurrentPage: this.selectCurrentPage,
+        findPageByFormObjectKey: this.findPageByFormObjectKey,
         // Form Objects handlers
         addForm: this.addForm,
         getCurrentFormObject: this.getCurrentFormObject,
@@ -418,11 +429,11 @@ export function BuilderProvider() {
         removeFormObject: this.removeFormObject,
         duplicateFormObject: this.duplicateFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex,
+        findFormObjectByKey: this.findFormObjectByKey,
         // Dependencies hadlers
         addAnswerDependency: this.addAnswerDependency,
         removeAnswerDependency: this.removeAnswerDependency,
         findDependencyTargets: this.findDependencyTargets,
-        findFormObjectByKey: this.findFormObjectByKey,
         // Display handlers
         setDisplay: this.setDisplay,
         getDisplay: this.getDisplay,
