@@ -8,7 +8,7 @@ import { DfComponentsController }         from './components/builder/builder.con
 import { DfComponentController }          from './components/builder/builder.controller';
 import { DfFormController }               from './components/builder/builder.controller';
 import { DfFormObjectController }         from './components/builder/builder.controller';
-import { DfFormBuilderController }          from './components/builder/builder.controller';
+import { DfFormBuilderController }        from './components/builder/builder.controller';
 import { DfBuilder }                      from './components/builder/builder.directive';
 import { DfFormObjectEditable }           from './components/builder/builder.directive';
 import { DfObjectEditable }               from './components/builder/builder.directive';
@@ -22,6 +22,7 @@ import { DfPaginator }                    from './components/builder/builder.dir
 import { Contenteditable }                from './components/builder/builder.directive';
 import { ConfigBuilder }                  from './components/builder/builder.config';
 import { DfOffsetFilter }                 from './components/builder/builder.filter';
+// import { BaseService }                    from './components/builder/builder.service';
 
 // MAIN
 angular
