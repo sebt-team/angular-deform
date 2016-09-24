@@ -1,3 +1,5 @@
+import { Utils } from './builder.classes';
+
 export function DfBuilderController() {
   // TODO: adds logic code
 }
@@ -24,7 +26,7 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
 
     // list all instanced objects pages
     $scope.activatorsFormObjects = $builder.pages.reduce((sum, page) => {
-      sum = sum.concat(page.form.components.map( fo => {
+      sum = sum.concat(page.components.map( fo => {
         // not show objects with a lower index
         if($builder.getCurrentPage().index < page.index)
           return;
@@ -62,7 +64,7 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
         let currentOption = $scope.options[index] || {};
         currentOption.text = text;
 
-        if(!currentOption.key) currentOption.key = $builder.generateKey();
+        if(!currentOption.key) currentOption.key = new Utils().generateKey();
         if(!currentOption.value) currentOption.value = 0;
         sum.push(currentOption);
         return sum;
@@ -127,7 +129,6 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
 export function DfComponentsController($scope, $injector) {
   // providers
   var $builder = $injector.get('$builder');
-
   $scope.groupedComponents = {};
   angular.forEach($builder.components, (component) => {
     if (angular.isUndefined($scope.groupedComponents[component.group])) {
@@ -149,13 +150,37 @@ export function DfFormController($scope, $injector) {
   if ($scope.input == null) $scope.input = [];
 
   $scope.$watch('form', function() {
-    if ($scope.input.length > $scope.form.length)
-      $scope.input.splice($scope.form.length);
-
+    // if ($scope.input.length > $scope.form.length)
+    //   $scope.input.splice($scope.form.length);
     $timeout(() => {
       $scope.$broadcast($builder.broadcastChannel.updateInput);
     });
   }, true);
+
+  $scope.$watch('builder.pages', (pages) => {
+    if(pages)
+      initializeInput(pages);
+  });
+
+  $scope.$watch('builder.getDisplay()', (display) => {
+    if(!display) return;
+
+    $scope.input = [];
+    if(display == $builder.displayTypes.WIZARD)
+      initializeInput($builder.pages);
+  });
+
+  function initializeInput(pages) {
+    angular.forEach(pages, function(form) {
+      if(!$scope.input[form.index])
+        $scope.input[form.index] = {
+          index: form.index,
+          responses: []
+        }
+    });
+  }
+
+  initializeInput($builder.pages);
 }
 
 export function DfFormObjectController($scope, $injector) {
@@ -163,22 +188,50 @@ export function DfFormObjectController($scope, $injector) {
   var $builder = $injector.get('$builder');
   // it comes with the sourcecode but isn't used
   $scope.copyObjectToScope = (object) => $builder.copyObjectToScope(object, $scope);
-  $scope.updateInput = (value) => {
-    // Copy current scope.input[X] to $parent.input.
-    // @param value: The input value.
-    let input = {
-      id: $scope.formObject.id,
-      label: $scope.formObject.label,
-      value: value != null ? value : ''
-    };
-    $scope.$parent.input.splice($scope.$index, 1, input);
-  };
 
   $scope.findSelectedOption = (options, key) => {
     let selectedOption = options.filter((option)=> { return option.key == key})[0];
     return selectedOption || false;
   }
+  $scope.updateInput = (value) => {
+    // copy current scope.input[X] to $parent.input.
+    let input = {
+      id: $scope.formObject.id,
+      label: $scope.formObject.label,
+      value: value != null ? value : ''
+    };
+    // changes the output format depending on the display
+    if($builder.getDisplay() == $builder.displayTypes.WIZARD) {
+      let page = $builder.findPageByFormObjectKey($scope.formObject.key);
+      $scope.$parent.input[page.index].responses.splice($scope.$index, 1, input);
+    } else {
+      $scope.$parent.input.splice($scope.$index, 1, input);
+    }
+  };
 }
-export function DfDragpagesController() {
-  // TODO: adds logic code
+
+export function DfFormBuilderController($scope, $injector) {
+  // providers
+  var $builder = $injector.get('$builder');
+
+  $scope.changePage = (index)=> {
+    $builder.selectCurrentPage(index);
+  }
+
+  $scope.$watch('builder.getDisplay()', () => {
+    setOutputFormat();
+  });
+
+  function setOutputFormat() {
+    if($builder.getDisplay() == $builder.displayTypes.WIZARD)
+      $scope.output = $builder.pages;
+    else
+      $scope.output = $builder.pages[0].components;
+  }
+
+  // create the first page
+  if(!$builder.pages.length)
+    $builder.addPage();
+  // define output format
+  setOutputFormat();
 }

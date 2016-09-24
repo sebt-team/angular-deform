@@ -1,11 +1,17 @@
 // TODO LIST:
-// 1. Replace js object from ES Class
+// 1. Replace main js object from ES Class
 // 2. Replace forms and arrays for ES Map
 
 var indexOf = [].indexOf || function(item) { for (var i = 0, l = this.length; i < l; i++) { if (i in this && this[i] === item) return i; } return -1; };
 // -----------------------
 // BuilderProvider
 // -----------------------
+
+import { Utils }         from './builder.classes';
+import { Component }     from './builder.classes';
+import { FormObject }    from './builder.classes';
+import { Page }          from './builder.classes';
+
 export function BuilderProvider() {
 
   // Constants
@@ -26,6 +32,7 @@ export function BuilderProvider() {
     saveInput: '$saveInput'
   };
 
+  let display = displayTypes.SINGLE;
   let current = {
     formObject: null,
     formObjectScope: null,
@@ -34,39 +41,10 @@ export function BuilderProvider() {
     page: null,
     form: this.forms['default']
   }
-  let display = displayTypes.SINGLE;
-  let secretKey = '_' + Math.random().toString(36).substr(2, 9);
-  let randomNumber = Math.floor((Math.random() * 100000));
-
-  this.generateKey = ()=> {
-    randomNumber++;
-    return `${secretKey}${Date.now()}${randomNumber}`;
-  }
 
   this.convertComponent = (name, component) => {
-    let ref;
-    let result = {
-      name: name,
-      group: (ref = component.group) != null ? ref : 'Default',
-      label: (ref = component.label) != null ? ref : '',
-      description: (ref = component.description) != null ? ref : '',
-      placeholder: (ref = component.placeholder) != null ? ref : '',
-      editable: (ref = component.editable) != null ? ref : true,
-      required: (ref = component.required) != null ? ref : false,
-      validation: (ref = component.validation) != null ? ref : '/.*/',
-      validationOptions: (ref = component.validationOptions) != null ? ref : [],
-      complexValues: (ref = component.complexValues) != null ? ref : [],
-      options: (ref = component.options) != null ? ref : [],
-      multipeChoice: (ref = component.multipeChoice) != null ? ref : false,
-      display: (ref = component.display) != null ? ref : true,
-      dependentFrom: (ref = component.dependentFrom) != null ? ref : {},
-      template: component.template,
-      templateUrl: component.templateUrl,
-      showcaseTemplate: component.showcaseTemplate,
-      icon: component.icon,
-      popoverTemplate: component.popoverTemplate,
-      popoverTemplateUrl: component.popoverTemplateUrl
-    };
+    let result = new Component(name, component);
+
     if (!result.template && !result.templateUrl)
       $log.error("The template is empty.");
 
@@ -78,27 +56,12 @@ export function BuilderProvider() {
 
   this.convertFormObject = (name, formObject) => {
     formObject = formObject || {};
-    let ref;
     let component = this.components[formObject.component];
     if (component == null) {
       throw "The component " + formObject.component + " was not registered.";
     }
 
-    let result = {
-      id: formObject.id,
-      key: (ref = formObject.key) != null ? ref : this.generateKey(),
-      component: formObject.component,
-      editable: (ref = formObject.editable) != null ? ref : component.editable,
-      label: (ref = formObject.label) != null ? ref : component.label,
-      description: (ref = formObject.description) != null ? ref : component.description,
-      placeholder: (ref = formObject.placeholder) != null ? ref : component.placeholder,
-      options: (ref = formObject.options) != null ? ref : component.options,
-      required: (ref = formObject.required) != null ? ref : component.required,
-      validation: (ref = formObject.validation) != null ? ref : component.validation,
-      display: (ref = formObject.display) != null ? ref : component.display,
-      dependentFrom: (ref = formObject.dependentFrom) != null ? ref : component.dependentFrom,
-      complexValues: (ref = formObject.complexValues) != null ? ref : component.complexValues
-    };
+    let result = new FormObject(name, formObject, component)
     return result;
   };
 
@@ -229,18 +192,22 @@ export function BuilderProvider() {
     return current.page = this.pages[index];
   }
 
-  this.addPage = () => {
+  this.addPage = (page) => {
     let pageNumber = this.pages.length;
-    let page = {
-      title: `Page ${pageNumber + 1}`,
-      description: `Description number ${pageNumber + 1}`,
+
+    if(page)
+      return this.insertPage(page, pageNumber)
+
+    let newPage = {
       index: pageNumber,
       formName: `form${pageNumber}`,
-      form: {
-        name: `form${pageNumber}`,
-        components: this.addForm(`form${pageNumber}`)
-      }
-    };
+      components: this.addForm(`form${pageNumber}`)
+    }
+    return this.insertPage(newPage, pageNumber);
+  }
+
+  this.insertPage = (page, pageNumber) => {
+    page = new Page(page);
     this.pages.push(page);
     this.selectCurrentPage(pageNumber);
     return page;
@@ -366,6 +333,16 @@ export function BuilderProvider() {
     return selectedFormObject || false
   }
 
+  this.findPageByFormObjectKey = (key) => {
+    let selectedPage = this.pages.find((page) => {
+      let selectedComponent = page.components.find((component) => {
+        return component.key == key;
+      });
+      return selectedComponent;
+    });
+    return selectedPage || false;
+  }
+
   this.setDisplay = (displayType) => {
     if(displayType == displayTypes.SINGLE || displayType == displayTypes.WIZARD) {
       display = displayType
@@ -408,6 +385,7 @@ export function BuilderProvider() {
         addPage: this.addPage,
         getCurrentPage: this.getCurrentPage,
         selectCurrentPage: this.selectCurrentPage,
+        findPageByFormObjectKey: this.findPageByFormObjectKey,
         // Form Objects handlers
         addForm: this.addForm,
         getCurrentFormObject: this.getCurrentFormObject,
@@ -418,11 +396,11 @@ export function BuilderProvider() {
         removeFormObject: this.removeFormObject,
         duplicateFormObject: this.duplicateFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex,
+        findFormObjectByKey: this.findFormObjectByKey,
         // Dependencies hadlers
         addAnswerDependency: this.addAnswerDependency,
         removeAnswerDependency: this.removeAnswerDependency,
         findDependencyTargets: this.findDependencyTargets,
-        findFormObjectByKey: this.findFormObjectByKey,
         // Display handlers
         setDisplay: this.setDisplay,
         getDisplay: this.getDisplay,
@@ -432,7 +410,7 @@ export function BuilderProvider() {
         // Other utils functions
         broadcastChannel: this.broadcastChannel,
         copyObjectToScope: this.copyObjectToScope,
-        generateKey: this.generateKey
+        generateKey: new Utils().generateKey()
       };
     }
   ];
