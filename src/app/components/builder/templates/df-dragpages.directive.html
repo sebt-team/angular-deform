@@ -4,8 +4,8 @@
       <div class="tab-pane fade row" ng-class="{ 'active in' : builder.getCurrentPage().index == $index }" ng-repeat="page in pages" id="page_{{$index}}">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bhoechie-tab-container dragzone-tab-container">
           <div ng-show="builder.getDisplay() == 'WIZARD'">
-            <h3 class="df-title-form" contenteditable="true" ng-model="page.title"></h3>
-            <h5 class="df-title-form" contenteditable="true" ng-model="page.description"></h5>
+            <h3 class="df-title-form" contenteditable ng-model="page.title"></h3>
+            <h5 class="df-title-form" contenteditable ng-model="page.description"></h5>
           </div>
           <div df-builder="{{page.formName}}">
           </div>
