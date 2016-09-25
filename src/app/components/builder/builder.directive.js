@@ -163,6 +163,7 @@ export function DfFormObjectEditable($injector) {
     link: (scope, element) => {
       scope.inputArray = [];
       scope.builder = $builder;
+      scope.tags = $builder.tags
       scope.$component = $builder.components[scope.formObject.component];
       scope.setupScope(scope.formObject);
 

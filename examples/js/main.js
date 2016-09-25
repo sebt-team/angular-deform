@@ -101,12 +101,22 @@ angular.module('deformExamples', [
 
     $scope.form = undefined;
     $scope.formDisplay = 'single';
+    $scope.tags = angular.copy($builder.tags);
 
     $scope.changeFormBuilderDisplay = function(display) {
       if(display == 'single')
         $builder.setDisplay($builder.displayTypes.SINGLE)
       else if(display == 'wizard')
         $builder.setDisplay($builder.displayTypes.WIZARD)
+    }
+
+    $scope.addTag = function(tag) {
+      var builderTag = $builder.addTag(tag);
+      tag.key = builderTag.key;
+    }
+
+    $scope.removetag = function(tag) {
+      $builder.removeTag(tag.key);
     }
 
     $scope.$on($builder.broadcastChannel.selectInput, function() {

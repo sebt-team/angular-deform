@@ -96,7 +96,7 @@
                   </div>
                   <div class="form-group">
                     <label>Categories</label>
-                    <tags-input ng-model="tags"></tags-input>
+                    <tags-input ng-model="tags" on-tag-added="addTag($tag)" on-tag-removed="removetag($tag)"></tags-input>
                     <p class="help-block">Opcional</p>
                   </div>
                 </div>
