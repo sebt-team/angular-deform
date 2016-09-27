@@ -202,7 +202,7 @@ export function BuilderProvider() {
 
     let newPage = {
       index: pageNumber,
-      formName: `form${pageNumber}`,
+      formReference: `form${pageNumber}`,
       components: this.addForm(`form${pageNumber}`)
     }
     return this.insertPage(newPage, pageNumber);
@@ -306,7 +306,6 @@ export function BuilderProvider() {
   }
 
   this.removeTag = (tagKey) => {
-    debugger;
     let index = this.tags.findIndex(tag => tag.key == tagKey)
     this.tags.splice(index, 1);
   }

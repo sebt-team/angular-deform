@@ -67,7 +67,7 @@ export class Page {
     this.title = (ref = attributes.title) != null ? ref : `Page ${attributes.index + 1}`;
     this.description = (ref = attributes.description) != null ? ref : `Description number ${attributes.index + 1}`;
     this.index = attributes.index;
-    this.formName = attributes.formName;
+    this.formReference = attributes.formReference;
     this.components = attributes.components;
   }
 }
