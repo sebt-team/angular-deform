@@ -13,12 +13,13 @@
   </div>
   <div class="checkbox">
     <label>
-    <input type="checkbox" ng-model="required" />Required</label>
-  </div>
-  <hr/>
+      <input type="checkbox" ng-model="required" />Required</label>
+    </div>
+    <div ng-include="'app/components/builder/templates/shared/dependency.html'"></div>
+    <hr/>
     <div class="form-group">
-    <input type="submit" ng-click="duplicate()" class="btn btn-primary" value="Duplicate"/>
-    <input type="button" ng-click="cancel()" class="btn btn-default" value="Cancel"/>
-    <input type="button" ng-click="remove()" class="btn btn-danger" value="Delete"/>
-  </div>
-</form>
+      <input type="submit" ng-click="duplicate()" class="btn btn-primary" value="Duplicate"/>
+      <input type="button" ng-click="cancel()" class="btn btn-default" value="Cancel"/>
+      <input type="button" ng-click="remove()" class="btn btn-danger" value="Delete"/>
+    </div>
+  </form>

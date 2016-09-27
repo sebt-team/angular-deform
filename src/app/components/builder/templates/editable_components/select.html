@@ -9,7 +9,7 @@
   </div>
   <div class="form-group">
     <label class="control-label">Options</label>
-    <textarea class="form-control" rows="3" ng-model="optionsText"/>
+    <textarea class="form-control" rows="3" ng-model="optionsText"></textarea>
   </div>
   <hr/>
   <div class="df-accordeon panel-group" id="accordion" role="tablist" aria-multiselectable="true">
@@ -37,35 +37,7 @@
         </div>
       </div>
     </div>
-    <div class="panel sidebar_section">
-      <div class="panel-heading" role="tab" id="heading{{$index}}">
-        <h4 class="panel-title">
-          <a role="button" data-toggle="collapse" data-target="#collapseDependency">
-            Dependency
-          </a>
-        </h4>
-      </div>
-      <div id="collapseDependency" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
-        <div class="panel-body">
-          <ng-form>
-            <div class="form-group" ng-repeat="item in options track by $index">
-              <div class="checkbox">
-                <div class="col-sm-5">
-                  <label>
-                    <input name="{{formName+index}}" ng-model="$parent.addDependency[$index]" validator-group="{{formName}}" value="{{item}}" type="checkbox" ng-change="$parent.dependency[$index] = undefined"/>{{item.text}}
-                  </label>
-                </div>
-                <div class="col-sm-7">
-                  <select ng-disabled="!$parent.addDependency[$index]" ng-model="$parent.dependency[$index]" class="form-control" ng-options="fo.key as fo.label group by fo.page for fo in allFormObjects">
-                    <option value=""><i>-Select dependency-</i></option>
-                  </select>
-                </div>
-              </div>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
+    <div ng-include="'app/components/builder/templates/shared/dependency.html'"></div>
     </div>
   </div>
   <div class="form-group">

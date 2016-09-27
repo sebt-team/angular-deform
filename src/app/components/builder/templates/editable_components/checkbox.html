@@ -9,7 +9,7 @@
   </div>
   <div class="form-group">
     <label class="control-label">Options</label>
-    <textarea class="form-control" rows="3" ng-model="optionsText"/>
+    <textarea class="form-control" rows="3" ng-model="optionsText"></textarea>
   </div>
   <div class="checkbox">
     <label>
@@ -31,7 +31,7 @@
           <form class="form-group">
             <div ng-repeat="item in options track by $index">
               <label class="control-label truncate" for="pwd">{{item.text}}:</label>
-                <input type="number" class="form-control" ng-model="item.value" placeholder="0" validator="[totalPoints, number]" validator-group="options">
+              <input type="number" class="form-control" ng-model="item.value" placeholder="0" validator="[totalPoints, number]" validator-group="options">
             </div>
             <div class="form-group">
               <div class="col-sm-offset-6 col-sm-6">
@@ -43,6 +43,7 @@
       </div>
     </div>
   </div>
+  <div ng-include="'app/components/builder/templates/shared/dependency.html'"></div>
   <hr/>
   <div class="form-group">
     <input type="submit" ng-click="duplicate()" class="btn btn-primary" value="Duplicate"/>
