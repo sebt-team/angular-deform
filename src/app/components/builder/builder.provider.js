@@ -197,15 +197,12 @@ export function BuilderProvider() {
   this.addPage = (page) => {
     let pageNumber = this.pages.length;
 
-    if(page)
-      return this.insertPage(page, pageNumber)
+    page = page || {};
+    page.index = page.index || pageNumber;
+    page.formReference = page.formReference || ('form' + pageNumber);
+    page.components = this.addForm('form' + pageNumber);
 
-    let newPage = {
-      index: pageNumber,
-      formReference: `form${pageNumber}`,
-      components: this.addForm(`form${pageNumber}`)
-    }
-    return this.insertPage(newPage, pageNumber);
+    this.insertPage(page, pageNumber);
   }
 
   this.insertPage = (page, pageNumber) => {
@@ -370,14 +367,28 @@ export function BuilderProvider() {
     return display;
   }
 
-  // this.init = (defaultValues) => {
-  //   if(defaultValues.display)
-  //     this.display = defaultValues.display;
-  //   if(defaultValues.groups)
-  //     this.groups = defaultValues.groups;
-  //   if(defaultValues.pages)
-  //     this.pages = defaultValues.pages;
-  // }
+  this.setupDefaults = (defaultValues) => {
+    display = displayTypes.WIZARD;
+    this.tags = defaultValues.tags || this.tags;
+
+    if(defaultValues.components) {
+      if(display == displayTypes.WIZARD) {
+        defaultValues.components.forEach((page) => {
+          let formObjects = angular.copy(page.components);
+          this.addPage(page);
+          formObjects.forEach((formObject) => {
+            this.addFormObject(page.formReference, formObject);
+          });
+        });
+      }
+      if(this.display == displayTypes.SINGLE) {
+        let page = this.addPage();
+        defaultValues.components.forEach((formObject) => {
+          this.addFormObject(page.formReference, formObject);
+        });
+      }
+    }
+  }
 
   this.$get = [
     '$injector', function($injector) {
@@ -427,7 +438,8 @@ export function BuilderProvider() {
         // Other utils functions
         broadcastChannel: this.broadcastChannel,
         copyObjectToScope: this.copyObjectToScope,
-        generateKey: new Utils().generateKey()
+        generateKey: new Utils().generateKey(),
+        setupDefaults: this.setupDefaults
       };
     }
   ];
