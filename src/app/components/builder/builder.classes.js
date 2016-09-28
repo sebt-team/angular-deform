@@ -51,6 +51,7 @@ export class FormObject {
     this.options = (ref = attributes.options) != null ? ref : component.options;
     this.required = (ref = attributes.required) != null ? ref : component.required;
     this.validation = (ref = attributes.validation) != null ? ref : component.validation;
+    this.tag = (ref = attributes.tag) != null ? ref : component.tag;
     this.display = (ref = attributes.display) != null ? ref : component.display;
     this.dependentFrom = (ref = attributes.dependentFrom) != null ? ref : component.dependentFrom;
     this.complexValues = (ref = attributes.complexValues) != null ? ref : component.complexValues;
@@ -66,8 +67,17 @@ export class Page {
     this.title = (ref = attributes.title) != null ? ref : `Page ${attributes.index + 1}`;
     this.description = (ref = attributes.description) != null ? ref : `Description number ${attributes.index + 1}`;
     this.index = attributes.index;
-    this.formName = attributes.formName;
+    this.formReference = attributes.formReference;
     this.components = attributes.components;
   }
 }
 
+export class Tag {
+  constructor(attributes) {
+    let ref;
+
+    this.id = attributes.id;
+    this.key = (ref = attributes.key) != null ? ref : new Utils().generateKey();
+    this.text = attributes.text;
+  }
+}

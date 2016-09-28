@@ -11,6 +11,12 @@
     <label class="control-label">Options</label>
     <textarea class="form-control" rows="3" ng-model="optionsText"></textarea>
   </div>
+  <div class="form-group">
+    <label class="control-label">Tag</label>
+    <select ng-disabled="!tags.length" ng-model="tag" class="form-control" ng-options="tag.text as tag.text for tag in tags">
+      <option value=""><i>-Select tag category-</i></option>
+    </select>
+  </div>
   <hr/>
   <div class="df-accordeon panel-group" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel sidebar_section">

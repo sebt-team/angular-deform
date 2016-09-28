@@ -11,6 +11,7 @@ import { Utils }         from './builder.classes';
 import { Component }     from './builder.classes';
 import { FormObject }    from './builder.classes';
 import { Page }          from './builder.classes';
+import { Tag }           from './builder.classes';
 
 export function BuilderProvider() {
 
@@ -22,9 +23,10 @@ export function BuilderProvider() {
 
   var $injector = null, $http = null, $log = null, $templateCache = null;
   this.components = {};
-  this.groups = [];
   this.forms = { 'default': [] }; // replace for map
   this.pages = [];
+  this.tags = [];
+  this.groups = [];
   this.dependencies = [];
   this.broadcastChannel = {
     selectInput: '$selectInput',
@@ -200,7 +202,7 @@ export function BuilderProvider() {
 
     let newPage = {
       index: pageNumber,
-      formName: `form${pageNumber}`,
+      formReference: `form${pageNumber}`,
       components: this.addForm(`form${pageNumber}`)
     }
     return this.insertPage(newPage, pageNumber);
@@ -297,6 +299,17 @@ export function BuilderProvider() {
     return this.reindexFormObject(name);
   };
 
+  this.addTag = (tag) => {
+    tag = new Tag(tag);
+    this.tags.push(new Tag(tag));
+    return tag;
+  }
+
+  this.removeTag = (tagKey) => {
+    let index = this.tags.findIndex(tag => tag.key == tagKey)
+    this.tags.splice(index, 1);
+  }
+
   this.addAnswerDependency = (formObject, formObjectHandler, formAnswer) => {
     this.removeAnswerDependency(formObject);
     formObject.display = false;
@@ -376,11 +389,12 @@ export function BuilderProvider() {
       }
       return {
         // Objects & Arrays
-        components: this.components,
-        groups: this.groups,
         forms: this.forms,
         pages: this.pages,
+        groups: this.groups,
+        tags: this.tags,
         dependencies: this.dependencies,
+        components: this.components,
         // Pages handlers
         addPage: this.addPage,
         getCurrentPage: this.getCurrentPage,
@@ -397,6 +411,9 @@ export function BuilderProvider() {
         duplicateFormObject: this.duplicateFormObject,
         updateFormObjectIndex: this.updateFormObjectIndex,
         findFormObjectByKey: this.findFormObjectByKey,
+        // Tags handlers
+        addTag: this.addTag,
+        removeTag: this.removeTag,
         // Dependencies hadlers
         addAnswerDependency: this.addAnswerDependency,
         removeAnswerDependency: this.removeAnswerDependency,

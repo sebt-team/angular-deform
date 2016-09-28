@@ -43,7 +43,7 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
     });
 
     // wtach normal attibutes
-    $scope.$watch('[label, description, placeholder, required, options, validation, display, dependentFrom]', () => {
+    $scope.$watch('[label, description, placeholder, required, options, validation, display, tag, dependentFrom]', () => {
       formObject.label         = $scope.label;
       formObject.description   = $scope.description;
       formObject.placeholder   = $scope.placeholder;
@@ -51,6 +51,7 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
       formObject.options       = $scope.options;
       formObject.validation    = $scope.validation;
       formObject.display       = $scope.display;
+      formObject.tag           = $scope.tag;
       formObject.dependentFrom = $scope.dependentFrom;
     }, true);
 
