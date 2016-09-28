@@ -1,5 +1,5 @@
 <div class="tabbable-panel df-shared">
-  <div class="tabbable-line tabs-below">
+  <div class="tabbable-line tabs-below {{builder.getDisplay().toLowerCase()}}">
     <div class="tab-content">
       <div class="tab-pane fade row" ng-class="{ 'active in' : builder.getCurrentPage().index == $index }" ng-repeat="page in pages" id="page_{{$index}}">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 bhoechie-tab-container dragzone-tab-container">
