@@ -449,7 +449,7 @@ export function DfPageEditable($injector) {
       }
 
       scope.removePage = ()=> {
-        alert(1);
+        $builder.removePage()
       }
     }
   }
@@ -479,6 +479,7 @@ export function DfFormBuilder($injector) {
       scope.forms = $builder.forms;
       scope.pages = $builder.pages;
       scope.builder = $builder;
+      // scope.output = {}
     }
   }
 
