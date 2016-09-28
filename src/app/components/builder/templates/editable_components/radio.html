@@ -34,7 +34,7 @@
               <div class="form-block">
                 <label class="control-label truncate col-sm-12" for="pwd">{{item.text}}:</label>
                 <div class="col-sm-12">
-                  <input type="number" class="form-control" ng-model="item.value" placeholder="0" validator="[maxPointsInOption]" validator-group="options">
+                  <input type="number" class="form-control" ng-model="item.value" placeholder="0" validator="[maxPointsInOption, number]" validator-group="options">
                 </div>
               </div>
             </div>

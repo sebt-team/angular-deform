@@ -111,19 +111,8 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
   }
 
   $scope.submitPoints = () => {
-    let v = $validator.validate($scope, 'options');
+    $validator.validate($scope, 'options');
     $scope.validator = $validator
-    v.success ( () => {
-      // validated success
-      $log.info('success');
-    });
-    v.error( () => {
-      // validated error
-      $log.error($scope.validator.broadcastChannel);
-    });
-    v.then( () => {
-      $log.info("then");
-    });
   };
 }
 

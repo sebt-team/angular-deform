@@ -28,17 +28,17 @@
       </div>
       <div id="collapsePints" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
         <div class="panel-body">
-          <form class="form-group">
+          <ng-form class="form-group points-form">
             <div ng-repeat="item in options track by $index">
               <label class="control-label truncate" for="pwd">{{item.text}}:</label>
-              <input type="number" class="form-control" ng-model="item.value" placeholder="0" validator="[totalPoints, number]" validator-group="options">
+              <input type="number" class="form-control" ng-model="item.value" placeholder="0" validator="[totalPoints, number, maxPointsInOption]" validator-group="options">
             </div>
             <div class="form-group">
               <div class="col-sm-offset-6 col-sm-6">
-                <button type="submit" class="btn btn-primary" ng-click="submit()">Save</button>
+                <button type="submit" class="btn btn-primary" ng-click="submitPoints(options)">Save</button>
               </div>
             </div>
-          </form>
+          </ng-form>
         </div>
       </div>
     </div>
