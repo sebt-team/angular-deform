@@ -1,13 +1,11 @@
 <div class="df-shared">
-  <p class="help">
-    <a href="" class="btn btn-primary" ng-click="addNewPage()" data-toggle="tooltip" data-placement="bottom" title="New page"> <i class="glyphicon glyphicon-plus"></i></a>
-    <a href="" class="btn btn-danger" ng-click="removePage()" data-toggle="tooltip" data-placement="bottom" title="New page"> <i class="glyphicon glyphicon-remove"></i></a>
-  </p>
-
-  <br/>
-
   <div class="row">
-    <div class="col-md-12 col-sm-12">
+    <div class="col-md-12 col-sm-12" ng-if="builder.getDisplay() == 'WIZARD'">
+      <p>
+        <a href="" class="btn btn-primary" ng-click="addNewPage()" data-toggle="tooltip" data-placement="bottom" title="New page"> Add Page <i class="glyphicon glyphicon-plus"></i></a>
+        <a href="" class="btn btn-danger" ng-click="removePage()" data-toggle="tooltip" data-placement="bottom" title="New page"> Remove Page <i class="glyphicon glyphicon-remove"></i></a>
+      </p>
+      <br/>
       <div class="form-group">
         <label>Title</label>
         <input type="text" class="form-control" placeholder="Title" ng-model="currentPage.title">
@@ -16,6 +14,11 @@
         <label>Description</label>
         <textarea rows="4" cols="40" class="form-control" placeholder="Description" ng-model="currentPage.description"></textarea>
         <p class="help-block">Optional</p>
+      </div>
+    </div>
+    <div class="col-md-12 col-sm-12" ng-if="builder.getDisplay() == 'SINGLE'">
+      <div class="alert alert-info" role="alert">
+        Nothing here
       </div>
     </div>
   </div>

@@ -1,19 +1,19 @@
 <form>
-  <div class='form-group'>
-    <label class='control-label'>Label</label>
-    <input type='text' ng-model='label' validator='[required]' class='form-control'/>
+  <div class="form-group">
+    <label class="control-label">Label</label>
+    <input type="text" ng-model="label" validator="[required]" class="form-control"/>
   </div>
-  <div class='form-group'>
-    <label class='control-label'>Description</label>
-    <input type='text' ng-model='description' class='form-control'/>
+  <div class="form-group">
+    <label class="control-label">Description</label>
+    <input type="text" ng-model="description" class="form-control"/>
   </div>
-  <div class='form-group'>
-    <label class='control-label'>Options</label>
-    <textarea class='form-control' rows='3' ng-model='optionsText'/>
+  <div class="form-group">
+    <label class="control-label">Options</label>
+    <textarea class="form-control" rows="3" ng-model="optionsText"></textarea>
   </div>
-  <div class='checkbox'>
+  <div class="checkbox">
     <label>
-      <input type='checkbox' ng-model='required' />Required
+      <input type="checkbox" ng-model="required" />Required
     </label>
   </div>
   <hr/>
@@ -21,40 +21,33 @@
     <div class="panel sidebar_section">
       <div class="panel-heading" role="tab" id="heading{{$index}}">
         <h4 class="panel-title">
-          <a role="button" data-toggle="collapse" data-target="#collapsePints">
+          <a role="button" data-toggle="collapse" ng-click="customAction('cascana')" data-target="#collapsePints">
             Points
           </a>
         </h4>
       </div>
       <div id="collapsePints" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
         <div class="panel-body">
-          <form class="form-group">
-            <pre>
-              {{validator | json}}
-            </pre>
-            <pre>
-              {{options | json}}
-            </pre>
-            <div ng-repeat='item in options track by $index'>
-              <label class="control-label truncate col-sm-6" for="pwd">{{item.text}}:</label>
-              <div class="col-sm-6">
-                <input type="number" class="form-control" ng-model="item.value" placeholder="0" validator="[totalPoints, number]" validator-group="options">
-              </div>
+          <ng-form class="form-group points-form">
+            <div ng-repeat="item in options track by $index">
+              <label class="control-label truncate" for="pwd">{{item.text}}:</label>
+              <input type="number" class="form-control" ng-model="item.value" placeholder="0" validator="[totalPoints, number, maxPointsInOption]" validator-group="options">
             </div>
             <div class="form-group">
               <div class="col-sm-offset-6 col-sm-6">
-                <button type="submit" class="btn btn-primary" ng-click="submit()">Save</button>
+                <button type="submit" class="btn btn-primary" ng-click="submitPoints(options)">Save</button>
               </div>
             </div>
-          </form>
+          </ng-form>
         </div>
       </div>
     </div>
   </div>
+  <div ng-include="'app/components/builder/templates/shared/dependency.html'"></div>
   <hr/>
-  <div class='form-group'>
-    <input type='submit' ng-click='duplicate()' class='btn btn-primary' value='Duplicate'/>
-    <input type='button' ng-click='cancel()' class='btn btn-default' value='Cancel'/>
-    <input type='button' ng-click='remove()' class='btn btn-danger' value='Delete'/>
+  <div class="form-group">
+    <input type="submit" ng-click="duplicate()" class="btn btn-primary" value="Duplicate"/>
+    <input type="button" ng-click="cancel()" class="btn btn-default" value="Cancel"/>
+    <input type="button" ng-click="remove()" class="btn btn-danger" value="Delete"/>
   </div>
 </form>

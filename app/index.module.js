@@ -8,7 +8,7 @@ import { DfComponentsController }         from './components/builder/builder.con
 import { DfComponentController }          from './components/builder/builder.controller';
 import { DfFormController }               from './components/builder/builder.controller';
 import { DfFormObjectController }         from './components/builder/builder.controller';
-import { DfDragpagesController }          from './components/builder/builder.controller';
+import { DfFormBuilderController }        from './components/builder/builder.controller';
 import { DfBuilder }                      from './components/builder/builder.directive';
 import { DfFormObjectEditable }           from './components/builder/builder.directive';
 import { DfObjectEditable }               from './components/builder/builder.directive';
@@ -17,24 +17,29 @@ import { DfComponent }                    from './components/builder/builder.dir
 import { DfForm }                         from './components/builder/builder.directive';
 import { DfFormObject }                   from './components/builder/builder.directive';
 import { DfPageEditable }                 from './components/builder/builder.directive';
-import { DfDragpages }                    from './components/builder/builder.directive';
+import { DfFormBuilder }                  from './components/builder/builder.directive';
+import { DfPaginator }                    from './components/builder/builder.directive';
 import { Contenteditable }                from './components/builder/builder.directive';
 import { ConfigBuilder }                  from './components/builder/builder.config';
+import { DfOffsetFilter }                 from './components/builder/builder.filter';
+// import { BaseService }                    from './components/builder/builder.service';
 
 // MAIN
 angular
-  .module('angularDeforms',
-    [
+  .module('angularDeforms',[
       'ngAnimate',
+      'validator',
       'validator.rules',
       'builderDirective',
       'builderComponents',
-      'builderProvider'
+      'builderProvider',
+      'mgo-angular-wizard'
     ]);
 
 // DIRECTIVE
 angular
-  .module('builder', ['builderDirective']);
+  .module('builder', ['builderDirective'])
+  .filter('offset', [DfOffsetFilter]);
 
 // PROVIDERS
 angular
@@ -55,7 +60,7 @@ angular
   .controller('dfFormObjectController', ['$scope', '$injector', DfFormObjectController])
   .controller('dfComponentController', ['$scope', '$injector', DfComponentController])
   .controller('dfFormController', ['$scope', '$injector', DfFormController])
-  .controller('dfDragpagesController', [DfDragpagesController]);
+  .controller('dfFormBuilderController', ['$scope', '$injector', DfFormBuilderController]);
 
 // DRAG
 angular
@@ -73,5 +78,6 @@ angular
   .directive('dfForm', ['$injector', DfForm])
   .directive('dfFormObject', ['$injector', DfFormObject])
   .directive('dfPageEditable', ['$injector', DfPageEditable])
-  .directive('dfDragpages', ['$injector', DfDragpages])
+  .directive('dfPaginator', ['$injector', DfPaginator])
+  .directive('dfFormBuilder', ['$injector', DfFormBuilder])
   .directive('contenteditable', ['$injector', Contenteditable]);
