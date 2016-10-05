@@ -64,7 +64,7 @@ angular.module('deformExamples', [
   });
 }])
 
-.controller('DemoController', ['$scope', '$builder', function($scope, $builder) {
+.controller('DemoController', ['$scope', '$builder', '$q', function($scope, $builder, $q) {
     // var checkbox, textbox;
     // textbox = $builder.addFormObject('default', {
     //   id: 'textbox',
@@ -103,6 +103,10 @@ angular.module('deformExamples', [
     $scope.formDisplay = 'single';
     $scope.tags = angular.copy($builder.tags);
 
+    $scope.$on($builder.broadcastChannel.selectInput, function() {
+      $('a[data-target="#options"]').tab('show')
+    });
+
     $scope.changeFormBuilderDisplay = function(display) {
       if(display == 'single')
         $builder.setDisplay($builder.displayTypes.SINGLE)
@@ -119,9 +123,16 @@ angular.module('deformExamples', [
       $builder.removeTag(tag.key);
     }
 
-    $scope.$on($builder.broadcastChannel.selectInput, function() {
-      $('a[data-target="#options"]').tab('show')
-    });
+    $scope.submitForm = function(responses, form, isLastStep) {
+      debugger;
+      var deferred = $q.defer();
+      setTimeout(function() {
+        deferred.resolve();
+        //deferred.reject();
+      }, 1000);
+
+      return deferred.promise;
+    }
 
   }
 ]);

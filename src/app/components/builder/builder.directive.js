@@ -319,7 +319,9 @@ export function DfForm($injector) {
     require: 'ngModel',
     scope: {
       formData: '=dfForm',
-      input: '=ngModel'
+      input: '=ngModel',
+      onSubmitSuccessFn: '&onSubmitSuccess',
+      onSubmitErrorFn: '&onSubmitError'
     },
     templateUrl: 'app/components/builder/templates/df-form.directive.html',
     controller: 'dfFormController',
@@ -352,6 +354,7 @@ export function DfFormObject($injector) {
     link: (scope, element, attrs) => {
       scope.formObject = $parse(attrs.dfFormObject)(scope);
       scope.$component = $builder.components[scope.formObject.component];
+      scope.formName = attrs.formName;
 
       // listen (formObject updated)
       scope.$on($builder.broadcastChannel.updateInput, () => {
@@ -385,9 +388,9 @@ export function DfFormObject($injector) {
         if (!template) return;
 
         let $template = $(template);
-        let view = $compile($template)(scope);
         let $input = $template.find("[ng-model='inputText']");
         $input.attr({ validator: '{{validation}}'});
+        let view = $compile($template)(scope);
         return $(element).html(view);
       });
 

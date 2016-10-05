@@ -28,6 +28,7 @@ import { DfOffsetFilter }                 from './components/builder/builder.fil
 angular
   .module('angularDeforms',[
       'ngAnimate',
+      'validator',
       'validator.rules',
       'builderDirective',
       'builderComponents',

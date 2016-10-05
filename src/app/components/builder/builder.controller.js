@@ -145,9 +145,13 @@ export function DfComponentController($scope, $injector) {
 }
 
 export function DfFormController($scope, $injector) {
+
   var $builder = $injector.get('$builder');
   var $timeout = $injector.get('$timeout');
+  var $validator = $injector.get('$validator');
+  var WizardHandler = $injector.get('WizardHandler');
 
+  $scope.disableInputs = false;
   if ($scope.input == null) $scope.input = [];
 
   $scope.$watch('form', function() {
@@ -171,10 +175,45 @@ export function DfFormController($scope, $injector) {
       initializeInput($builder.pages);
   });
 
+  $scope.nextStep = (page, index=0) => {
+    // validate current form
+    $scope.disableInputs = true;
+    let isLastStep = index == ($scope.pages.length - 1);
+    let validatorPromise = $validator.validate($scope, page.formReference);
+    // success validation
+    validatorPromise.success(function() {
+      // if callback function exist
+      if($scope.onSubmitSuccessFn()) {
+        let responses = $scope.input;
+        // if display is WIZARD send current responses
+        if($builder.getDisplay() == $builder.displayTypes.WIZARD) {
+          responses = $scope.input.find((responses) => {
+            return responses.key == page.key
+          }).responses;
+        }
+        $scope.onSubmitSuccessFn()(responses, page, isLastStep).then(() => {
+          if(!isLastStep) WizardHandler.wizard().next();
+          $scope.disableInputs = false;
+        }, () => {
+          scope.disableInputs = false;
+        });
+      } else {
+        if(!isLastStep) WizardHandler.wizard().next();
+        $scope.disableInputs = false;
+      }
+    }).error(function() {
+      if($scope.onSubmitErrorFn())
+        $scope.onSubmitErrorFn()();
+      $scope.disableInputs = false;
+    });
+  }
+
   function initializeInput(pages) {
     angular.forEach(pages, function(form) {
       if(!$scope.input[form.index])
         $scope.input[form.index] = {
+          id: form.id,
+          key: form.key,
           index: form.index,
           responses: []
         }
@@ -194,6 +233,7 @@ export function DfFormObjectController($scope, $injector) {
     let selectedOption = options.filter((option)=> { return option.key == key})[0];
     return selectedOption || false;
   }
+
   $scope.updateInput = (value) => {
     // copy current scope.input[X] to $parent.input.
     let input = {
