@@ -195,7 +195,7 @@ export function DfFormController($scope, $injector) {
           if(!isLastStep) WizardHandler.wizard().next();
           $scope.disableInputs = false;
         }, () => {
-          scope.disableInputs = false;
+          $scope.disableInputs = false;
         });
       } else {
         if(!isLastStep) WizardHandler.wizard().next();
