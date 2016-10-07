@@ -43,16 +43,17 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
     });
 
     // wtach normal attibutes
-    $scope.$watch('[label, description, placeholder, required, options, validation, display, tag, dependentFrom]', () => {
-      formObject.label         = $scope.label;
-      formObject.description   = $scope.description;
-      formObject.placeholder   = $scope.placeholder;
-      formObject.required      = $scope.required;
-      formObject.options       = $scope.options;
-      formObject.validation    = $scope.validation;
-      formObject.display       = $scope.display;
-      formObject.tag           = $scope.tag;
-      formObject.dependentFrom = $scope.dependentFrom;
+    $scope.$watch('[label, description, placeholder, required, options, validation, display, tag, dependentFrom, customAttributes]', () => {
+      formObject.label            = $scope.label;
+      formObject.description      = $scope.description;
+      formObject.placeholder      = $scope.placeholder;
+      formObject.required         = $scope.required;
+      formObject.options          = $scope.options;
+      formObject.validation       = $scope.validation;
+      formObject.display          = $scope.display;
+      formObject.tag              = $scope.tag;
+      formObject.dependentFrom    = $scope.dependentFrom;
+      formObject.customAttributes = $scope.customAttributes;
     }, true);
 
     // watch options (to selects, radios and checkboxes)

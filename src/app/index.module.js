@@ -22,7 +22,6 @@ import { DfPaginator }                    from './components/builder/builder.dir
 import { Contenteditable }                from './components/builder/builder.directive';
 import { ConfigBuilder }                  from './components/builder/builder.config';
 import { DfOffsetFilter }                 from './components/builder/builder.filter';
-// import { BaseService }                    from './components/builder/builder.service';
 
 // MAIN
 angular
