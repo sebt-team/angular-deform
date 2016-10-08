@@ -368,7 +368,7 @@ export function BuilderProvider() {
   }
 
   this.setupDefaults = (defaultValues) => {
-    display = displayTypes.display;
+    display = defaultValues.display || display;
     this.tags = defaultValues.tags || this.tags;
 
     if(defaultValues.components) {

@@ -320,6 +320,7 @@ export function DfForm($injector) {
     scope: {
       formData: '=dfForm',
       input: '=ngModel',
+      default: '=defaultValues',
       onSubmitSuccessFn: '&onSubmitSuccess',
       onSubmitErrorFn: '&onSubmitError'
     },
@@ -411,6 +412,19 @@ export function DfFormObject($injector) {
         } else
           scope.updateInput(scope.inputText);
       }
+
+      //set default value
+      scope.$watch(`default['${scope.formObject.id}']`, (value) => {
+        if(!value) return;
+
+        if(scope.$component.multipeChoice) {
+          scope.inputArray  = value.map((items) => {
+            return items.key;
+          })
+        } else {
+          scope.inputText = (scope.formObject.options.length > 0) ? value.key : value
+        }
+      });
 
       // set initial value from component
       if (!scope.$component.multipeChoice && scope.formObject.options.length > 0)
