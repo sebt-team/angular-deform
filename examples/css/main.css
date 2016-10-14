@@ -4,7 +4,7 @@ html, body {
   overflow: hidden;
 }
 hr {
-  margin-bottom: 0;
+  /*margin-bottom: 0;*/
 }
 .full-height {
   height: 100%;
