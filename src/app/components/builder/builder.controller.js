@@ -4,7 +4,7 @@ export function DfBuilderController() {
   // TODO: adds logic code
 }
 
-export function DfFormObjectEditableController($scope, $injector, $log) {
+export function DfFormObjectEditableController($scope, $injector) {
   var $builder    = $injector.get('$builder');
   var $validator  = $injector.get('$validator');
 

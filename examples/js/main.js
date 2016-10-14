@@ -107,6 +107,10 @@ angular.module('deformExamples', [
       $('a[data-target="#options"]').tab('show')
     });
 
+    $scope.$on($builder.broadcastChannel.selectPage, function() {
+      $('a[data-target="#page"]').tab('show')
+    });
+
     $scope.changeFormBuilderDisplay = function(display) {
       if(display == 'single')
         $builder.setDisplay($builder.displayTypes.SINGLE)

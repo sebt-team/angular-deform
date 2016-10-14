@@ -504,6 +504,10 @@ export function DfFormBuilder($injector) {
 }
 
 export function Contenteditable($injector) {
+  // ----------------------------------------
+  // providers
+  // ----------------------------------------
+  var $builder = $injector.get('$builder');
   var $timeout = $injector.get('$timeout');
 
   return {
@@ -514,6 +518,8 @@ export function Contenteditable($injector) {
       element.on('keyup', () => {
         scope.$apply(() => {
             ctrl.$setViewValue(element.html());
+            if($builder.getDisplay() == $builder.displayTypes.WIZARD)
+              scope.$emit($builder.broadcastChannel.selectPage);
         });
       });
 

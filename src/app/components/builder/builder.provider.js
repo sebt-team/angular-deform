@@ -29,6 +29,7 @@ export function BuilderProvider() {
   this.groups = [];
   this.dependencies = [];
   this.broadcastChannel = {
+    selectPage: '$selectPage',
     selectInput: '$selectInput',
     updateInput: '$updateInput',
     saveInput: '$saveInput'
@@ -204,6 +205,18 @@ export function BuilderProvider() {
 
     this.insertPage(page, pageNumber);
   }
+
+  this.removePage = function(pageKey) {
+    var index = this.pages.findIndex(function (page) {
+      return page.key == pageKey;
+    });
+    if(index > 0) {
+      this.pages.splice(index, 1);
+      this.selectCurrentPage(index-1);
+    } else {
+      $log.error("Cant delete the first page.");
+    }
+  };
 
   this.insertPage = (page, pageNumber) => {
     page = new Page(page);
@@ -381,10 +394,10 @@ export function BuilderProvider() {
           });
         });
       }
-      if(this.display == displayTypes.SINGLE) {
-        let page = this.addPage();
+      if(display == displayTypes.SINGLE) {
+        this.addPage();
         defaultValues.components.forEach((formObject) => {
-          this.addFormObject(page.formReference, formObject);
+          this.addFormObject(this.pages[0].formReference, formObject);
         });
       }
     }
@@ -408,6 +421,7 @@ export function BuilderProvider() {
         components: this.components,
         // Pages handlers
         addPage: this.addPage,
+        removePage: this.removePage,
         getCurrentPage: this.getCurrentPage,
         selectCurrentPage: this.selectCurrentPage,
         findPageByFormObjectKey: this.findPageByFormObjectKey,
