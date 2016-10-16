@@ -108,7 +108,17 @@ export function DfFormObjectEditableController($scope, $injector) {
   $scope.remove = (formObject, event) => {
     if(event)
       event.stopPropagation();
-    $builder.removeFormObject($scope.$parent.formName, formObject);
+
+    let dependentTargets = $builder.findDependencyTargets(formObject.key)
+    if(dependentTargets.length) {
+      let response = confirm("This change will break one or more dependencies\nDo you want to continue?");
+      if (response == true) {
+        $builder.removeAnswerDependencybyTarget(formObject);
+        $builder.removeFormObject($scope.$parent.formName, formObject);
+      }
+    } else {
+      $builder.removeFormObject($scope.$parent.formName, formObject);
+    }
   }
 
   $scope.submitPoints = () => {
@@ -139,6 +149,7 @@ export function DfFormController($scope, $injector) {
   var $builder = $injector.get('$builder');
   var $timeout = $injector.get('$timeout');
   var $validator = $injector.get('$validator');
+  var $rootScope = $injector.get('$rootScope');
   var WizardHandler = $injector.get('WizardHandler');
 
   $scope.disableInputs = false;
@@ -184,12 +195,15 @@ export function DfFormController($scope, $injector) {
         $scope.onSubmitSuccessFn()(responses, page, isLastStep).then(() => {
           if(!isLastStep) WizardHandler.wizard().next();
           $scope.disableInputs = false;
+          debugger;
+          $rootScope.$broadcast($builder.broadcastChannel.changeWizardStep, index+1);
         }, () => {
           $scope.disableInputs = false;
         });
       } else {
         if(!isLastStep) WizardHandler.wizard().next();
         $scope.disableInputs = false;
+        $scope.$broadcast($builder.broadcastChannel.changeWizardStep, index-1);
       }
     }).error(function() {
       if($scope.onSubmitErrorFn())

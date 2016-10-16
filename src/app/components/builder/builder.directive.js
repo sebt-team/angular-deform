@@ -114,7 +114,7 @@ export function DfBuilder ($injector) {
 
               let skipReindex = false;
               if(dependentsTrouble || dependencyTrouble) {
-                var response = confirm("This change will break one or more dependencies\nDo you want to continue?");
+                let response = confirm("This change will break one or more dependencies\nDo you want to continue?");
                 if (response == true) {
                   if(dependencyTrouble)
                     dependentTargets = dependentTargets.concat([formObject]);
@@ -466,7 +466,17 @@ export function DfPageEditable($injector) {
       }
 
       scope.removePage = ()=> {
-        $builder.removePage()
+        let response = confirm("This change will break one or more dependencies\nDo you want to continue?");
+        if (response == true) {
+          let selectedComponents = scope.currentPage.components.filter((component) => {
+            // change evaluation by enabledComponent attribute
+            return component.component == 'radio' || component.component == 'select';
+          });
+          selectedComponents.forEach( component => {
+            $builder.removeAnswerDependencybyTarget(component);
+          });
+          $builder.removePage();
+        }
       }
     }
   }

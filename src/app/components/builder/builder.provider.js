@@ -32,7 +32,8 @@ export function BuilderProvider() {
     selectPage: '$selectPage',
     selectInput: '$selectInput',
     updateInput: '$updateInput',
-    saveInput: '$saveInput'
+    saveInput: '$saveInput',
+    changeWizardStep: '$changeWizardStep'
   };
 
   let display = displayTypes.SINGLE;
@@ -210,9 +211,12 @@ export function BuilderProvider() {
     var index = this.pages.findIndex(function (page) {
       return page.key == pageKey;
     });
-    if(index > 0) {
+    if(this.pages.length > 1) {
       this.pages.splice(index, 1);
-      this.selectCurrentPage(index-1);
+      if(index > this.getCurrentPage().index)
+        this.selectCurrentPage(index-1);
+      else
+        this.selectCurrentPage(index+1);
     } else {
       $log.error("Cant delete the first page.");
     }
@@ -340,6 +344,15 @@ export function BuilderProvider() {
     });
   }
 
+  this.removeAnswerDependencybyTarget = (formObject) => {
+    let dependentTargets = this.findDependencyTargets(formObject.key)
+    if(!dependentTargets.length) return false;
+
+    dependentTargets.forEach( dependentFormObject => {
+      this.removeAnswerDependency(dependentFormObject, true);
+    });
+  }
+
   this.findDependencyTargets = (formObjectKey) => {
     return this.dependencies.filter( d => {
       return d.formObjectKey == formObjectKey;
@@ -442,6 +455,7 @@ export function BuilderProvider() {
         // Dependencies hadlers
         addAnswerDependency: this.addAnswerDependency,
         removeAnswerDependency: this.removeAnswerDependency,
+        removeAnswerDependencybyTarget: this.removeAnswerDependencybyTarget,
         findDependencyTargets: this.findDependencyTargets,
         // Display handlers
         setDisplay: this.setDisplay,
