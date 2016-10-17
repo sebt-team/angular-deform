@@ -394,6 +394,10 @@ export function BuilderProvider() {
   }
 
   this.setupDefaults = (defaultValues) => {
+    this.pages.length = 0;
+    this.dependencies.length = 0;
+    this.forms = {};
+
     display = defaultValues.display || display;
     this.tags = defaultValues.tags || this.tags;
 

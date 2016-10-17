@@ -223,7 +223,10 @@ export function DfFormController($scope, $injector) {
 
   function setDefaultWizardStep() {
     $timeout(function () {
-      if ($scope.currentWizardStep && ($builder.getDisplay() == $builder.displayTypes.WIZARD))
+      if ($scope.currentWizardStep &&
+          $scope.pages.length > 1 &&
+          $builder.getDisplay() == $builder.displayTypes.WIZARD
+      )
         WizardHandler.wizard().goTo($scope.currentWizardStep);
     });
   }
@@ -270,6 +273,16 @@ export function DfFormObjectController($scope, $injector) {
       $scope.$parent.input.splice($scope.$index, 1, input);
     }
   };
+
+  // function to run custom action defined in the templates
+  $scope.callCustomAction = (customActionName) => {
+    if($scope.customActions) {
+      if($scope.customActions[customActionName])
+        $scope.customActions[customActionName]($scope);
+      else
+        console.log("This custom action does not exist.");
+    }
+  }
 }
 
 export function DfFormBuilderController($scope, $injector) {
