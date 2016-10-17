@@ -111,9 +111,7 @@ angular.module('deformExamples', [
       $('a[data-target="#page"]').tab('show')
     });
 
-    debugger;
     $scope.$on($builder.broadcastChannel.changeWizardStep, function(event, stepIndex) {
-      debugger;
     });
 
     $scope.changeFormBuilderDisplay = function(display) {

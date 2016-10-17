@@ -1,20 +1,20 @@
-<wizard>
+<wizard hide-indicators="hideIndicators">
     <wz-step wz-title="{{page.title}}" ng-repeat="page in pages" ng-if="builder.getDisplay() == 'WIZARD'">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h3 class="panel-title">{{page.title}}</h3>
-        </div>
-        <div class="panel-body">
           <div class="alert alert-info" role="alert" ng-if="page.description != ''">
             {{page.description}}
           </div>
+        </div>
+        <div class="panel-body">
           <form name="{{page.formReference}}" class="form-horizontal panel-body">
             <div class="df-form-object" ng-repeat="object in page.components" df-form-object="object" form-name="{{page.formReference}}"></div>
             <div class="form-group">
               <div class="col-sm-offset-4 col-sm-8">
-                <input type="submit" class="btn btn-default" wz-previous value="Previous" ng-if="$index">
-                <input type="submit" class="btn btn-default" ng-click="nextStep(page, $index)" value="Next" ng-if="$index < (pages.length - 1)">
-                <input type="submit" class="btn btn-default" ng-click="nextStep(page, $index)" value="Finish" ng-if="$index == (pages.length - 1)">
+                <input type="submit" class="btn btn-default previous" ng-click="previousStep($index)" value="Previous" ng-if="$index">
+                <input type="submit" class="btn btn-default next" ng-click="nextStep(page, $index)" value="Next" ng-if="$index < (pages.length - 1)" ng-class="{ 'full-width': ($index == 0) }">
+                <input type="submit" class="btn btn-default finish" ng-click="nextStep(page, $index)" value="Finish" ng-if="$index == (pages.length - 1)">
               </div>
             </div>
           </form>

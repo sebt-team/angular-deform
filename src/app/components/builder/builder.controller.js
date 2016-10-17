@@ -176,6 +176,14 @@ export function DfFormController($scope, $injector) {
       initializeInput($builder.pages);
   });
 
+  $scope.previousStep = (index=0) => {
+    let isFirstStep = index == 0;
+
+    if (!isFirstStep) WizardHandler.wizard().previous();
+    $scope.disableInputs = false;
+    $rootScope.$broadcast($builder.broadcastChannel.changeWizardStep, index-1);
+  }
+
   $scope.nextStep = (page, index=0) => {
     // validate current form
     $scope.disableInputs = true;
@@ -193,22 +201,30 @@ export function DfFormController($scope, $injector) {
           }).responses;
         }
         $scope.onSubmitSuccessFn()(responses, page, isLastStep).then(() => {
-          if(!isLastStep) WizardHandler.wizard().next();
-          $scope.disableInputs = false;
-          debugger;
-          $rootScope.$broadcast($builder.broadcastChannel.changeWizardStep, index+1);
+          goToNextWizardStep(index, isLastStep);
         }, () => {
           $scope.disableInputs = false;
         });
       } else {
-        if(!isLastStep) WizardHandler.wizard().next();
-        $scope.disableInputs = false;
-        $scope.$broadcast($builder.broadcastChannel.changeWizardStep, index-1);
+        goToNextWizardStep(index, isLastStep);
       }
     }).error(function() {
       if($scope.onSubmitErrorFn())
         $scope.onSubmitErrorFn()();
       $scope.disableInputs = false;
+    });
+  }
+
+  function goToNextWizardStep(index, isLastStep) {
+    if(!isLastStep) WizardHandler.wizard().next();
+    $scope.disableInputs = false;
+    $rootScope.$broadcast($builder.broadcastChannel.changeWizardStep, index+1);
+  }
+
+  function setDefaultWizardStep() {
+    $timeout(function () {
+      if ($scope.currentWizardStep && ($builder.getDisplay() == $builder.displayTypes.WIZARD))
+        WizardHandler.wizard().goTo($scope.currentWizardStep);
     });
   }
 
@@ -225,6 +241,7 @@ export function DfFormController($scope, $injector) {
   }
 
   initializeInput($builder.pages);
+  setDefaultWizardStep();
 }
 
 export function DfFormObjectController($scope, $injector) {
