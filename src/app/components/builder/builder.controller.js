@@ -250,6 +250,7 @@ export function DfFormController($scope, $injector) {
 export function DfFormObjectController($scope, $injector) {
   // providers
   var $builder = $injector.get('$builder');
+  var $log     = $injector.get('$log');
   // it comes with the sourcecode but isn't used
   $scope.copyObjectToScope = (object) => $builder.copyObjectToScope(object, $scope);
 
@@ -275,13 +276,17 @@ export function DfFormObjectController($scope, $injector) {
   };
 
   // function to run custom action defined in the templates
-  $scope.callCustomAction = (customActionName) => {
+  $scope.callCustomAction = (customActionName, customValues) => {
     if($scope.customActions) {
       if($scope.customActions[customActionName])
-        $scope.customActions[customActionName]($scope);
+        $scope.customActions[customActionName]($scope, customValues);
       else
-        console.log("This custom action does not exist.");
+        $log.error("This custom action does not exist.");
     }
+  }
+
+  $scope.changeEvent = (event) => {
+    $scope.$emit($builder.broadcastChannel.changeFormInputEvent, event.type);
   }
 }
 

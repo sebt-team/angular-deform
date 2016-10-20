@@ -114,6 +114,11 @@ angular.module('deformExamples', [
     $scope.$on($builder.broadcastChannel.changeWizardStep, function(event, stepIndex) {
     });
 
+    $scope.$on($builder.broadcastChannel.changeFormInputEvent, function(event, inputEventType) {
+      debugger;
+    });
+
+
     $scope.changeFormBuilderDisplay = function(display) {
       if(display == 'single')
         $builder.setDisplay($builder.displayTypes.SINGLE)

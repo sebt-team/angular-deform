@@ -33,7 +33,8 @@ export function BuilderProvider() {
     selectInput: '$selectInput',
     updateInput: '$updateInput',
     saveInput: '$saveInput',
-    changeWizardStep: '$changeWizardStep'
+    changeWizardStep: '$changeWizardStep',
+    changeFormInputEvent: '$changeFormInputEvent'
   };
 
   let display = displayTypes.SINGLE;

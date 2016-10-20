@@ -42,7 +42,7 @@ export function ConfigBuilder($logProvider, $builderProvider) {
       options: [{text: 'Value one'}, {text: 'Value two'}],
       multipeChoice: true,
       showcaseTemplate: "<i class='{{icon}}'></i> <span>{{label}}</span>",
-      template: "<div class=\"form-group\">\n    <label for=\"{{formName+index}}\" class=\"col-sm-4 control-label\" ng-class=\"{'df-required':required}\">{{label}}</label>\n    <div class=\"col-sm-8\">\n        <input type='hidden' ng-model=\"inputText\" validator-required=\"{{required}}\" validator-group=\"{{formName}}\"/>\n        <div class='checkbox' ng-repeat=\"item in options track by $index\">\n            <label><input type='checkbox' ng-model=\"$parent.inputArray[$index]\" ng-true-value=\"'{{item.key}}'\" ng-false-value=\"false\" />\n                {{item.text}}\n            </label>\n        </div>\n        <p class='help-block'>{{description}}</p>\n    </div>\n</div>",
+      templateUrl: "app/components/builder/templates/form_objects/checkbox.html",
       popoverTemplateUrl: 'app/components/builder/templates/editable_components/checkbox.html'
     });
     $builderProvider.registerComponent('radio', {
