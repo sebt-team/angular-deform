@@ -70,6 +70,9 @@
           font-weight: normal;
         }
       }
+      label {
+        line-height: 14px;
+      }
       input[type=number] {
         height: 30px !important;
       }
