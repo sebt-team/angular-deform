@@ -57,6 +57,30 @@
       }
     }
 
+    .df-points {
+      .df-weight {
+        padding-bottom: 0;
+        label {
+          font-weight: 500;
+        }
+      }
+      .df-percentage {
+        padding-bottom: 13px;
+        label {
+          font-weight: normal;
+        }
+      }
+      input[type=number] {
+        height: 30px !important;
+      }
+      hr {
+        margin: 10px 0;
+      }
+      button {
+        width: 100%;
+        margin-left: 15px;
+      }
+    }
   }
   // END TABS INPUTS -------------------------
 

@@ -22,6 +22,7 @@ export class Component {
     this.editable = (ref = attributes.editable) != null ? ref : true;
     this.required = (ref = attributes.required) != null ? ref : false;
     this.validation = (ref = attributes.validation) != null ? ref : '/.*/';
+    this.weight = (ref = attributes.weight) != null ? ref : 1;
     this.validationOptions = (ref = attributes.validationOptions) != null ? ref : [];
     this.complexValues = (ref = attributes.complexValues) != null ? ref : [];
     this.options = (ref = attributes.options) != null ? ref : [];
@@ -50,6 +51,7 @@ export class FormObject {
     this.label = (ref = attributes.label) != null ? ref : component.label;
     this.description = (ref = attributes.description) != null ? ref : component.description;
     this.placeholder = (ref = attributes.placeholder) != null ? ref : component.placeholder;
+    this.weight = (ref = attributes.weight) != null ? ref : component.weight;
     this.options = (ref = attributes.options) != null ? ref : component.options;
     this.required = (ref = attributes.required) != null ? ref : component.required;
     this.validation = (ref = attributes.validation) != null ? ref : component.validation;

@@ -21,16 +21,21 @@
     <div class="panel sidebar_section">
       <div class="panel-heading" role="tab" id="heading{{$index}}">
         <h4 class="panel-title">
-          <a role="button" data-toggle="collapse" ng-click="customAction('cascana')" data-target="#collapsePints">
+          <a role="button" data-toggle="collapse" ng-click="customAction('cascana')" data-target="#collapsePoints">
             Points
           </a>
         </h4>
       </div>
-      <div id="collapsePints" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
+      <div id="collapsePoints" class="panel-collapse collapse df-points" role="tabpanel" aria-labelledby="heading{{$index}}">
         <div class="panel-body">
           <ng-form class="form-group points-form">
-            <div ng-repeat="item in options track by $index">
-              <label class="control-label truncate" for="pwd">{{item.text}}:</label>
+            <div class="form-group df-weight">
+              <label class="control-label truncate" for="pwd">Weight:</label>
+              <input type="number" class="form-control" ng-model="weight" placeholder="0" validator="[totalPoints, number, maxPointsInOption]" validator-group="options">
+            </div>
+            <hr>
+            <div ng-repeat="item in options track by $index" class="df-percentage">
+              <label class="control-label truncate" for="pwd">{{item.text}} (%):</label>
               <input type="number" class="form-control" ng-model="item.value" placeholder="0" validator="[totalPoints, number, maxPointsInOption]" validator-group="options">
             </div>
             <div class="form-group">
