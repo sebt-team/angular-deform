@@ -43,13 +43,14 @@ export function DfFormObjectEditableController($scope, $injector) {
     });
 
     // wtach normal attibutes
-    $scope.$watch('[label, description, placeholder, required, options, validation, display, tag, dependentFrom, customAttributes]', () => {
+    $scope.$watch('[label, description, placeholder, required, options, validation, weight, display, tag, dependentFrom, customAttributes]', () => {
       formObject.label            = $scope.label;
       formObject.description      = $scope.description;
       formObject.placeholder      = $scope.placeholder;
       formObject.required         = $scope.required;
       formObject.options          = $scope.options;
       formObject.validation       = $scope.validation;
+      formObject.weight           = $scope.weight;
       formObject.display          = $scope.display;
       formObject.tag              = $scope.tag;
       formObject.dependentFrom    = $scope.dependentFrom;
@@ -109,15 +110,16 @@ export function DfFormObjectEditableController($scope, $injector) {
     if(event)
       event.stopPropagation();
 
+    formObject = formObject || $builder.getCurrentFormObject();
     let dependentTargets = $builder.findDependencyTargets(formObject.key)
     if(dependentTargets.length) {
       let response = confirm("This change will break one or more dependencies\nDo you want to continue?");
       if (response == true) {
         $builder.removeAnswerDependencybyTarget(formObject);
-        $builder.removeFormObject($scope.$parent.formName, formObject);
+        $builder.removeFormObject($scope.$parent.formName, formObject.index);
       }
     } else {
-      $builder.removeFormObject($scope.$parent.formName, formObject);
+      $builder.removeFormObject($scope.$parent.formName, formObject.index);
     }
   }
 
