@@ -12,7 +12,7 @@
     <textarea class="form-control" rows="3" ng-model="optionsText"></textarea>
   </div>
   <hr/>
-  <div class="df-accordeon panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+  <div class="df-accordeon panel-group df-points" id="accordion" role="tablist" aria-multiselectable="true">
     <div class="panel sidebar_section">
       <div class="panel-heading" role="tab" id="heading{{$index}}">
         <h4 class="panel-title">
@@ -21,7 +21,7 @@
           </a>
         </h4>
       </div>
-      <div id="collapsePoints" class="panel-collapse collapse df-points" role="tabpanel" aria-labelledby="heading{{$index}}">
+      <div id="collapsePoints" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{$index}}">
         <div class="panel-body">
           <ng-form class="form-group points-form">
             <div class="form-group df-weight">
