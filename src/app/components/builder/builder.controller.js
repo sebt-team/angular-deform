@@ -277,6 +277,16 @@ export function DfFormObjectController($scope, $injector) {
     }
   };
 
+  $scope.resolveDependency = (value) => {
+    $scope.builder.dependencies.filter( d => {
+      return d.formObjectKey == $scope.formObject.key;
+    }).map( d => {
+      let display = d.formAnswerKey == value;
+      let formObject = $scope.builder.findFormObjectByKey(d.formObjectTargetKey);
+      formObject.display = display;
+    });
+  }
+
   // function to run custom action defined in the templates
   $scope.callCustomAction = (customActionName, customValues) => {
     if($scope.customActions) {
@@ -285,10 +295,6 @@ export function DfFormObjectController($scope, $injector) {
       else
         $log.error("This custom action does not exist.");
     }
-  }
-
-  $scope.changeEvent = (event) => {
-    $scope.$emit($builder.broadcastChannel.changeFormInputEvent, event.type);
   }
 }
 

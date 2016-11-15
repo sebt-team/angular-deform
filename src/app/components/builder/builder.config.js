@@ -54,6 +54,7 @@ export function ConfigBuilder($logProvider, $builderProvider) {
       required: false,
       complexValues: true,
       options: [{text: 'Value one'}, {text: 'Value two'}],
+      handleDependencies: true,
       showcaseTemplate: "<i class='{{icon}}'></i> <span>{{label}}</span>",
       templateUrl: "app/components/builder/templates/form_objects/radio.html",
       popoverTemplateUrl: 'app/components/builder/templates/editable_components/radio.html'
@@ -67,6 +68,7 @@ export function ConfigBuilder($logProvider, $builderProvider) {
       required: false,
       complexValues: true,
       options: [{text: 'Value one'}, {text: 'Value two'}],
+      handleDependencies: true,
       showcaseTemplate: "<i class='{{icon}}'></i> <span>{{label}}</span>",
       templateUrl: "app/components/builder/templates/form_objects/select.html",
       popoverTemplateUrl: 'app/components/builder/templates/editable_components/select.html'

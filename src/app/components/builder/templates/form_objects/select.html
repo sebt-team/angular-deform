@@ -3,7 +3,7 @@
     {{label}}
   </label>
   <div class="col-sm-8">
-    <select ng-options="value.key as value.text for value in options" id="{{formName+index}}" class="form-control" ng-model="inputText" ng-init="inputText = inputText || options[0]"  ng-blur="changeEvent($event)">
+    <select ng-options="value.key as value.text for value in options" id="{{formName+index}}" class="form-control" ng-model="inputText" ng-init="inputText = inputText || options[0]">
       <option value=""> - <option>
     </select>
     <p class="help-block">{{description}}</p>

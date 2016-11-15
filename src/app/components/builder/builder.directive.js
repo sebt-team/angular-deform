@@ -412,6 +412,8 @@ export function DfFormObject($injector) {
         if(options.length > 0) {
           let selectedOption = scope.findSelectedOption(options, scope.inputText)
           scope.updateInput(selectedOption);
+          if(scope.formObject.handleDependencies)
+            scope.resolveDependency(selectedOption.key);
         } else
           scope.updateInput(scope.inputText);
       }
