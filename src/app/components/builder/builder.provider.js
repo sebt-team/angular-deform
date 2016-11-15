@@ -419,6 +419,12 @@ export function BuilderProvider() {
         });
       }
     }
+
+    if (defaultValues.dependencies.length)
+      defaultValues.dependencies.forEach(function (d) {
+        let formObject = _this.findFormObjectByKey(d.formObjectTargetKey);
+        _this.addAnswerDependency(formObject, d.formObjectKey, d.formAnswerKey);
+      });
   }
 
   this.$get = [
