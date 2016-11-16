@@ -400,9 +400,13 @@ export function DfFormObject($injector) {
 
       function updateInputArray() {
         let value = [];
+        scope.inputText = undefined
         scope.inputArray.forEach((input) => {
           let selectedOption = scope.findSelectedOption(scope.options, input)
-          if(selectedOption) value.push(selectedOption);
+          if(selectedOption) {
+            value.push(selectedOption);
+            scope.inputText = 'value'
+          }
         });
         scope.updateInput(value);
       }
