@@ -405,13 +405,15 @@ export function DfFormObject($injector) {
           let selectedOption = scope.findSelectedOption(scope.options, input)
           if(selectedOption) {
             value.push(selectedOption);
-            scope.inputText = 'value'
+            scope.inputText = input
           }
         });
         scope.updateInput(value);
       }
 
       function updateInputText() {
+        if(scope.formObject.readOnly || scope.formObject.component == 'checkbox') return;
+
         let options = scope.formObject.options;
         if(options.length > 0) {
           let selectedOption = scope.findSelectedOption(options, scope.inputText)
@@ -427,17 +429,20 @@ export function DfFormObject($injector) {
         if(!value) return;
 
         if(scope.$component.multipeChoice) {
-          scope.inputArray  = value.map((items) => {
-            return items.key;
-          })
+          scope.inputArray = scope.options.map((option) => {
+            let selectedItem = value.filter(function (item) {
+              return item.key == option.key;
+            })[0];
+            return selectedItem ? selectedItem.key : false;
+          });
         } else {
           scope.inputText = (scope.formObject.options.length > 0) ? value.key : value
         }
       });
 
       // set initial value from component
-      if (!scope.$component.multipeChoice && scope.formObject.options.length > 0)
-        scope.inputText = scope.formObject.options[0].key;
+      // if (!scope.$component.multipeChoice && scope.formObject.options.length > 0)
+      //   scope.inputText = scope.formObject.options[0].key;
     }
   };
 

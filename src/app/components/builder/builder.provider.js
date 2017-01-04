@@ -421,7 +421,7 @@ export function BuilderProvider() {
     }
 
     if (defaultValues.dependencies.length)
-      defaultValues.dependencies.forEach(function (d) {
+      defaultValues.dependencies.forEach((d) => {
         let formObject = this.findFormObjectByKey(d.formObjectTargetKey);
         this.addAnswerDependency(formObject, d.formObjectKey, d.formAnswerKey);
       });

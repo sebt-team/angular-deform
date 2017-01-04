@@ -32,6 +32,7 @@ export class Component {
     this.handleDependencies = (ref = attributes.handleDependencies) != null ? ref : false;
     this.customAttributes = (ref = attributes.customAttributes) != null ? ref : {};
     this.readOnly = (ref = attributes.readOnly) != null ? ref : false;
+    this.mimeType = (ref = attributes.readOnly) != null ? ref : false;
     this.template = attributes.template;
     this.templateUrl = attributes.templateUrl;
     this.showcaseTemplate = attributes.showcaseTemplate;
@@ -59,6 +60,7 @@ export class FormObject {
     this.tag = (ref = attributes.tag) != null ? ref : component.tag;
     this.display = (ref = attributes.display) != null ? ref : component.display;
     this.readOnly = (ref = attributes.readOnly) != null ? ref : component.readOnly;
+    this.mimeType = (ref = attributes.mimeType) != null ? ref : component.mimeType;
     this.dependentFrom = (ref = attributes.dependentFrom) != null ? ref : component.dependentFrom;
     this.handleDependencies = (ref = attributes.handleDependencies) != null ? ref : component.handleDependencies;
     this.complexValues = (ref = attributes.complexValues) != null ? ref : component.complexValues;
