@@ -108,23 +108,6 @@ export function DfFormObjectEditableController($scope, $injector) {
     $builder.duplicateFormObject($scope.$parent.formName, formObject);
   }
 
-  $scope.addOption = (index) => {
-    let options = getOptionsTextArray()
-    options.splice(index + 1, 0, `Set option text`);
-    refreshOptionsText(options)
-  }
-
-  $scope.editOption = (index) => {
-    if($scope.options[index].text == '')
-      $scope.options[index].text = `Set option text`;
-    refreshOptionsText(getOptionsTextArray())
-  }
-
-  $scope.removeOption = (index) => {
-    let options = $scope.options.splice(index, 1);
-    refreshOptionsText(getOptionsTextArray())
-  }
-
   $scope.remove = (formObject, event) => {
     if(event)
       event.stopPropagation();
@@ -140,6 +123,23 @@ export function DfFormObjectEditableController($scope, $injector) {
     } else {
       $builder.removeFormObject($scope.$parent.formName, formObject.index);
     }
+  }
+
+  $scope.addOption = (index) => {
+    let options = getOptionsTextArray()
+    options.splice(index + 1, 0, `Set option text`);
+    refreshOptionsText(options)
+  }
+
+  $scope.editOption = (index) => {
+    if($scope.options[index].text == '')
+      $scope.options[index].text = `Set option text`;
+    refreshOptionsText(getOptionsTextArray())
+  }
+
+  $scope.removeOption = (index) => {
+    let options = $scope.options.splice(index, 1);
+    refreshOptionsText(getOptionsTextArray())
   }
 
   $scope.submitPoints = () => {

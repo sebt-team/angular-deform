@@ -11,6 +11,17 @@
     <label class="control-label">Options</label>
     <textarea class="form-control" rows="3" ng-model="optionsText"></textarea>
   </div>
+  <div class="form-group input-group" ng-repeat="item in options track by $index">
+    <span class="input-group-addon">
+      <label class="control-label">Hide</label>
+      <input type="checkbox" ng-model="item.hidden">
+    </span>
+    <input type="text" class="form-control" ng-model="item.text" placeholder="Product name" ng-change="editOption($index)">
+    <span class="input-group-btn">
+      <button class="btn btn-primary" type="button" ng-click="addOption($index)"><i class="glyphicon glyphicon-plus"></i></button>
+      <button class="btn btn-danger" type="button" ng-click="removeOption($index)"><i class="glyphicon glyphicon-trash"></i></button>
+    </span>
+  </div>
   <div class="checkbox">
     <label>
       <input type="checkbox" ng-model="required" />Required
