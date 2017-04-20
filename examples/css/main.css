@@ -137,6 +137,7 @@ body>.container {
 }
 .action-buttons {
   position: fixed;
+  z-index: 2;
   bottom: 0;
   margin-bottom: 0 !important;
   width: inherit;

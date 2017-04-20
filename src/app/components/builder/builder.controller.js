@@ -69,6 +69,8 @@ export function DfFormObjectEditableController($scope, $injector) {
 
         if(!currentOption.key) currentOption.key = new Utils().generateKey();
         if(!currentOption.value) currentOption.value = 0;
+        if(currentOption.hidden == undefined) currentOption.hidden = false;
+        currentOption
         sum.push(currentOption);
         return sum;
       }, []);
@@ -106,6 +108,23 @@ export function DfFormObjectEditableController($scope, $injector) {
     $builder.duplicateFormObject($scope.$parent.formName, formObject);
   }
 
+  $scope.addOption = (index) => {
+    let options = getOptionsTextArray()
+    options.splice(index + 1, 0, `Set option text`);
+    refreshOptionsText(options)
+  }
+
+  $scope.editOption = (index) => {
+    if($scope.options[index].text == '')
+      $scope.options[index].text = `Set option text`;
+    refreshOptionsText(getOptionsTextArray())
+  }
+
+  $scope.removeOption = (index) => {
+    let options = $scope.options.splice(index, 1);
+    refreshOptionsText(getOptionsTextArray())
+  }
+
   $scope.remove = (formObject, event) => {
     if(event)
       event.stopPropagation();
@@ -127,6 +146,20 @@ export function DfFormObjectEditableController($scope, $injector) {
     $validator.validate($scope, 'options');
     $scope.validator = $validator
   };
+
+  function getOptionsTextArray() {
+    return $scope.options.map( o => {
+      return o.text;
+    });
+  }
+
+  function refreshOptionsText(options) {
+    $scope.optionsText = options.reduce((sum, text, index) => {
+      sum += text;
+      sum += '\n';
+      return sum;
+    }, '');
+  }
 }
 
 export function DfComponentsController($scope, $injector) {
