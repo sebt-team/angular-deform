@@ -65,6 +65,7 @@ export class FormObject {
     this.handleDependencies = (ref = attributes.handleDependencies) != null ? ref : component.handleDependencies;
     this.complexValues = (ref = attributes.complexValues) != null ? ref : component.complexValues;
     this.customAttributes = (ref = attributes.customAttributes) != null ? ref : component.customAttributes;
+    this.isStore = attributes.id != null ? true : false;
   }
 }
 

@@ -213,17 +213,48 @@ export function DfFormController($scope, $injector) {
 
   $scope.previousStep = (index=0) => {
     let isFirstStep = index == 0;
+    let normalNavigation = true;
+    if(index) index--;
 
-    if (!isFirstStep) WizardHandler.wizard().previous();
+    if (!isFirstStep) {
+      for (var i = index; i >= 0; i--) {
+        index = i
+        if(showPage(i)) {
+          break
+        }
+      }
+      WizardHandler.wizard().goTo(index);
+    }
+
     $scope.disableInputs = false;
-    $rootScope.$broadcast($builder.broadcastChannel.changeWizardStep, index-1);
+    $rootScope.$broadcast($builder.broadcastChannel.changeWizardStep, index);
   }
 
   $scope.nextStep = (page, index=0) => {
+
     // validate current form
     $scope.disableInputs = true;
     let isLastStep = index == ($scope.pages.length - 1);
     let validatorPromise = $validator.validate($scope, page.formReference);
+    let normalNavigation = true;
+    index++;
+
+    if(!isLastStep) {
+      for (var i = index; i < $scope.pages.length; i++) {
+
+        if(i > index) {
+          index = i;
+          normalNavigation = false;
+          isLastStep = index == ($scope.pages.length - 1);
+        }
+
+        if(showPage(i)) {
+          isLastStep = false;
+          break;
+        }
+      }
+    }
+
     // success validation
     validatorPromise.success(function() {
       // if callback function exist
@@ -236,12 +267,12 @@ export function DfFormController($scope, $injector) {
           }).responses;
         }
         $scope.onSubmitSuccessFn()(responses, page, isLastStep).then(() => {
-          goToNextWizardStep(index, isLastStep);
+          goToNextWizardStep(index, isLastStep, normalNavigation);
         }, () => {
           $scope.disableInputs = false;
         });
       } else {
-        goToNextWizardStep(index, isLastStep);
+        goToNextWizardStep(index, isLastStep, normalNavigation);
       }
     }).error(function() {
       if($scope.onSubmitErrorFn())
@@ -250,10 +281,23 @@ export function DfFormController($scope, $injector) {
     });
   }
 
-  function goToNextWizardStep(index, isLastStep) {
-    if(!isLastStep) WizardHandler.wizard().next();
+  function showPage(index) {
+    let components = $scope.pages[index].components;
+    let functionalComponents = components.filter((component)=> { return !component.readOnly }) || [];
+    let displayedComponents = functionalComponents.filter((component)=> { return component.display }) || [];
+    return (!functionalComponents.length && components.length) || displayedComponents.length;
+  }
+
+  function goToNextWizardStep(index, isLastStep, normalNavigation = true) {
+    if(!isLastStep) {
+      if(normalNavigation)
+        WizardHandler.wizard().next();
+      else
+        WizardHandler.wizard().goTo(index);
+    }
+
     $scope.disableInputs = false;
-    $rootScope.$broadcast($builder.broadcastChannel.changeWizardStep, index+1);
+    $rootScope.$broadcast($builder.broadcastChannel.changeWizardStep, index);
   }
 
   function setDefaultWizardStep() {

@@ -115,7 +115,6 @@ angular.module('deformExamples', [
     });
 
     $scope.$on($builder.broadcastChannel.changeFormInputEvent, function(event, inputEventType) {
-      debugger;
     });
 
 
