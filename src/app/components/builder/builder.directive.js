@@ -409,6 +409,7 @@ export function DfFormObject($injector) {
             scope.inputText = input
           }
         });
+        scope.resolveDependency(value, false);
         scope.updateInput(value);
       }
 

@@ -39,7 +39,7 @@ export function DfFormObjectEditableController($scope, $injector) {
       return sum;
     }, []).filter( (fo) => {
       if(fo)
-        return fo.component == 'radio' || fo.component == 'select';
+        return fo.component == 'radio' || fo.component == 'select' || fo.component == 'checkbox';
     });
 
     // wtach normal attibutes
@@ -356,11 +356,15 @@ export function DfFormObjectController($scope, $injector) {
     }
   };
 
-  $scope.resolveDependency = (value) => {
+  $scope.resolveDependency = (answer, singleValue = true) => {
     $scope.builder.dependencies.filter( d => {
       return d.formObjectKey == $scope.formObject.key;
-    }).map( d => {
-      let display = d.formAnswerKey == value;
+    }).forEach( d => {
+      let display;
+      if(singleValue)
+        display = d.formAnswerKey == answer;
+      else
+        display = answer.some((a)=> { return a.key == d.formAnswerKey });
       let formObject = $scope.builder.findFormObjectByKey(d.formObjectTargetKey);
       formObject.display = display;
     });
