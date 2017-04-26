@@ -21,6 +21,12 @@ export function BuilderProvider() {
     WIZARD: 'WIZARD'
   });
 
+  // Constants
+  const dependencyConditionals = Object.freeze({
+    IFMATCH: '0',
+    IFNOTMATCH: '1'
+  });
+
   var $injector = null, $http = null, $log = null, $templateCache = null;
   this.components = {};
   this.forms = { 'default': [] }; // replace for map
@@ -468,6 +474,7 @@ export function BuilderProvider() {
         removeAnswerDependency: this.removeAnswerDependency,
         removeAnswerDependencybyTarget: this.removeAnswerDependencybyTarget,
         findDependencyTargets: this.findDependencyTargets,
+        dependencyConditionals: dependencyConditionals,
         // Display handlers
         setDisplay: this.setDisplay,
         getDisplay: this.getDisplay,

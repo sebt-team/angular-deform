@@ -360,12 +360,19 @@ export function DfFormObjectController($scope, $injector) {
     $scope.builder.dependencies.filter( d => {
       return d.formObjectKey == $scope.formObject.key;
     }).forEach( d => {
-      let display;
-      if(singleValue)
-        display = d.formAnswerKey == answer;
-      else
-        display = answer.some((a)=> { return a.key == d.formAnswerKey });
+      let display, operator;
       let formObject = $scope.builder.findFormObjectByKey(d.formObjectTargetKey);
+
+      if(formObject.dependentFrom.formConditional === $scope.builder.dependencyConditionals.IFNOTMATCH)
+        operator = '!=';
+      else
+        operator = '==';
+
+      if(singleValue)
+        display = eval('d.formAnswerKey' + operator + 'answer');
+      else
+        display = answer.some((a)=> { return eval('a.key' + operator + 'd.formAnswerKey') });
+
       formObject.display = display;
     });
   }
