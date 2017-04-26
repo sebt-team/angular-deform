@@ -21,6 +21,12 @@ export function BuilderProvider() {
     WIZARD: 'WIZARD'
   });
 
+  // Constants
+  const dependencyConditionals = Object.freeze({
+    IFMATCH: '0',
+    IFNOTMATCH: '1'
+  });
+
   var $injector = null, $http = null, $log = null, $templateCache = null;
   this.components = {};
   this.forms = { 'default': [] }; // replace for map
@@ -29,9 +35,12 @@ export function BuilderProvider() {
   this.groups = [];
   this.dependencies = [];
   this.broadcastChannel = {
+    selectPage: '$selectPage',
     selectInput: '$selectInput',
     updateInput: '$updateInput',
-    saveInput: '$saveInput'
+    saveInput: '$saveInput',
+    changeWizardStep: '$changeWizardStep',
+    changeFormInputEvent: '$changeFormInputEvent'
   };
 
   let display = displayTypes.SINGLE;
@@ -205,6 +214,21 @@ export function BuilderProvider() {
     this.insertPage(page, pageNumber);
   }
 
+  this.removePage = function(pageKey) {
+    var index = this.pages.findIndex(function (page) {
+      return page.key == pageKey;
+    });
+    if(this.pages.length > 1) {
+      this.pages.splice(index, 1);
+      if(index > this.getCurrentPage().index)
+        this.selectCurrentPage(index-1);
+      else
+        this.selectCurrentPage(index+1);
+    } else {
+      $log.error("Cant delete the first page.");
+    }
+  };
+
   this.insertPage = (page, pageNumber) => {
     page = new Page(page);
     this.pages.push(page);
@@ -327,6 +351,15 @@ export function BuilderProvider() {
     });
   }
 
+  this.removeAnswerDependencybyTarget = (formObject) => {
+    let dependentTargets = this.findDependencyTargets(formObject.key)
+    if(!dependentTargets.length) return false;
+
+    dependentTargets.forEach( dependentFormObject => {
+      this.removeAnswerDependency(dependentFormObject, true);
+    });
+  }
+
   this.findDependencyTargets = (formObjectKey) => {
     return this.dependencies.filter( d => {
       return d.formObjectKey == formObjectKey;
@@ -368,7 +401,11 @@ export function BuilderProvider() {
   }
 
   this.setupDefaults = (defaultValues) => {
-    display = displayTypes.display;
+    this.pages.length = 0;
+    this.dependencies.length = 0;
+    this.forms = {};
+
+    display = defaultValues.display || display;
     this.tags = defaultValues.tags || this.tags;
 
     if(defaultValues.components) {
@@ -381,13 +418,19 @@ export function BuilderProvider() {
           });
         });
       }
-      if(this.display == displayTypes.SINGLE) {
-        let page = this.addPage();
+      if(display == displayTypes.SINGLE) {
+        this.addPage();
         defaultValues.components.forEach((formObject) => {
-          this.addFormObject(page.formReference, formObject);
+          this.addFormObject(this.pages[0].formReference, formObject);
         });
       }
     }
+
+    if (defaultValues.dependencies.length)
+      defaultValues.dependencies.forEach((d) => {
+        let formObject = this.findFormObjectByKey(d.formObjectTargetKey);
+        this.addAnswerDependency(formObject, d.formObjectKey, d.formAnswerKey);
+      });
   }
 
   this.$get = [
@@ -408,6 +451,7 @@ export function BuilderProvider() {
         components: this.components,
         // Pages handlers
         addPage: this.addPage,
+        removePage: this.removePage,
         getCurrentPage: this.getCurrentPage,
         selectCurrentPage: this.selectCurrentPage,
         findPageByFormObjectKey: this.findPageByFormObjectKey,
@@ -428,7 +472,9 @@ export function BuilderProvider() {
         // Dependencies hadlers
         addAnswerDependency: this.addAnswerDependency,
         removeAnswerDependency: this.removeAnswerDependency,
+        removeAnswerDependencybyTarget: this.removeAnswerDependencybyTarget,
         findDependencyTargets: this.findDependencyTargets,
+        dependencyConditionals: dependencyConditionals,
         // Display handlers
         setDisplay: this.setDisplay,
         getDisplay: this.getDisplay,

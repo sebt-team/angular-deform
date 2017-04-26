@@ -107,6 +107,17 @@ angular.module('deformExamples', [
       $('a[data-target="#options"]').tab('show')
     });
 
+    $scope.$on($builder.broadcastChannel.selectPage, function() {
+      $('a[data-target="#page"]').tab('show')
+    });
+
+    $scope.$on($builder.broadcastChannel.changeWizardStep, function(event, stepIndex) {
+    });
+
+    $scope.$on($builder.broadcastChannel.changeFormInputEvent, function(event, inputEventType) {
+    });
+
+
     $scope.changeFormBuilderDisplay = function(display) {
       if(display == 'single')
         $builder.setDisplay($builder.displayTypes.SINGLE)

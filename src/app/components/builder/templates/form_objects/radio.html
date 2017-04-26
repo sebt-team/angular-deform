@@ -3,7 +3,7 @@
     {{label}}
   </label>
   <div class="col-sm-8">
-    <div class="radio" ng-repeat="item in options track by $index">
+    <div class="radio" ng-repeat="item in options track by $index" ng-show="!item.hidden">
       <label>
         <input name="{{formName+index}}" ng-model="$parent.inputText" validator-group="{{formName}}" value="{{item.key}}" type="radio"/>
         {{item.text}}

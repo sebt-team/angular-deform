@@ -4,9 +4,10 @@
   </label>
   <div class="col-sm-8">
     <input type="hidden" ng-model="inputText" validator-required="{{required}}" validator-group="{{formName}}"/>
-    <div class="checkbox" ng-repeat="item in options track by $index">
+    {{inputText}}
+    <div class="checkbox" ng-repeat="item in options track by $index" ng-show="!item.hidden">
       <label>
-        <input type="checkbox" ng-model="$parent.inputArray[$index]" ng-true-value="{{item.key}}" ng-false-value="false" />
+        <input type="checkbox" ng-model="$parent.inputArray[$index]" ng-true-value="'{{item.key}}'" ng-false-value="false"/>
         {{item.text}}
       </label>
     </div>
