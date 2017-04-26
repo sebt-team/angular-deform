@@ -217,10 +217,12 @@ export function DfFormController($scope, $injector) {
     if(index) index--;
 
     if (!isFirstStep) {
-      for (var i = index; i >= 0; i--) {
-        index = i
-        if(showPage(i)) {
-          break
+      if($scope.skipBlankPages) {
+        for (var i = index; i >= 0; i--) {
+          index = i
+          if(showPage(i)) {
+            break;
+          }
         }
       }
       WizardHandler.wizard().goTo(index);
@@ -239,7 +241,7 @@ export function DfFormController($scope, $injector) {
     let normalNavigation = true;
     index++;
 
-    if(!isLastStep) {
+    if(!isLastStep && $scope.skipBlankPages) {
       for (var i = index; i < $scope.pages.length; i++) {
 
         if(i > index) {

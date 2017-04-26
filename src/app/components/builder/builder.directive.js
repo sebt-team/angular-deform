@@ -322,6 +322,7 @@ export function DfForm($injector) {
       input: '=ngModel',
       default: '=defaultValues',
       hideIndicators: '=hideIndicators',
+      skipBlankPages: '=skipBlankPages',
       customActions: '=customActions',
       currentWizardStep: '=currentWizardStep',
       onSubmitSuccessFn: '&onSubmitSuccess',
