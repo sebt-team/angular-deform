@@ -114,7 +114,7 @@ export function DfBuilder ($injector) {
 
               let skipReindex = false;
               if(dependentsTrouble || dependencyTrouble) {
-                var response = confirm("This change will break one or more dependencies\nDo you want to continue?");
+                let response = confirm("This change will break one or more dependencies\nDo you want to continue?");
                 if (response == true) {
                   if(dependencyTrouble)
                     dependentTargets = dependentTargets.concat([formObject]);
@@ -320,6 +320,11 @@ export function DfForm($injector) {
     scope: {
       formData: '=dfForm',
       input: '=ngModel',
+      default: '=defaultValues',
+      hideIndicators: '=hideIndicators',
+      skipBlankPages: '=skipBlankPages',
+      customActions: '=customActions',
+      currentWizardStep: '=currentWizardStep',
       onSubmitSuccessFn: '&onSubmitSuccess',
       onSubmitErrorFn: '&onSubmitError'
     },
@@ -396,25 +401,50 @@ export function DfFormObject($injector) {
 
       function updateInputArray() {
         let value = [];
+        scope.inputText = undefined
         scope.inputArray.forEach((input) => {
           let selectedOption = scope.findSelectedOption(scope.options, input)
-          if(selectedOption) value.push(selectedOption);
+          if(selectedOption) {
+            value.push(selectedOption);
+            scope.inputText = input
+          }
         });
+        scope.resolveDependency(value, false);
         scope.updateInput(value);
       }
 
       function updateInputText() {
+        if(scope.formObject.readOnly || scope.formObject.component == 'checkbox') return;
+
         let options = scope.formObject.options;
         if(options.length > 0) {
           let selectedOption = scope.findSelectedOption(options, scope.inputText)
           scope.updateInput(selectedOption);
+          if(scope.formObject.handleDependencies)
+            scope.resolveDependency(selectedOption.key);
         } else
           scope.updateInput(scope.inputText);
       }
 
+      //set default value
+      scope.$watch(`default['${scope.formObject.id}']`, (value) => {
+        if(!value) return;
+
+        if(scope.$component.multipeChoice) {
+          scope.inputArray = scope.options.map((option) => {
+            let selectedItem = value.filter(function (item) {
+              return item.key == option.key;
+            })[0];
+            return selectedItem ? selectedItem.key : false;
+          });
+        } else {
+          scope.inputText = (scope.formObject.options.length > 0) ? value.key : value
+        }
+      });
+
       // set initial value from component
-      if (!scope.$component.multipeChoice && scope.formObject.options.length > 0)
-        scope.inputText = scope.formObject.options[0].key;
+      // if (!scope.$component.multipeChoice && scope.formObject.options.length > 0)
+      //   scope.inputText = scope.formObject.options[0].key;
     }
   };
 
@@ -452,7 +482,17 @@ export function DfPageEditable($injector) {
       }
 
       scope.removePage = ()=> {
-        $builder.removePage()
+        let response = confirm("This change will break one or more dependencies\nDo you want to continue?");
+        if (response == true) {
+          let selectedComponents = scope.currentPage.components.filter((component) => {
+            // change evaluation by enabledComponent attribute
+            return component.component == 'radio' || component.component == 'select';
+          });
+          selectedComponents.forEach( component => {
+            $builder.removeAnswerDependencybyTarget(component);
+          });
+          $builder.removePage();
+        }
       }
     }
   }
@@ -490,6 +530,10 @@ export function DfFormBuilder($injector) {
 }
 
 export function Contenteditable($injector) {
+  // ----------------------------------------
+  // providers
+  // ----------------------------------------
+  var $builder = $injector.get('$builder');
   var $timeout = $injector.get('$timeout');
 
   return {
@@ -500,6 +544,8 @@ export function Contenteditable($injector) {
       element.on('keyup', () => {
         scope.$apply(() => {
             ctrl.$setViewValue(element.html());
+            if($builder.getDisplay() == $builder.displayTypes.WIZARD)
+              scope.$emit($builder.broadcastChannel.selectPage);
         });
       });
 

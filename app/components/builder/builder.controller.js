@@ -4,7 +4,7 @@ export function DfBuilderController() {
   // TODO: adds logic code
 }
 
-export function DfFormObjectEditableController($scope, $injector, $log) {
+export function DfFormObjectEditableController($scope, $injector) {
   var $builder    = $injector.get('$builder');
   var $validator  = $injector.get('$validator');
 
@@ -39,20 +39,22 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
       return sum;
     }, []).filter( (fo) => {
       if(fo)
-        return fo.component == 'radio' || fo.component == 'select';
+        return fo.component == 'radio' || fo.component == 'select' || fo.component == 'checkbox';
     });
 
     // wtach normal attibutes
-    $scope.$watch('[label, description, placeholder, required, options, validation, display, tag, dependentFrom]', () => {
-      formObject.label         = $scope.label;
-      formObject.description   = $scope.description;
-      formObject.placeholder   = $scope.placeholder;
-      formObject.required      = $scope.required;
-      formObject.options       = $scope.options;
-      formObject.validation    = $scope.validation;
-      formObject.display       = $scope.display;
-      formObject.tag           = $scope.tag;
-      formObject.dependentFrom = $scope.dependentFrom;
+    $scope.$watch('[label, description, placeholder, required, options, validation, weight, display, tag, dependentFrom, customAttributes]', () => {
+      formObject.label            = $scope.label;
+      formObject.description      = $scope.description;
+      formObject.placeholder      = $scope.placeholder;
+      formObject.required         = $scope.required;
+      formObject.options          = $scope.options;
+      formObject.validation       = $scope.validation;
+      formObject.weight           = $scope.weight;
+      formObject.display          = $scope.display;
+      formObject.tag              = $scope.tag;
+      formObject.dependentFrom    = $scope.dependentFrom;
+      formObject.customAttributes = $scope.customAttributes;
     }, true);
 
     // watch options (to selects, radios and checkboxes)
@@ -67,6 +69,8 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
 
         if(!currentOption.key) currentOption.key = new Utils().generateKey();
         if(!currentOption.value) currentOption.value = 0;
+        if(currentOption.hidden == undefined) currentOption.hidden = false;
+        currentOption
         sum.push(currentOption);
         return sum;
       }, []);
@@ -107,13 +111,55 @@ export function DfFormObjectEditableController($scope, $injector, $log) {
   $scope.remove = (formObject, event) => {
     if(event)
       event.stopPropagation();
-    $builder.removeFormObject($scope.$parent.formName, formObject);
+
+    formObject = formObject || $builder.getCurrentFormObject();
+    let dependentTargets = $builder.findDependencyTargets(formObject.key)
+    if(dependentTargets.length) {
+      let response = confirm("This change will break one or more dependencies\nDo you want to continue?");
+      if (response == true) {
+        $builder.removeAnswerDependencybyTarget(formObject);
+        $builder.removeFormObject($scope.$parent.formName, formObject.index);
+      }
+    } else {
+      $builder.removeFormObject($scope.$parent.formName, formObject.index);
+    }
+  }
+
+  $scope.addOption = (index) => {
+    let options = getOptionsTextArray()
+    options.splice(index + 1, 0, `Set option text`);
+    refreshOptionsText(options)
+  }
+
+  $scope.editOption = (index) => {
+    if($scope.options[index].text == '')
+      $scope.options[index].text = `Set option text`;
+    refreshOptionsText(getOptionsTextArray())
+  }
+
+  $scope.removeOption = (index) => {
+    let options = $scope.options.splice(index, 1);
+    refreshOptionsText(getOptionsTextArray())
   }
 
   $scope.submitPoints = () => {
     $validator.validate($scope, 'options');
     $scope.validator = $validator
   };
+
+  function getOptionsTextArray() {
+    return $scope.options.map( o => {
+      return o.text;
+    });
+  }
+
+  function refreshOptionsText(options) {
+    $scope.optionsText = options.reduce((sum, text, index) => {
+      sum += text;
+      sum += '\n';
+      return sum;
+    }, '');
+  }
 }
 
 export function DfComponentsController($scope, $injector) {
@@ -138,6 +184,7 @@ export function DfFormController($scope, $injector) {
   var $builder = $injector.get('$builder');
   var $timeout = $injector.get('$timeout');
   var $validator = $injector.get('$validator');
+  var $rootScope = $injector.get('$rootScope');
   var WizardHandler = $injector.get('WizardHandler');
 
   $scope.disableInputs = false;
@@ -164,11 +211,52 @@ export function DfFormController($scope, $injector) {
       initializeInput($builder.pages);
   });
 
+  $scope.previousStep = (index=0) => {
+    let isFirstStep = index == 0;
+    let normalNavigation = true;
+    if(index) index--;
+
+    if (!isFirstStep) {
+      if($scope.skipBlankPages) {
+        for (var i = index; i >= 0; i--) {
+          index = i
+          if(showPage(i)) {
+            break;
+          }
+        }
+      }
+      WizardHandler.wizard().goTo(index);
+    }
+
+    $scope.disableInputs = false;
+    $rootScope.$broadcast($builder.broadcastChannel.changeWizardStep, index);
+  }
+
   $scope.nextStep = (page, index=0) => {
+
     // validate current form
     $scope.disableInputs = true;
     let isLastStep = index == ($scope.pages.length - 1);
     let validatorPromise = $validator.validate($scope, page.formReference);
+    let normalNavigation = true;
+    index++;
+
+    if(!isLastStep && $scope.skipBlankPages) {
+      for (var i = index; i < $scope.pages.length; i++) {
+
+        if(i > index) {
+          index = i;
+          normalNavigation = false;
+          isLastStep = index == ($scope.pages.length - 1);
+        }
+
+        if(showPage(i)) {
+          isLastStep = false;
+          break;
+        }
+      }
+    }
+
     // success validation
     validatorPromise.success(function() {
       // if callback function exist
@@ -181,19 +269,46 @@ export function DfFormController($scope, $injector) {
           }).responses;
         }
         $scope.onSubmitSuccessFn()(responses, page, isLastStep).then(() => {
-          if(!isLastStep) WizardHandler.wizard().next();
-          $scope.disableInputs = false;
+          goToNextWizardStep(index, isLastStep, normalNavigation);
         }, () => {
           $scope.disableInputs = false;
         });
       } else {
-        if(!isLastStep) WizardHandler.wizard().next();
-        $scope.disableInputs = false;
+        goToNextWizardStep(index, isLastStep, normalNavigation);
       }
     }).error(function() {
       if($scope.onSubmitErrorFn())
         $scope.onSubmitErrorFn()();
       $scope.disableInputs = false;
+    });
+  }
+
+  function showPage(index) {
+    let components = $scope.pages[index].components;
+    let functionalComponents = components.filter((component)=> { return !component.readOnly }) || [];
+    let displayedComponents = functionalComponents.filter((component)=> { return component.display }) || [];
+    return (!functionalComponents.length && components.length) || displayedComponents.length;
+  }
+
+  function goToNextWizardStep(index, isLastStep, normalNavigation = true) {
+    if(!isLastStep) {
+      if(normalNavigation)
+        WizardHandler.wizard().next();
+      else
+        WizardHandler.wizard().goTo(index);
+    }
+
+    $scope.disableInputs = false;
+    $rootScope.$broadcast($builder.broadcastChannel.changeWizardStep, index);
+  }
+
+  function setDefaultWizardStep() {
+    $timeout(function () {
+      if ($scope.currentWizardStep &&
+          $scope.pages.length > 1 &&
+          $builder.getDisplay() == $builder.displayTypes.WIZARD
+      )
+        WizardHandler.wizard().goTo($scope.currentWizardStep);
     });
   }
 
@@ -210,11 +325,13 @@ export function DfFormController($scope, $injector) {
   }
 
   initializeInput($builder.pages);
+  setDefaultWizardStep();
 }
 
 export function DfFormObjectController($scope, $injector) {
   // providers
   var $builder = $injector.get('$builder');
+  var $log     = $injector.get('$log');
   // it comes with the sourcecode but isn't used
   $scope.copyObjectToScope = (object) => $builder.copyObjectToScope(object, $scope);
 
@@ -238,6 +355,37 @@ export function DfFormObjectController($scope, $injector) {
       $scope.$parent.input.splice($scope.$index, 1, input);
     }
   };
+
+  $scope.resolveDependency = (answer, singleValue = true) => {
+    $scope.builder.dependencies.filter( d => {
+      return d.formObjectKey == $scope.formObject.key;
+    }).forEach( d => {
+      let display, operator;
+      let formObject = $scope.builder.findFormObjectByKey(d.formObjectTargetKey);
+
+      if(formObject.dependentFrom.formConditional === $scope.builder.dependencyConditionals.IFNOTMATCH)
+        operator = '!=';
+      else
+        operator = '==';
+
+      if(singleValue)
+        display = eval('d.formAnswerKey' + operator + 'answer');
+      else
+        display = answer.some((a)=> { return eval('a.key' + operator + 'd.formAnswerKey') });
+
+      formObject.display = display;
+    });
+  }
+
+  // function to run custom action defined in the templates
+  $scope.callCustomAction = (customActionName, customValues) => {
+    if($scope.customActions) {
+      if($scope.customActions[customActionName])
+        $scope.customActions[customActionName]($scope, customValues);
+      else
+        $log.error("This custom action does not exist.");
+    }
+  }
 }
 
 export function DfFormBuilderController($scope, $injector) {

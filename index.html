@@ -1,4 +1,4 @@
-<!doctype html><html ng-app="deformExamples" class="full-height"><head><meta charset="utf-8"><title>angularDeforms</title><meta name="description" content=""><meta name="viewport" content="width=device-width"><!--   <link rel="stylesheet" href="../css/angular-sweetnotifier.min.css" charset="utf-8"> --><!-- Place favicon.ico and apple-touch-icon.png in the root directory --><link rel="stylesheet" href="styles/vendor-36e5b822dd.css"><link rel="stylesheet" href="styles/app-02fdd2648a.css"></head><body ng-app="deformExamples" class="full-height"><!--[if lt IE 10]>
+<!doctype html><html ng-app="deformExamples" class="full-height"><head><meta charset="utf-8"><title>angularDeforms</title><meta name="description" content=""><meta name="viewport" content="width=device-width"><!--   <link rel="stylesheet" href="../css/angular-sweetnotifier.min.css" charset="utf-8"> --><!-- Place favicon.ico and apple-touch-icon.png in the root directory --><link rel="stylesheet" href="styles/vendor-36e5b822dd.css"><link rel="stylesheet" href="styles/app-3cccda0445.css"></head><body ng-app="deformExamples" class="full-height"><!--[if lt IE 10]>
     <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]--><nav class="navbar navbar-default navbar-static-top"><div class="container-fluid"><div class="navbar-header"><a href="#" class="navbar-brand">DEFORM EXAMPLE</a></div><div class="collapse navbar-collapse" id="bs-example-navbar-collapse-8"><ul class="nav navbar-nav navbar-right"><li><a ui-sref="builder">Builder</a></li><li><a ui-sref="render">Render</a></li></ul></div></div></nav><div class="example-container full-height" ng-controller="DemoController"><hr><div ui-view class="full-height"></div></div><script type="text/ng-template" id="/partial-builder.html"><div class="toolbox-container full-height">
         <div class="inputs-container df-tabs-container full-height">
@@ -75,7 +75,7 @@
         <div df-form-builder="$parent.form"></div>
       </div></script><script type="text/ng-template" id="/partial-render.html"><div class="form-container full-height">
         <div class="col-md-6">
-          <div ng-model="data" df-form="form" on-submit-success="$parent.submitForm"></div>
+          <div ng-model="data" df-form="form" skip-blank-pages="true" custom-actions="customActions" on-submit-success="$parent.submitForm"></div>
         </div>
         <div class="col-md-3 full-height json-container">
           <div class="well full-height">
@@ -87,4 +87,4 @@
             <json-explorer data="data" collapsed="false"></json-explorer>
           </div>
         </div>
-      </div></script><script src="scripts/vendor-78a8034cd6.js"></script><script src="scripts/examples-bundler-360e58ed5e.js"></script></body></html>
+      </div></script><script src="scripts/vendor-78a8034cd6.js"></script><script src="scripts/examples-bundler-36b6eb3a69.js"></script></body></html>

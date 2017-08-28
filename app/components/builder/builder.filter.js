@@ -4,3 +4,11 @@ export function DfOffsetFilter() {
     return input.slice(start);
   };
 }
+
+export function DfRemoveHiddens() {
+  return function (inputs) {
+    return inputs.filter( i => {
+      return !i.hidden;
+    })
+  };
+}

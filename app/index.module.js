@@ -22,7 +22,7 @@ import { DfPaginator }                    from './components/builder/builder.dir
 import { Contenteditable }                from './components/builder/builder.directive';
 import { ConfigBuilder }                  from './components/builder/builder.config';
 import { DfOffsetFilter }                 from './components/builder/builder.filter';
-// import { BaseService }                    from './components/builder/builder.service';
+import { DfRemoveHiddens }                from './components/builder/builder.filter';
 
 // MAIN
 angular
@@ -36,10 +36,11 @@ angular
       'mgo-angular-wizard'
     ]);
 
-// DIRECTIVE
+// FILTERS
 angular
   .module('builder', ['builderDirective'])
-  .filter('offset', [DfOffsetFilter]);
+  .filter('offset', [DfOffsetFilter])
+  .filter('rmHiddens', [DfRemoveHiddens]);
 
 // PROVIDERS
 angular

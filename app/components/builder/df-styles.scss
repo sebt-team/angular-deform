@@ -57,6 +57,33 @@
       }
     }
 
+    .df-points {
+      .df-weight {
+        padding-bottom: 0;
+        label {
+          font-weight: 500;
+        }
+      }
+      .df-percentage {
+        padding-bottom: 13px;
+        label {
+          font-weight: normal;
+        }
+      }
+      label {
+        line-height: 14px;
+      }
+      input[type=number] {
+        height: 30px !important;
+      }
+      hr {
+        margin: 10px 0;
+      }
+      button {
+        width: 100%;
+        margin-left: 15px;
+      }
+    }
   }
   // END TABS INPUTS -------------------------
 
@@ -205,6 +232,12 @@
         margin: 0;
       }
     }
+  }
+
+  .input-group-addon label {
+    font-weight: normal;
+    font-size: 12px;
+    margin-bottom: 0;
   }
   // END FOOTER ------------------------------
 }
