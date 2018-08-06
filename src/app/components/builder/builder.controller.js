@@ -53,6 +53,7 @@ export function DfFormObjectEditableController($scope, $injector) {
       formObject.weight           = $scope.weight;
       formObject.display          = $scope.display;
       formObject.tag              = $scope.tag;
+      debugger;
       formObject.dependentFrom    = $scope.dependentFrom;
       formObject.customAttributes = $scope.customAttributes;
     }, true);
@@ -81,6 +82,12 @@ export function DfFormObjectEditableController($scope, $injector) {
         $builder.removeAnswerDependency($scope, true);
     });
 
+    $scope.$watch('dependentFrom["multi"]', (active) => {
+      debugger;
+      if(active == true && !$scope.dependentFrom['formAnswerKey'])
+        $scope.dependentFrom["formAnswerKey"] = [undefined];
+    });
+
     $scope.$watch('dependentFrom["formObjectKey"]', (formObjectKey) => {
       // 1. get array with all formObjects (in all pages)
       // 2. find object with equal key
@@ -92,13 +99,15 @@ export function DfFormObjectEditableController($scope, $injector) {
     });
 
     $scope.$watch('dependentFrom["formAnswerKey"]', (optionKey) => {
+      debugger;
       if(optionKey && optionKey != '') {
+        debugger;
         let dependentFormObjectKey = $scope.dependentFrom.formObjectKey
         $builder.addAnswerDependency($scope, dependentFormObjectKey, optionKey);
       } else {
          $builder.removeAnswerDependency($scope);
       }
-    });
+    }, true);
 
     $scope.validationOptions = $builder.components[formObject.component].validationOptions;
     $scope.colapseDependency = $scope.dependentFrom.active;
@@ -140,6 +149,10 @@ export function DfFormObjectEditableController($scope, $injector) {
   $scope.removeOption = (index) => {
     let options = $scope.options.splice(index, 1);
     refreshOptionsText(getOptionsTextArray())
+  }
+
+  $scope.addDependency = (index) => {
+    $scope.dependentFrom["formAnswerKey"][index + 1] = undefined;
   }
 
   $scope.submitPoints = () => {
@@ -368,10 +381,19 @@ export function DfFormObjectController($scope, $injector) {
       else
         operator = '==';
 
-      if(singleValue)
-        display = eval('d.formAnswerKey' + operator + 'answer');
-      else
-        display = answer.some((a)=> { return eval('a.key' + operator + 'd.formAnswerKey') });
+      if(singleValue) {
+        if(formObject.dependentFrom.multi)
+          display = d.formAnswerKey.some((answerKey)=> { return eval('answerKey' + operator + 'answer') });
+        else
+          display = eval('d.formAnswerKey' + operator + 'answer');
+      } else
+        if(formObject.dependentFrom.multi)
+          angular.forEach(d.formAnswerKey, function(answerKey) {
+            if(!display)
+              display = answer.some((a)=> { return eval('a.key' + operator + 'answerKey') });
+          });
+        else
+          display = answer.some((a)=> { return eval('a.key' + operator + 'd.formAnswerKey') });
 
       formObject.display = display;
     });

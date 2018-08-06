@@ -28,6 +28,7 @@ export class Component {
     this.options = (ref = attributes.options) != null ? ref : [];
     this.multipeChoice = (ref = attributes.multipeChoice) != null ? ref : false;
     this.display = (ref = attributes.display) != null ? ref : true;
+    debugger;
     this.dependentFrom = (ref = attributes.dependentFrom) != null ? ref : {};
     this.handleDependencies = (ref = attributes.handleDependencies) != null ? ref : false;
     this.customAttributes = (ref = attributes.customAttributes) != null ? ref : {};
@@ -61,6 +62,7 @@ export class FormObject {
     this.display = (ref = attributes.display) != null ? ref : component.display;
     this.readOnly = (ref = attributes.readOnly) != null ? ref : component.readOnly;
     this.mimeType = (ref = attributes.mimeType) != null ? ref : component.mimeType;
+    debugger;
     this.dependentFrom = (ref = attributes.dependentFrom) != null ? ref : component.dependentFrom;
     this.handleDependencies = (ref = attributes.handleDependencies) != null ? ref : component.handleDependencies;
     this.complexValues = (ref = attributes.complexValues) != null ? ref : component.complexValues;

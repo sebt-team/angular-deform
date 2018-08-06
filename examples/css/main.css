@@ -74,7 +74,7 @@ body>.container {
 .toolbox-container {
   display: block;
   border-right: 1px solid #ccc;
-  width: 350px !important;
+  width: 400px !important;
   float: none;
   height: 100%;
   padding-left: 15px;
@@ -92,7 +92,7 @@ body>.container {
   padding: 20px 15px 165px;
   transition: left 250ms ease-in-out;
   overflow: auto;
-  width: calc(100% - 350px);
+  width: calc(100% - 400px);
   height: 100%;
 }
 .form-workarea-container hr {
@@ -145,7 +145,7 @@ body>.container {
   padding: 15px;
 }
 .form-workarea-container .action-buttons {
-  width: calc(100% - 350px);
+  width: calc(100% - 400px);
 }
 .action-buttons .nav > li > a {
     padding: 12px 9px;

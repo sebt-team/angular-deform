@@ -96,6 +96,7 @@ export function DfBuilder ($injector) {
 
               let dependentsTrouble = false;
               let formObject = draggable.object.formObject;
+              debugger;
               let formObjectKey = formObject.key;
               let dependentTargets = $builder.findDependencyTargets(formObjectKey);
               let affectedDependentTargets = dependentTargets.filter(dt => {
@@ -106,6 +107,7 @@ export function DfBuilder ($injector) {
 
               let dependencyTrouble = false;
               if(formObject.dependentFrom.active) {
+                debugger;
                 let dependencyFormObjectKey = formObject.dependentFrom.formObjectKey;
                 let dependencyFormObject = $builder.findFormObjectByKey(dependencyFormObjectKey);
                 if(dependencyFormObject.index >= newIndex)

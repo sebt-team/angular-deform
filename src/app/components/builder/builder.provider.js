@@ -428,6 +428,7 @@ export function BuilderProvider() {
 
     if (defaultValues.dependencies.length)
       defaultValues.dependencies.forEach((d) => {
+        debbuger;
         let formObject = this.findFormObjectByKey(d.formObjectTargetKey);
         this.addAnswerDependency(formObject, d.formObjectKey, d.formAnswerKey);
       });
