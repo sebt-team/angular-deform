@@ -85,6 +85,17 @@
       }
     }
   }
+  .df-dependency {
+    #collapseDependency .form-group.input-group {
+      padding-bottom: 0px;
+      margin-bottom: 4px;
+      .btn {
+        font-size: 12px;
+        height: 28px;
+        padding: 0 10px;
+      }
+    }
+  }
   // END TABS INPUTS -------------------------
 
   // START DRAGPAGE --------------------------

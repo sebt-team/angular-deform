@@ -12,8 +12,24 @@
         <div class="form-group">
           <div class="col-sm-offset-5 col-sm-7">
             <label>
-              <input type="checkbox" ng-model="dependentFrom['active']"> show if the answer is
+              <input type="checkbox" ng-model="dependentFrom['active']"> enable dependency
             </label>
+          </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-5 col-sm-7">
+              <label>
+                <input type="checkbox" ng-disabled="!dependentFrom['active']" ng-model="dependentFrom['multi']"> multi-dependency
+              </label>
+            </div>
+          </div>
+        <div class="form-group">
+          <label class="control-label truncate col-sm-5">select condition:</label>
+          <div class="col-sm-7">
+            <select ng-disabled="!dependentFrom['active']" ng-init="dependentFrom['formConditional'] = dependentFrom['formConditional'] || '0'" ng-model="dependentFrom['formConditional']" class="form-control">
+              <option value="0"><i>IF MATCH</i></option>
+              <option value="1"><i>IF NOT MATCH</i></option>
+            </select>
           </div>
         </div>
         <div class="form-group">
@@ -26,19 +42,21 @@
         </div>
         <div class="form-group">
           <label class="control-label truncate col-sm-5">select answer:</label>
-          <div class="col-sm-7">
+          <div class="col-sm-7" ng-if="!dependentFrom['multi']">
             <select ng-disabled="!dependentFrom['formObjectKey']" ng-model="dependentFrom['formAnswerKey']" class="form-control" ng-options="o.key as o.text for o in dependencyOptions">
               <option value=""><i>-Select option-</i></option>
             </select>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="control-label truncate col-sm-5">select condition:</label>
-          <div class="col-sm-7">
-            <select ng-disabled="!dependentFrom['formObjectKey']" ng-init="dependentFrom['formConditional'] = dependentFrom['formConditional'] || '0'" ng-model="dependentFrom['formConditional']" class="form-control">
-              <option value="0"><i>IF MATCH</i></option>
-              <option value="1"><i>IF NOT MATCH</i></option>
-            </select>
+          <div class="col-sm-12" ng-if="dependentFrom['multi']">
+            <div class="form-group input-group" ng-repeat="key in dependentFrom['formAnswerKey'] track by $index">
+              <select ng-disabled="!dependentFrom['formObjectKey']" ng-model="dependentFrom['formAnswerKey'][$index]" class="form-control" ng-options="o.key as o.text for o in dependencyOptions">
+                <option value=""><i>-Select option-</i></option>
+              </select>
+              <span class="input-group-btn">
+                <button class="btn btn-primary" type="button" ng-click="addDependency($index)"><i class="glyphicon glyphicon-plus"></i></button>
+                <button class="btn btn-danger" type="button" ng-click="removeOption($index)"><i class="glyphicon glyphicon-trash"></i></button>
+              </span>
+            </div>
           </div>
         </div>
       </ng-form>

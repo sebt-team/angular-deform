@@ -1,9 +1,9 @@
 <div class="form-group">
-  <label for="{{formName+index}}" class="col-sm-4 control-label">
-    {{label}}
+  <label for="{{formName+index}}" class="col-sm-4 control-label" ng-class="{'df-required':required}">
+    {{label}} {{inputText}}
   </label>
   <div class="col-sm-8">
-    <select ng-options="item.key as item.text for item in options | rmHiddens" id="{{formName+index}}" class="form-control" ng-model="inputText" ng-init="inputText = inputText || options[0]" ng-if="!item.hidden">
+    <select ng-options="item.key as item.text for item in options | rmHiddens" id="{{formName+index}}" class="form-control" ng-model="inputText" ng-init="inputText = inputText || options[0]" validator-required="{{required}}" validator-group="{{formName}}" ng-if="!item.hidden">
       <option value=""> - <option>
     </select>
     <p class="help-block">{{description}}</p>
