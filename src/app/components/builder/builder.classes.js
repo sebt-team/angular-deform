@@ -28,12 +28,12 @@ export class Component {
     this.options = (ref = attributes.options) != null ? ref : [];
     this.multipeChoice = (ref = attributes.multipeChoice) != null ? ref : false;
     this.display = (ref = attributes.display) != null ? ref : true;
-    debugger;
+    this.randomize = (ref = attributes.randomize) != null ? ref : false;
     this.dependentFrom = (ref = attributes.dependentFrom) != null ? ref : {};
     this.handleDependencies = (ref = attributes.handleDependencies) != null ? ref : false;
-    this.customAttributes = (ref = attributes.customAttributes) != null ? ref : {};
+    this.randomize = (ref = attributes.randomize) != null ? ref : {};
     this.readOnly = (ref = attributes.readOnly) != null ? ref : false;
-    this.mimeType = (ref = attributes.readOnly) != null ? ref : false;
+    this.mimeType = (ref = attributes.mimeType) != null ? ref : false;
     this.template = attributes.template;
     this.templateUrl = attributes.templateUrl;
     this.showcaseTemplate = attributes.showcaseTemplate;
@@ -60,9 +60,9 @@ export class FormObject {
     this.validation = (ref = attributes.validation) != null ? ref : component.validation;
     this.tag = (ref = attributes.tag) != null ? ref : component.tag;
     this.display = (ref = attributes.display) != null ? ref : component.display;
+    this.randomize = (ref = attributes.randomize) != null ? ref : component.randomize;
     this.readOnly = (ref = attributes.readOnly) != null ? ref : component.readOnly;
     this.mimeType = (ref = attributes.mimeType) != null ? ref : component.mimeType;
-    debugger;
     this.dependentFrom = (ref = attributes.dependentFrom) != null ? ref : component.dependentFrom;
     this.handleDependencies = (ref = attributes.handleDependencies) != null ? ref : component.handleDependencies;
     this.complexValues = (ref = attributes.complexValues) != null ? ref : component.complexValues;

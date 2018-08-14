@@ -38,6 +38,7 @@ export function ConfigBuilder($logProvider, $builderProvider) {
       placeholder: 'placeholder',
       icon: 'glyphicon glyphicon-ok',
       required: false,
+      randomize: false,
       complexValues: true,
       options: [{text: 'Set option 1 text'}, {text: 'Set option 2 text'}],
       multipeChoice: true,

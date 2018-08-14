@@ -308,6 +308,7 @@ export function DfComponent($injector) {
 }
 
 export function DfForm($injector) {
+
   // ----------------------------------------
   // providers
   // ----------------------------------------
@@ -360,6 +361,11 @@ export function DfFormObject($injector) {
     controller: 'dfFormObjectController',
     link: (scope, element, attrs) => {
       scope.formObject = $parse(attrs.dfFormObject)(scope);
+
+      debugger;
+      if(scope.formObject.randomize && scope.formObject.options.length)
+        scope.formObject.options = scope.shuffle(scope.formObject.options)
+
       scope.$component = $builder.components[scope.formObject.component];
       scope.formName = attrs.formName;
 

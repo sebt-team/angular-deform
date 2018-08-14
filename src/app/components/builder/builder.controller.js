@@ -43,7 +43,7 @@ export function DfFormObjectEditableController($scope, $injector) {
     });
 
     // wtach normal attibutes
-    $scope.$watch('[label, description, placeholder, required, options, validation, weight, display, tag, dependentFrom, customAttributes]', () => {
+    $scope.$watch('[label, description, placeholder, required, options, validation, weight, display, randomize, tag, dependentFrom, customAttributes]', () => {
       formObject.label            = $scope.label;
       formObject.description      = $scope.description;
       formObject.placeholder      = $scope.placeholder;
@@ -52,8 +52,8 @@ export function DfFormObjectEditableController($scope, $injector) {
       formObject.validation       = $scope.validation;
       formObject.weight           = $scope.weight;
       formObject.display          = $scope.display;
+      formObject.randomize        = $scope.randomize;
       formObject.tag              = $scope.tag;
-      debugger;
       formObject.dependentFrom    = $scope.dependentFrom;
       formObject.customAttributes = $scope.customAttributes;
     }, true);
@@ -407,6 +407,24 @@ export function DfFormObjectController($scope, $injector) {
       else
         $log.error("This custom action does not exist.");
     }
+  }
+
+  $scope.shuffle = (array) => {
+    var currentIndex = array.length, temporaryValue, randomIndex;
+    // while there remain elements to shuffle...
+    while (0 !== currentIndex) {
+
+      // pick a remaining element...
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex -= 1;
+  
+      // and swap it with the current element.
+      temporaryValue = array[currentIndex];
+      array[currentIndex] = array[randomIndex];
+      array[randomIndex] = temporaryValue;
+    }
+  
+    return array;
   }
 }
 
